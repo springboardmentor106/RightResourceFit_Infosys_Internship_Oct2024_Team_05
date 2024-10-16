@@ -10,6 +10,7 @@
     padding-right:10px ;
     padding-top: 5px;
     height: 81px;
+    width: 100vw;
     position: absolute;
     background-color: transparent;
     z-index: 100;
@@ -27,6 +28,8 @@
     /* color: white; */
     height: 30px;
     width: 30px;
+    position: relative;
+    top: 10px;
 }
 .logo p{
     font-weight: bold;
@@ -45,6 +48,8 @@
     list-style: none;
     font-weight: 200;
     font-size:18px ;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
 }
 .list ul li:hover{
     text-decoration: underline;
@@ -57,7 +62,9 @@
     background-color: #9181F4;
     border: none;
     font-size: 20px;
+    margin-right: 30px;
 }
 button:hover{
     font-weight: bold;
+    cursor: pointer;
 }
