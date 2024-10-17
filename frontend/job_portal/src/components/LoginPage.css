@@ -1,0 +1,92 @@
+.login-page{
+    background-color: #7f5cf1;
+}
+
+.login-container {
+    border-color: black;
+    border-width: 2px;
+    border-radius: 8px;
+    padding: 10%;
+    display: flex;
+    justify-content: space-between;
+    height: 500px;
+    background-color: #f0f0f0;
+  }
+  
+  .login-left {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    flex: 1;
+    padding: 50px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:100px;
+  }
+  
+  .login-right {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 20px;
+    flex: 1;
+    background: linear-gradient(45deg, #7f5cf1, #5a3bed);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-form {
+    width: 80%;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  input {
+    width: 75%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .login-options {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .login-btn {
+    width: 25%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #7f5cf1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .google-login {
+    margin-top: 20px;
+  }
+  
+  .google-btn {
+    width: 50%;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .sign-up {
+    margin-top: 20px;
+    text-align: center;
+  }
