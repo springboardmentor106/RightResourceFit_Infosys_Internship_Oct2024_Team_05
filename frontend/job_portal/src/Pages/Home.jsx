@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import './home.css'
 
 
@@ -159,6 +160,61 @@ const Home = () => {
                 </div>
             </div>
         </div>
+
+
+        <div className="recent_jobs">
+            <h1>Recent Jobs Available</h1>
+            <div className="jobs">
+                <div className="section">
+                    <div className="logo">
+                        <img src="/Images/google logo.webp" alt="" />
+                    </div>
+                    <div className="text">
+                        <h2>Software Developer</h2>
+                        <p>Google looking for a skilled Software Developer , working on innovative solutions that impact millions globally. Responsibilities include designing, coding, testing, and deploying scalable applications while collaborating with cross-functional teams.</p>
+                    </div>
+                    <div className="button">
+                        <button>
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+                <div className="section">
+                    <div className="logo">
+                        <img src="/Images/google logo.webp" alt="" />
+                    </div>
+                    <div className="text">
+                        <h2>Email Marketing</h2>
+                        <p>Google looking for a skilled Software Developer , working on innovative solutions that impact millions globally. Responsibilities include designing, coding, testing, and deploying scalable applications while collaborating with cross-functional teams.</p>
+                    </div>
+                    <div className="button">
+                        <button>
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+                <div className="section">
+                    <div className="logo">
+                        <img src="/Images/google logo.webp" alt="" />
+                    </div>
+                    <div className="text">
+                        <h2>Brand Designer</h2>
+                        <p>Google looking for a skilled Software Developer , working on innovative solutions that impact millions globally. Responsibilities include designing, coding, testing, and deploying scalable applications while collaborating with cross-functional teams.</p>
+                    </div>
+                    <div className="button">
+                        <button>
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div className="link">
+            <a href="">View More </a>
+        </div>
+
+    <Footer/>    
     </div>
   )
 }

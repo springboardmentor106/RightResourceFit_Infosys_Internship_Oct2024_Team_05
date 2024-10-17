@@ -1,5 +1,7 @@
 import React from 'react'
 import './navbar.css'
+import Footer from './Footer'
+
 
 const Navbar = () => {
   return (
@@ -18,11 +20,12 @@ const Navbar = () => {
                     <li>Home</li>
                     <li>About Us</li>
                     <li>Jobs</li>
-                    <li>Contact Us</li>
+                    <li><a href='#contact'>Contact Us</a></li>
                 </ul>
             </div>
             <div className="button">
-                <button>Register</button>
+                <button>Sign In</button>
+                <button>Sign Up</button>
             </div>
 
         </div>

@@ -1,6 +1,16 @@
 html, body {
     overflow-x: hidden; 
 }
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none; 
+  }
+body{
+    overflow-y: auto;
+}
+html {
+    scroll-behavior: smooth;
+  }
+  
 .image {
     position: relative;
     width: 100vw;
@@ -107,3 +117,55 @@ html, body {
 .arrow p{
     font-size: 20px;
 }
+
+
+.recent_jobs{
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    
+}
+.recent_jobs h1{
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+.jobs{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.section{
+    background-color: #F0EDFF;
+    display: flex;
+    border-radius: 47px;
+    height: 220px;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+.section:hover{
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
+}
+.section .logo img{
+    height: 80px;
+    width: 80px;
+}
+.section .text{
+    /* position: relative;
+    right: 30px; */
+    margin-left: 1%;
+}
+.section .text h2{
+    font-weight: bold;
+    font-size: 28px;
+}
+.link{
+    text-align: center;
+    margin: 20px;
+    font-size: 20px;
+}
+
+
