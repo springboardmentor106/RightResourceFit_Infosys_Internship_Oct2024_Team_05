@@ -1,5 +1,5 @@
 import React from 'react';
-import './LoginPage.css';  // Import CSS for styling
+import './LoginPage.css';  
 
 const LoginPage = () => {
   return (
@@ -19,11 +19,11 @@ const LoginPage = () => {
           <div className="login-options">
             <a href="#">Forgot Password?</a>
           </div>
-          <button type="submit" className="login-btn">Login Now</button>
+          <button type="submit" className="login-btn">Sign In</button>
           <div className="google-login">
             <button className="google-btn">Continue with Google</button>
           </div>
-          <p className="sign-up">Not a member? <a href="#">Sign Up</a></p>
+          <p className="sign-up">Not a member? <a href="/signup">Sign Up</a></p>
         </form>
       </div>
       <div className="login-right">

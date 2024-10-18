@@ -55,7 +55,7 @@ html {
 .search svg {
     position: absolute;
     top: 87%;
-    right: 50px; 
+    right: 10px; 
     transform: translateY(-50%);
     height: 30px;
     width: 30px;
@@ -78,7 +78,7 @@ html {
     margin-bottom: 40px;
 }
 .category{
-    height: 200px;
+    height: 180px;
     width: 250px;
     background-color: #FEE8E8;
     border-radius: 31px;
@@ -94,7 +94,7 @@ html {
     flex-direction: column;
     align-items: center;
 }
-.category .content svg{
+.category .content img{
     height: 40px;
     width: 40px;
 }
@@ -109,10 +109,11 @@ html {
     bottom: 15px;
 }
 .arrow svg{
-    height: 30px;
-    width: 30px;
+    height: 30px !important;
+    width: 30px !important;
     position: relative;
-    top: 10px;
+    top: 20px;
+    left: 5px;
 }
 .arrow p{
     font-size: 20px;
@@ -140,9 +141,9 @@ html {
     background-color: #F0EDFF;
     display: flex;
     border-radius: 47px;
-    height: 220px;
+    height: 190px;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
     padding: 20px;
 }
@@ -154,9 +155,9 @@ html {
     width: 80px;
 }
 .section .text{
-    /* position: relative;
-    right: 30px; */
-    margin-left: 1%;
+    position: relative;
+    bottom: 30px;
+    margin-left: 2%;
 }
 .section .text h2{
     font-weight: bold;
