@@ -1,5 +1,6 @@
 import React from 'react';
-import './LoginPage.css';  
+import './LoginPage.css'; 
+import { Link } from 'react-router-dom'; 
 
 const LoginPage = () => {
   return (
@@ -17,7 +18,7 @@ const LoginPage = () => {
             <input type="password" id="password" placeholder="Password" />
           </div>
           <div className="login-options">
-            <a href="#">Forgot Password?</a>
+            <Link to="/forgotpassword">Forgot Password?</Link>
           </div>
           <button type="submit" className="login-btn">Sign In</button>
           <div className="google-login">

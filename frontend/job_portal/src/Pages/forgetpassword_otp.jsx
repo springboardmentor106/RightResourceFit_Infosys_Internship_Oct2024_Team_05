@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaLock } from 'react-icons/fa';
-import './App.css';
+// import './App.css';
 
 function ForgotPasswordOTP() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaEnvelope } from 'react-icons/fa';
-import './App.css';
+// import './App.css';
 
 function ForgotPassword_email() {
   return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import './SignUpPage.css';  // Import CSS for styling
+import { Link } from 'react-router-dom';
 
 const SignUpPage = () => {
   return (
@@ -24,7 +25,7 @@ const SignUpPage = () => {
           <div className="google-signup">
             <button className="google-btn">Continue with Google</button>
           </div>
-          <p className="login-prompt">Already have an account? <a href="#">Login</a></p>
+          <p className="login-prompt">Already have an account? <Link to="/signin">Sign In</Link></p>
         </form>
       </div>
       <div className="signup-right">
