@@ -160,7 +160,7 @@ async function forgotPassword(req, res) {
 // Reset password handler
 async function resetPassword(req, res) {
   try {
-    const { email, otp, password } = req.headers;
+    const { email, otp, newPassword } = req.headers;
     const user = await findUserByEmail(email);
     if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -177,7 +177,7 @@ async function resetPassword(req, res) {
     }
 
     // Update the user's password
-    await updateUserPassword(user._id, password);
+    await updateUserPassword(user._id, newPassword);
 
     // Remove the OTP after successful password reset
     await deleteOtp(user._id);
