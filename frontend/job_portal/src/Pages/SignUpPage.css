@@ -1,9 +1,7 @@
-/* Main signup page styling */
 .signup-page {
-    background-color: #7f5cf1;
+    background-color: #f0f0f0;
 }
 
-/* Container holding both left and right sections */
 .signup-container {
     border-color: black;
     border-width: 2px;
@@ -48,40 +46,51 @@
 
 .input-group {
     margin-bottom: 20px;
+    position: relative;  /* To position the icons properly */
+    width: 100%;
 }
 
 input {
-    width: 75%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    width: 94%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.password-group {
+    position: relative;
+    width: 100%;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
 
 .signup-btn {
-    width: 25%;
+    width: 20%;  /* Take full width */
     padding: 10px;
+    
     margin-top: 20px;
     background-color: #7f5cf1;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;  /* Horizontally center the text inside the button */
 }
 
-.google-signup {
-    margin-top: 20px;
+.button-container {
+      /* Full width of the form */
+    display: flex;
+    justify-content: center;  /* Center the button horizontally */
 }
 
-.google-btn {
-    width: 50%;
-    padding: 10px;
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 .login-prompt {
     margin-top: 20px;
