@@ -25,7 +25,7 @@ const corsOptions = {
 app.use(cors());
 app.use(json());
 
-app.use('/api', apiRoute); // example: http://agamya.com/api
+app.use('/api', apiRoute); // example: http://jaish.com/api
 
 // make express app to listen on PORT for incoming requests
 const PORT_LISTEN = process.env.BACKEND_LISTEN_PORT;
