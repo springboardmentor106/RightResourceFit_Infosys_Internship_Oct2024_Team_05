@@ -85,13 +85,13 @@ const LoginPage = () => {
                 className="password-toggle"
                 onClick={togglePasswordVisibility}
               >
-                {passwordShown ? <FaEyeSlash /> : <FaEye />}
+                {passwordShown ? <FaEye />:<FaEyeSlash /> }
               </span>
             </div>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">Login successful!</p>}
             <div className="login-options">
-              <Link to="/forgotpassword">Forgot Password?</Link>
+              <Link to="/forgotpasswordemail">Forgot Password?</Link>
             </div>
             <br />
             <div className="button-group">

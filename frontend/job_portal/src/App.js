@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import SignUpPage from "./Pages/SignUpPage";
 import LoginPage from "./Pages/LoginPage";
 import ForgotPassword from "./Pages/ForgotPassword";
-import ForgotPassword_email from "./ForgotPasswordEmail";
+import ForgotPasswordEmail from './Pages/ForgotPasswordEmail'
 import ForgotPasswordOTP from "./Pages/ForgotPasswordOtp";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
           <Route path="/signin" element={<LoginPage />} />
           <Route
             path="/forgotpasswordemail"
-            element={<ForgotPassword_email />}
+            element={<ForgotPasswordEmail />}
           />
           <Route path="/forgotpasswordotp" element={<ForgotPasswordOTP />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />

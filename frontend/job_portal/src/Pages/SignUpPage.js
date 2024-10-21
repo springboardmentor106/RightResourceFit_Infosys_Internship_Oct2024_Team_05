@@ -34,6 +34,11 @@ const SignUpPage = () => {
     });
   };
 
+  const isValidEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
+    return regex.test(email);
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +50,16 @@ const SignUpPage = () => {
       setErrorMessage("All fields are required");
       return;
     }
+
+    if (!isValidEmail(email)) {
+      setErrorMessage("Invalid email format");
+      return;
+    }
+    if (password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters long");
+      return;
+    }
+
 
     if (password !== confirmPassword) {
       setErrorMessage("Passwords do not match");
@@ -118,7 +133,7 @@ const SignUpPage = () => {
                 className="password-toggle"
                 onClick={togglePasswordVisibility}
               >
-                {passwordShown ? <FaEyeSlash /> : <FaEye />}
+                {passwordShown ?  <FaEye />:<FaEyeSlash /> }
               </span>
             </div>
             <div className="input-group password-group">
@@ -133,7 +148,7 @@ const SignUpPage = () => {
                 className="password-toggle"
                 onClick={toggleConfirmPasswordVisibility}
               >
-                {confirmPasswordShown ? <FaEyeSlash /> : <FaEye />}
+                {confirmPasswordShown ?  <FaEye />:<FaEyeSlash /> }
               </span>
             </div>
 
