@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import './ForgotPasswordEmail.css';
+
 
 const ForgotPasswordEmail = () => {
   const apiUrl = process.env.REACT_APP_BACKEND_API_URL;
@@ -65,8 +66,8 @@ const ForgotPasswordEmail = () => {
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">Code sent! Redirecting...</p>}
             <div className="button-container" align="center">
-              <button type="submit" className="signup-btn">
-                Send Code
+              <button type="submit" className="signup-btn"><Link to='/forgotpasswordotp'> Send Code</Link>
+               
               </button>
             </div>
           </form>

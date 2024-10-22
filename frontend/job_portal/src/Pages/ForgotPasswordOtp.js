@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ForgotPasswordOtp.css';  // Import CSS for styling
 import { FaEye, FaEyeSlash } from 'react-icons/fa';  // Import eye icons
+import { Link, useNavigate } from "react-router-dom";
 
 const ForgotPasswordOtp = () => {
   const apiUrl = process.env.REACT_APP_BACKEND_API_URL;
@@ -72,8 +73,8 @@ const ForgotPasswordOtp = () => {
             </div>
 
             <div className="button-container" align="center">
-              <button type="submit" className="signup-btn">
-                Enter Code
+              <button type="submit" className="signup-btn" ><Link to='/forgotpassword'>Enter Code</Link>
+                
               </button>
             </div>
 

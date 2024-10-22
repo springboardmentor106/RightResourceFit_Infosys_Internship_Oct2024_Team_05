@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ForgotPassword.css';  // Import CSS for styling
 import { FaEye, FaEyeSlash } from 'react-icons/fa';  // Import eye icons
+import { Link, useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -44,7 +45,7 @@ const ForgotPassword = () => {
             </div>
             
             <div className='button-container' align="center">
-              <button type="submit" className="signup-btn">Reset Password</button>
+              <button type="submit" className="signup-btn"><Link to='/'>Reset Password</Link></button>
             </div>
             
             
