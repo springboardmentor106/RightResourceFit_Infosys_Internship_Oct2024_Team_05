@@ -73,7 +73,7 @@ const ForgotPasswordOtp = () => {
             </div>
 
             <div className="button-container" align="center">
-              <button type="submit" className="signup-btn" ><Link to='/forgotpassword'>Enter Code</Link>
+              <button type="submit" className="signup-btn" ><Link to='/forgotpassword' style={{ color: 'white' }}>Enter Code</Link>
                 
               </button>
             </div>

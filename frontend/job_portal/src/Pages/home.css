@@ -15,13 +15,17 @@ html {
     position: relative;
     width: 100vw;
     height: 596px;
+    
 }
 
-.image img {
+.image .purple {
     width: 100%;
     height: 100%;
     object-fit: cover; 
     display: block;
+    background: linear-gradient(90deg, #9181F4, #5038ED);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 
@@ -41,7 +45,7 @@ html {
 
 .search input {
     width: 790px;
-    height: 50px;
+    height: 30px;
     border-radius: 16px;
     padding-left: 15px; 
     border: none; 
@@ -80,7 +84,7 @@ html {
 .category{
     height: 180px;
     width: 250px;
-    background-color: #FEE8E8;
+    background-color: #F0EDFF;
     border-radius: 31px;
     padding: 15px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
@@ -138,7 +142,7 @@ html {
     gap: 40px;
 }
 .section{
-    background-color: #F0EDFF;
+    background-color: #EFEFEF;
     display: flex;
     border-radius: 47px;
     height: 190px;

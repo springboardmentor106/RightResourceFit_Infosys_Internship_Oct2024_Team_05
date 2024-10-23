@@ -66,7 +66,7 @@ const ForgotPasswordEmail = () => {
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">Code sent! Redirecting...</p>}
             <div className="button-container" align="center">
-              <button type="submit" className="signup-btn"><Link to='/forgotpasswordotp'> Send Code</Link>
+              <button type="submit" className="signup-btn" style={{ color: 'white' }}><Link to='/forgotpasswordotp'> Send Code</Link>
                
               </button>
             </div>

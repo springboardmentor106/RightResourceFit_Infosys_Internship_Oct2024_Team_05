@@ -1,6 +1,6 @@
 .footer{
-    background-color: #091057;
-    height: 300px;
+    background: linear-gradient(90deg, #9181F4, #4228ed);
+    height: 200px;
     margin-top: 30px;
     color: white;
     display: flex;

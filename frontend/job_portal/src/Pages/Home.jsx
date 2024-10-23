@@ -11,7 +11,8 @@ const Home = () => {
     <div className='Home'>
         <Navbar/>
         <div className="image">
-            <img src="/Images/Homepage.jpg" alt="" />
+            {/* <img src="/Images/Homepage.jpg" alt="" /> */}
+            <div className='purple'></div>
             <div className="search">
                 <p>
                     Find Your Dream Job Today !!

@@ -36,11 +36,11 @@ const Navbar = () => {
             </div>
             <div className="button">
                 
-                <button>
-                    <Link to="/signin" className="nav-link">Sign In</Link>
+                <button  >
+                    <Link to="/signin" className="nav-link" style={{ color: 'white' }}>Sign In</Link>
                 </button>
-                <button>
-                    <Link to="/signup" className="nav-link">Sign Up</Link>
+                <button >
+                    <Link to="/signup" className="nav-link" style={{ color: 'white' }}>Sign Up</Link>
                 </button>
             </div>
 

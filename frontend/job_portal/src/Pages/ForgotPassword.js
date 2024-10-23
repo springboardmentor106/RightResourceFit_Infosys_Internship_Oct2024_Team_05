@@ -45,7 +45,7 @@ const ForgotPassword = () => {
             </div>
             
             <div className='button-container' align="center">
-              <button type="submit" className="signup-btn"><Link to='/'>Reset Password</Link></button>
+              <button type="submit" className="signup-btn"><Link to='/'style={{ color: 'white' }}>Reset Password</Link></button>
             </div>
             
             
