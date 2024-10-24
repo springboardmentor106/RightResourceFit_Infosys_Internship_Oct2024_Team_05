@@ -10,6 +10,10 @@ import {
   deleteOtp,
   updateUserPassword,
   findUserByUsername,
+  addJobToDB,
+  deleteJobFromDB,
+  updateJobInDB,
+  searchJobsInDB,
 } from "./dbHandlers.js";
 
 export {
@@ -24,4 +28,8 @@ export {
   deleteOtp,
   updateUserPassword,
   findUserByUsername,
+  addJobToDB,
+  deleteJobFromDB,
+  updateJobInDB,
+  searchJobsInDB,
 };

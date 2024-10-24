@@ -222,7 +222,88 @@ router.post("/logout", async (req, res) => {
   await logoutUser(req, res);
 });
 
+import { Job } from "../db/dbSchema.js"; // Import Job schema
+
+// Add Job - HR functionality
+async function addJob(req, res) {
+  try {
+    const { title, description, location, skills, hrId } = req.body;
+
+    const newJob = new Job({
+      title,
+      description,
+      location,
+      skills,
+      postedBy: hrId, // HR User ID
+    });
+
+    await newJob.save();
+    res.status(201).json({ message: "Job added successfully", job: newJob });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+// Update Job - HR functionality
+async function updateJob(req, res) {
+  try {
+    const { jobId, title, description, location, skills } = req.body;
+    
+    const updatedJob = await Job.findByIdAndUpdate(
+      jobId,
+      { title, description, location, skills, updatedAt: Date.now() },
+      { new: true } // Return updated job
+    );
+
+    if (!updatedJob) return res.status(404).json({ message: "Job not found" });
+    res.status(200).json({ message: "Job updated successfully", job: updatedJob });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+// Delete Job - HR functionality
+async function deleteJob(req, res) {
+  try {
+    const { jobId } = req.body;
+    const deletedJob = await Job.findByIdAndDelete(jobId);
+    
+    if (!deletedJob) return res.status(404).json({ message: "Job not found" });
+    res.status(200).json({ message: "Job deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+// Search Jobs by Location and Skills
+async function searchJobs(req, res) {
+  try {
+    const { location, skills } = req.query;
+    const query = {};
+
+    if (location) {
+      query.location = location;
+    }
+
+    if (skills && skills.length > 0) {
+      query.skills = { $in: skills.split(",") }; // Assume comma-separated skills in query
+    }
+
+    const jobs = await Job.find(query);
+    res.status(200).json({ jobs });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
+// Add routes for job management
+router.post("/jobs/add", addJob); // Add job
+router.put("/jobs/update", updateJob); // Update job
+router.delete("/jobs/delete", deleteJob); // Delete job
+router.get("/jobs/search", searchJobs); // Search jobs by location and skills
+
 
 export default router;

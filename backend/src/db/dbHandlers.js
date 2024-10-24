@@ -142,6 +142,77 @@ async function updateUserPassword(userId, newPassword) {
   }
 }
 
+import { Job } from "./dbSchema.js";
+//! JOB DB Functions
+
+// Add a Job to the database
+async function addJobToDB(jobData) {
+  try {
+    const newJob = new Job({
+      title: jobData.title,
+      description: jobData.description,
+      location: jobData.location,
+      skills: jobData.skills,
+      postedBy: jobData.hrId, // Reference to HR user
+    });
+    await newJob.save();
+    return newJob;
+  } catch (err) {
+    console.log(err.message);
+    throw new Error("Failed to add job");
+  }
+}
+
+// Update a Job in the database
+async function updateJobInDB(jobId, jobData) {
+  try {
+    const updatedJob = await Job.findByIdAndUpdate(
+      jobId,
+      {
+        title: jobData.title,
+        description: jobData.description,
+        location: jobData.location,
+        skills: jobData.skills,
+        updatedAt: Date.now(), // Update the timestamp
+      },
+      { new: true } // Return the updated document
+    );
+    return updatedJob;
+  } catch (err) {
+    console.log(err.message);
+    throw new Error("Failed to update job");
+  }
+}
+
+// Delete a Job from the database
+async function deleteJobFromDB(jobId) {
+  try {
+    const deletedJob = await Job.findByIdAndDelete(jobId);
+    if (!deletedJob) throw new Error("Job not found");
+    return deletedJob;
+  } catch (err) {
+    console.log(err.message);
+    throw new Error("Failed to delete job");
+  }
+}
+
+// Search Jobs by location and skills
+async function searchJobsInDB(location, skills) {
+  try {
+    const query = {};
+    if (location) query.location = location;
+    if (skills && skills.length > 0) {
+      query.skills = { $in: skills.split(",") }; // Match any of the skills
+    }
+    const jobs = await Job.find(query);
+    return jobs;
+  } catch (err) {
+    console.log(err.message);
+    throw new Error("Failed to search jobs");
+  }
+}
+
+
 export {
   connectToDB,
   addUserToDB,
@@ -154,4 +225,8 @@ export {
   findOtpByUserId,
   deleteOtp,
   updateUserPassword,
+  addJobToDB,
+  updateJobInDB,
+  deleteJobFromDB,
+  searchJobsInDB
 };
