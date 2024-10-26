@@ -1,0 +1,96 @@
+.job-form-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #4a90e2;
+}
+
+.form-group {
+  margin-bottom: 20px; /* Increased margin for better spacing */
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px; /* Added margin for better spacing between label and field */
+}
+
+input[type="text"],
+input[type="date"],
+textarea,
+.upload-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+  font-size: 1rem;
+}
+
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px; /* Spacing between radio buttons */
+  flex-wrap: wrap;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 8px; /* Spacing between radio button and label */
+  width: 18px; /* Increased size */
+  height: 18px; /* Increased size */
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.upload-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  cursor: pointer;
+  background: #e0e0e0;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover {
+  background: #d4d4d4;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #357abd;
+}
