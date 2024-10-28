@@ -165,6 +165,7 @@ const Home = () => {
                             Apply Now
                         </button>
                     </div>
+                    
                     </div>
                     
                 </div>

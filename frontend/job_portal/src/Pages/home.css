@@ -135,6 +135,8 @@ html {
 .recent_jobs h1{
     font-size: 35px;
     margin-bottom: 20px;
+    color: black;
+    text-align: left;
 }
 .jobs{
     display: flex;
@@ -151,9 +153,9 @@ html {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
     padding: 20px;
 }
-.section:hover{
+/* .section:hover{
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
-}
+} */
 .section .logo img{
     height: 80px;
     width: 80px;

@@ -7,6 +7,7 @@ import LoginPage from "./Pages/LoginPage";
 import ForgotPassword from "./Pages/ForgotPassword";
 import ForgotPasswordEmail from './Pages/ForgotPasswordEmail'
 import ForgotPasswordOTP from "./Pages/ForgotPasswordOtp";
+import JobPostingPage from "./Pages/Job Posting Page/JobPostingPage"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           />
           <Route path="/forgotpasswordotp" element={<ForgotPasswordOTP />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/jobpostingpage" element={<JobPostingPage />} />
         </Routes>
       </div>
     </Router>
