@@ -1,6 +1,7 @@
 // src/components/Dashboard.js
 import React from 'react';
 import './Dashboard.css';
+import { Link } from 'react-router-dom';
 
 
 function Dashboard() {
@@ -8,7 +9,7 @@ function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Welcome Back</h1>
-        <button className="post-job-btn">+ Post A Job</button>
+        <button ><Link to='/jobpostingpage' className="post-job-btn">+ Post A Job</Link></button>
       </header>
 
       <div className="stats">
