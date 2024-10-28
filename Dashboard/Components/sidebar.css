@@ -1,0 +1,79 @@
+/* Sidebar container */
+.sidebar {
+  width: 200px; /* Full width of the sidebar */
+  background-color: #007bff; /* Blue background */
+  color: #fff; /* White text */
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  height: 95vh; /* Adjusted to 95% of viewport height for 5% extension */
+  position: fixed; /* Fixed position to stay on the left side */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Logo section styling */
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Navigation menu styling */
+.nav-menu {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1; /* Allows menu to take available space */
+}
+
+/* Each navigation item styling */
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0; /* Adjusted padding for smaller items */
+  cursor: pointer;
+  color: #fff;
+}
+
+.nav-item:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  border-radius: 4px;
+}
+
+/* Settings and profile sections anchored at the bottom */
+.settings-section,
+.profile-section {
+  margin-top: auto;
+}
+
+/* Profile section with profile picture and info */
+.profile-section {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Profile picture styling */
+.profile-pic {
+  width: 30px; /* Adjust size as needed */
+  height: 30px;
+  border-radius: 50%; /* Circular shape */
+  margin-right: 10px; /* Space between image and text */
+}
+
+/* Profile information styling */
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.profile-role {
+  font-size: 0.8em;
+  color: #d1d1d1; /* Slightly lighter color for the role text */
+}
