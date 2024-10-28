@@ -1,0 +1,104 @@
+.dashboard {
+  flex: 1;
+  margin-left: 300px; /* Leaves space for sidebar */
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+/* Ensure job cards are in a row */
+.job-row {
+  display: flex;
+  gap: 20px; /* Space between cards */
+  margin-bottom: 20px; /* Space between rows */
+}
+
+.job-card {
+  flex: 1; /* Ensures equal width for both cards */
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+}
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space between left and right items */
+  padding: 20px;
+}
+
+.welcome-text {
+  font-size: 1.5em;
+  color: #333;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.notification-bell {
+  font-size: 1.5em;
+  color: #8e5fff;
+  margin-right: 15px; /* Space between bell icon and button */
+  cursor: pointer;
+}
+
+.post-job-btn {
+  padding: 10px 20px;
+  background-color: #8e5fff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+
+
+.job-info {
+  display: flex;
+  align-items: center;
+}
+
+.job-info img {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px; /* Adjust margin if necessary */
+}
+
+
+.job-type {
+  font-size: 0.9em;
+  color: #8e5fff;
+}
+
+.view-more {
+  color: #8e5fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+
+.stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.stat-item {
+  flex: 1;
+  padding: 20px;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.purple { background-color: #8e5fff; }
+.green { background-color: #5ac18e; }
+.blue { background-color: #5a9bf6; }
