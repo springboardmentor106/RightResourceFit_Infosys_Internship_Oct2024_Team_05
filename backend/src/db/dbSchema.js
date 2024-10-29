@@ -96,11 +96,11 @@ const jobSchema = new Schema(
       type: [String], // Array of strings representing required skills
       required: true,
     },
-    postedBy: {
-      type: Schema.Types.ObjectId,
-      ref: "User", // Reference to the HR who posted the job
-      required: true,
-    },
+    // postedBy: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User", // Reference to the HR who posted the job
+    //   required: true,
+    // },
     createdAt: {
       type: Date,
       default: Date.now,

@@ -153,7 +153,7 @@ async function addJobToDB(jobData) {
       description: jobData.description,
       location: jobData.location,
       skills: jobData.skills,
-      postedBy: jobData.hrId, // Reference to HR user
+      //postedBy: jobData.hrId, // Reference to HR user
     });
     await newJob.save();
     return newJob;

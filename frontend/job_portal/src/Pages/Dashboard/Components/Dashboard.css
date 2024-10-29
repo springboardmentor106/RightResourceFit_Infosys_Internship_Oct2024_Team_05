@@ -19,6 +19,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
+  
 }
 .dashboard-header {
   display: flex;
@@ -39,14 +40,14 @@
 
 .notification-bell {
   font-size: 1.5em;
-  color: #8e5fff;
+  color: purple;
   margin-right: 15px; /* Space between bell icon and button */
   cursor: pointer;
 }
 
 .post-job-btn {
   padding: 10px 20px;
-  background-color: #8e5fff;
+  background-color: purple;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -71,11 +72,11 @@
 
 .job-type {
   font-size: 0.9em;
-  color: #8e5fff;
+  color: purple;
 }
 
 .view-more {
-  color: #8e5fff;
+  color: purple;
   text-decoration: none;
   font-weight: bold;
 }
@@ -98,7 +99,16 @@
   justify-content: center;
   height: 100px;
 }
+.btn{
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  
+}
 
-.purple { background-color: #8e5fff; }
-.green { background-color: #5ac18e; }
-.blue { background-color: #5a9bf6; }
+.purple { background-color: #8e5fff !important; } 
+.green { background-color: #5ac18e !important; }
+.blue { background-color: #5a9bf6 !important; }
+.delete{
+  background-color: rgb(186, 4, 4);
+}

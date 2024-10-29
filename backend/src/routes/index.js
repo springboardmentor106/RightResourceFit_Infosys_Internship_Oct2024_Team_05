@@ -245,6 +245,18 @@ async function addJob(req, res) {
   }
 }
 
+//latest 4 jobs 
+router.get('/jobs/latest', async (req, res) => {
+  try {
+    const latestJobs = await Job.find().sort({ createdAt: -1 }).limit(4);
+    console.log(latestJobs);
+    res.json({ jobs: latestJobs }); // Wrap jobs array in an object for frontend compatibility
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    res.status(500).json({ error: "Error fetching jobs" });
+  }
+});
+
 // Update Job - HR functionality
 async function updateJob(req, res) {
   try {

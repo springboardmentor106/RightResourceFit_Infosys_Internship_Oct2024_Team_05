@@ -2,13 +2,42 @@ import React from 'react'
 import './navbar.css'
 import { Link } from 'react-router-dom'
 import {  useLocation } from 'react-router-dom';
-import LoginPage from '../Pages/LoginPage'
-import SignUpPage from '../Pages/SignUpPage'
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
     const location = useLocation();
     const isHomePage = location.pathname === '/';
+    const navigate= useNavigate()
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        // Check for session token in localStorage to determine login status
+        const sessionToken = localStorage.getItem("sessionToken");
+        setIsLoggedIn(!!sessionToken); // 
+    }, []);
+    const handleLogout = async () => {
+        try {
+            const sessionToken = localStorage.getItem("sessionToken");
+
+            await axios.post(
+                "http://localhost:3000/api/logout", 
+                {}, 
+                { headers: { Authorization: `Bearer ${sessionToken}` } }
+            );
+
+            localStorage.removeItem("sessionToken");
+            setIsLoggedIn(false);
+
+            
+            navigate('/signin');
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
   return (
     
 
@@ -35,13 +64,24 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="button">
+                {isLoggedIn ? (
+            
+                    <button onClick={handleLogout} style={{ color: 'white' }}>
+                        Logout
+                    </button>
+                ) : (
+            
+                    <button>
+                        <Link to="/signin" className="nav-link" style={{ color: 'white' }}>Sign In</Link>
+                    </button>
+                )}
                 
-                <button  >
+                {/* <button  >
                     <Link to="/signin" className="nav-link" style={{ color: 'white' }}>Sign In</Link>
-                </button>
-                <button >
+                </button> */}
+                {/* <button >
                     <Link to="/signup" className="nav-link" style={{ color: 'white' }}>Sign Up</Link>
-                </button>
+                </button> */}
             </div>
 
         </div>
