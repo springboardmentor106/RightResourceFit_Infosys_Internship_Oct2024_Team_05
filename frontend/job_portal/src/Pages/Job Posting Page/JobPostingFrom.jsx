@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaUpload } from 'react-icons/fa';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import "./JobPostingFrom.css"
 function JobForm() {
@@ -19,22 +21,41 @@ function JobForm() {
     setAttachment(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = {
-      jobTitle,
-      jobDescription,
-      skills,
-      jobMode,
-      experience,
-      salaryRange,
-      jobType,
-      location,
-      contactInfo,
-      deadline,
-      attachment,
-    };
-    console.log('Form Data Submitted:', formData);
+  const navigate=useNavigate()
+  const apiUrl = process.env.REACT_APP_BACKEND_API_URL;
+  
+
+  const handleSubmit = async(e) => {
+    
+      e.preventDefault();
+      const jobData = {
+        title:jobTitle,
+        description:jobDescription,
+        skills,
+        // jobMode,
+        // experience,
+        // salaryRange,
+        // jobType,
+        location,
+        // contactInfo,
+        // deadline,
+        // attachment,
+      };
+
+      try {
+        const response=await axios.post(`${apiUrl}/api/jobs/add`,jobData,{
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        alert("Job added successfully")
+        console.log(response.data);
+        navigate('/hrdashboard')
+    } catch (error) {
+      console.log(error)
+    }
+    
+    // console.log('Form Data Submitted:', formData);
     // Add any additional submission logic here (e.g., API call)
   };
 

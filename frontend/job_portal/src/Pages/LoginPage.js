@@ -29,7 +29,7 @@ const LoginPage = () => {
     const { username, password } = formData;
 
     try {
-      const response = await fetch(`${apiUrl}/login`, {
+      const response = await fetch(`${apiUrl}/api/login`, {
         method: "POST",
         headers: {
           username,

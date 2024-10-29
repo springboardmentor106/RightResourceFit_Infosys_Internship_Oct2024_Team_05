@@ -5,6 +5,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 
 const SignUpPage = () => {
   const apiUrl = process.env.REACT_APP_BACKEND_API_URL;
+  
+  console.log("API URL:", apiUrl);
   const [passwordShown, setPasswordShown] = useState(false);
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
   const [formData, setFormData] = useState({
@@ -67,7 +69,7 @@ const SignUpPage = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/register`, {
+      const response = await fetch(`${apiUrl}/api/register`, {
         method: "POST",
         headers: {
           email,

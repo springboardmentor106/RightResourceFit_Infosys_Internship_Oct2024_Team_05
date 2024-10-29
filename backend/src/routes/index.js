@@ -228,13 +228,14 @@ import { Job } from "../db/dbSchema.js"; // Import Job schema
 async function addJob(req, res) {
   try {
     const { title, description, location, skills, hrId } = req.body;
+    console.log("Adding job with data:", req.body);//added this line
 
     const newJob = new Job({
       title,
       description,
       location,
       skills,
-      postedBy: hrId, // HR User ID
+      //postedBy: hrId, // HR User ID
     });
 
     await newJob.save();
