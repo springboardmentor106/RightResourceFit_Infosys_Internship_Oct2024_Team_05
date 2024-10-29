@@ -1,0 +1,96 @@
+/* Sidebar container */
+.sidebar {
+  width: 200px;
+  background: linear-gradient(135deg, #8e5fff, #6a3fcf); /* Gradient to match your image colors */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  height: 95vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+/* Logo section with 2% gap */
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.logo span {
+  margin-left: 8%; /* 2% gap for Job Portal logo text */
+}
+
+/* Navigation menu styling */
+.nav-menu {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Adjust the margin for text */
+.nav-item span {
+  margin-left: 8%; /* 2% gap between each icon and text */
+}
+
+.nav-item:hover {
+  background-color: #0056b3;
+  border-radius: 4px;
+}
+
+/* Settings section with 2% gap */
+.settings-section h4 {
+  color: #d1d1d1;
+  margin-bottom: 10px;
+}
+
+.settings-section .nav-item span {
+  margin-left: 2%;
+}
+
+/* Profile section with profile picture and 2% gap */
+.profile-section {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.profile-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #fff;
+}
+
+.profile-role {
+  font-size: 0.8em;
+  color: #d1d1d1;
+}
+
+/* Minimized sidebar text visibility */
+.sidebar.minimized .hidden {
+  display: none;
+}
