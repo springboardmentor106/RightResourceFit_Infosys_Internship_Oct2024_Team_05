@@ -10,6 +10,7 @@ import { useState,useEffect } from 'react';
 function Dashboard() {
   const navigate = useNavigate();
   const [latestJobs, setLatestJobs] = useState([]);
+  const [editJob, setEditJob] = useState(null);
 
   const handlePostJobClick = () => {
     navigate('/jobpostingpage');}
@@ -18,7 +19,7 @@ function Dashboard() {
       const fetchLatestJobs = async () => {
         try {
           const response = await axios.get('http://localhost:3000/api/jobs/latest');
-          setLatestJobs(response.data.jobs); // Assuming backend sends { jobs: [...] }
+          setLatestJobs(response.data.jobs);
         } catch (error) {
           console.error('Error fetching latest jobs:', error);
         }
@@ -41,6 +42,11 @@ function Dashboard() {
       }
       
     };
+
+    const handleEditJob=(job)=>{
+        setEditJob(job)
+        navigate('/jobpostingpage',{ state: { job } })
+    }
     
   return (
     <div className="dashboard">
@@ -131,7 +137,7 @@ function Dashboard() {
                   <p>{job.description}</p>
                   {/* <small>{job.appliedCount} applied of {job.capacity} capacity</small> */}
                  <div className="btn">
-                    <button className=' post-job-btn edit'>Edit</button>
+                    <button className=' post-job-btn edit' onClick={()=>handleEditJob(job)}>Edit</button>
                     <button className='post-job-btn delete' onClick={() => handleDeleteJob(job._id)}>Delete</button>
                       
                  </div>

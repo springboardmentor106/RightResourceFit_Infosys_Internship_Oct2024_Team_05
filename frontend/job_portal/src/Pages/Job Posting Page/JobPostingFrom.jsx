@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUpload } from 'react-icons/fa';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams,useLocation } from 'react-router-dom';
 
 import "./JobPostingFrom.css"
 function JobForm() {
@@ -16,6 +16,7 @@ function JobForm() {
   const [contactInfo, setContactInfo] = useState('');
   const [deadline, setDeadline] = useState('');
   const [attachment, setAttachment] = useState(null);
+  const [jobId, setJobId] = useState(null)
 
   const handleFileUpload = (e) => {
     setAttachment(e.target.files[0]);
@@ -23,6 +24,22 @@ function JobForm() {
 
   const navigate=useNavigate()
   const apiUrl = process.env.REACT_APP_BACKEND_API_URL;
+ 
+  const locationState = useLocation().state;
+
+  useEffect(()=>{
+    if(locationState?.job){
+      const {_id, title, description, skills, location } = locationState.job;
+      setJobId(_id); 
+      setJobTitle(title);
+      setJobDescription(description);
+      setSkills(skills);
+      setLocation(location);
+    }
+    
+  },[locationState])
+
+  
   
 
   const handleSubmit = async(e) => {
@@ -43,25 +60,40 @@ function JobForm() {
       };
 
       try {
-        const response=await axios.post(`${apiUrl}/api/jobs/add`,jobData,{
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        alert("Job added successfully")
-        console.log(response.data);
-        navigate('/hrdashboard')
-    } catch (error) {
-      console.log(error)
-    }
-    
+        let response;
+
+        if (jobId){
+          response = await axios.put(`${apiUrl}/api/jobs/update/${jobId}`, jobData, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          alert('Job updated successfully')
+        }
+        else{
+           response=await axios.post(`${apiUrl}/api/jobs/add`,jobData,{
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          alert("Job added successfully")
+        }
+          console.log(response.data);
+          navigate('/hrdashboard')
+      } 
+      catch (error) {
+        console.log(error)
+      }
+      
+      
+        
     // console.log('Form Data Submitted:', formData);
     // Add any additional submission logic here (e.g., API call)
   };
 
   return (
     <div className="job-form-container">
-      <h1>Post a Job</h1>
+      <h1>{jobId? 'Edit Job':"Post a Job"}</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Job Title:</label>
@@ -202,7 +234,7 @@ function JobForm() {
           {attachment && <span>{attachment.name}</span>}
         </div>
 
-        <button type="submit" className="submit-button">Submit</button>
+        <button type="submit" className="submit-button">{jobId ? "Update" : "Submit"}</button>
       </form>
     </div>
   );

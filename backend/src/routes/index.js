@@ -257,10 +257,26 @@ router.get('/jobs/latest', async (req, res) => {
   }
 });
 
+//get job
+router.get("/jobs/:jobId",async(req,res)=>{
+  try {
+    const {jobId}=req.params;
+    const job=await Job.findById(jobId);
+    
+    if(!job) return res.status(404).json({message:'Job Not Found'});
+
+    res.status(200).json({job});
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+})
+
 // Update Job - HR functionality
 async function updateJob(req, res) {
   try {
-    const { jobId, title, description, location, skills } = req.body;
+    const {jobId}=req.params
+    const {  title, description, location, skills } = req.body;
     
     const updatedJob = await Job.findByIdAndUpdate(
       jobId,
@@ -314,7 +330,7 @@ router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 // Add routes for job management
 router.post("/jobs/add", addJob); // Add job
-router.put("/jobs/update", updateJob); // Update job
+router.put("/jobs/update/:jobId", updateJob); // Update job
 router.delete("/jobs/delete", deleteJob); // Delete job
 router.get("/jobs/search", searchJobs); // Search jobs by location and skills
 
