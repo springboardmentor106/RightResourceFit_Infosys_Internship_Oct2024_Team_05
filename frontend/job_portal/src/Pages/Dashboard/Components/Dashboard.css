@@ -10,6 +10,12 @@
   gap: 20px; /* Space between cards */
   margin-bottom: 20px; /* Space between rows */
 }
+.job-updates h2{
+  margin-left: 15px;
+}
+.recent-jobs h2{
+  margin-left: 15px;
+}
 
 .job-card {
   flex: 1; /* Ensures equal width for both cards */
@@ -59,7 +65,8 @@
 
 .job-info {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .job-info img {
@@ -70,9 +77,14 @@
 }
 
 
-.job-type {
+.job-type  {
   font-size: 0.9em;
   color: purple;
+  
+}
+.job-card h1{
+  text-align: left !important; 
+  margin: 0;
 }
 
 .view-more {

@@ -19,10 +19,16 @@
   align-items: center;
   margin-bottom: 20px;
   cursor: pointer;
+  
 }
 
 .logo span {
-  margin-left: 8%; /* 2% gap for Job Portal logo text */
+  /* margin-left: 8%; */
+  font-weight: bold;
+  font-size: 28px; 
+  position: relative;
+  bottom: 8px; 
+  right: 3px;
 }
 
 /* Navigation menu styling */

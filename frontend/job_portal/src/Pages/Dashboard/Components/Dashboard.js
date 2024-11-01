@@ -77,55 +77,7 @@ function Dashboard() {
       <div className="recent-jobs">
         <h2>Recently Posted Jobs</h2>
 
-        {/* Row for first two job cards */}
-        {/* <div className="job-row">
-          <div className="job-card">
-            <div className="job-info">
-              <img src="https://via.placeholder.com/40" alt="company logo" />
-              <div>
-                <span className="job-type">Full-Time</span>
-                <p>Web Developer</p>
-                <small>5 applied of 10 capacity</small>
-              </div>
-            </div>
-          </div>
-
-          <div className="job-card">
-            <div className="job-info">
-              <img src="https://via.placeholder.com/40" alt="company logo" />
-              <div>
-                <span className="job-type">Part-Time</span>
-                <p>Data Analyst</p>
-                <small>2 applied of 5 capacity</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-       
-        <div className="job-row">
-          <div className="job-card">
-            <div className="job-info">
-              <img src="https://via.placeholder.com/40" alt="company logo" />
-              <div>
-                <span className="job-type">Contract</span>
-                <p>Project Manager</p>
-                <small>8 applied of 12 capacity</small>
-              </div>
-            </div>
-          </div>
-
-          <div className="job-card">
-            <div className="job-info">
-              <img src="https://via.placeholder.com/40" alt="company logo" />
-              <div>
-                <span className="job-type">Internship</span>
-                <p>UI/UX Designer</p>
-                <small>3 applied of 6 capacity</small>
-              </div>
-            </div>
-          </div>
-        </div> */}
+        
 
 <div className="job-row">
           {latestJobs.map((job) => (

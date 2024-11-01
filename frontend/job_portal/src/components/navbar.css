@@ -43,13 +43,13 @@ a{
     height: 30px;
     width: 30px;
     position: relative;
-    top: 10px;
+    bottom: 10px;
 }
 .logo p{
     font-weight: bold;
     font-size: 28px;
     position: relative;
-    bottom: 22px;
+    bottom: 10px;
 }
 .list ul{
     display: flex;
