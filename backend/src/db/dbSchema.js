@@ -113,9 +113,62 @@ const jobSchema = new Schema(
   { versionKey: false }
 );
 
+// Define HR user schema
+const hrUserSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    default: "HR", // Specifies this user as HR
+    enum: ["HR", "Admin"], // Only HR and Admin allowed
+  },
+  companyName: {
+    type: String,
+    required: true,
+  },
+  contactNumber: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  sessions: [{
+    sessionToken: String,
+    expiresAt: Date
+  }],
+}, { versionKey: false });
+
+// Pre-save middleware for updating `updatedAt` timestamp on modification
+hrUserSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
+  next();
+});
+
+
+const HRUser = model("HRUser", hrUserSchema);
 const Otp = model("Otp", otpSchema);
 const Job = model("Job", jobSchema);
 const User = model(USERS_COLLECTION, userSchema);
 const Session = model(SESSIONS_COLLECTION, sessionSchema);
 
-export { User, Session, Otp, Job };
+export { User, Session, Otp, Job,HRUser };
