@@ -248,7 +248,7 @@ async function addJob(req, res) {
 //latest 4 jobs 
 router.get('/jobs/latest', async (req, res) => {
   try {
-    const latestJobs = await Job.find().sort({ createdAt: -1 }).limit(4);
+    const latestJobs = await Job.find().sort({ createdAt: -1 }).limit(3);
     console.log(latestJobs);
     res.json({ jobs: latestJobs }); // Wrap jobs array in an object for frontend compatibility
   } catch (error) {

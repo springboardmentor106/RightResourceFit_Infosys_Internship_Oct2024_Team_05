@@ -206,7 +206,7 @@ function JobForm() {
           />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Contact Info:</label>
           <input
             type="text"
@@ -232,7 +232,7 @@ function JobForm() {
             <input type="file" onChange={handleFileUpload} style={{ display: 'none' }} />
           </label>
           {attachment && <span>{attachment.name}</span>}
-        </div>
+        </div> */}
 
         <button type="submit" className="submit-button">{jobId ? "Update" : "Submit"}</button>
       </form>
