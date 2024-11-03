@@ -197,17 +197,39 @@ async function deleteJobFromDB(jobId) {
 }
 
 // Search Jobs by location and skills
-async function searchJobsInDB(location, skills) {
+// async function searchJobsInDB(location, skills) {
+//   try {
+//     const query = {};
+//     if (location) query.location = location;
+//     if (skills && skills.length > 0) {
+//       query.skills = { $in: skills.split(",") }; // Match any of the skills
+//     }
+//     const jobs = await Job.find(query);
+//     return jobs;
+//   } catch (err) {
+//     console.log(err.message);
+//     throw new Error("Failed to search jobs");
+//   }
+// }
+
+async function searchJobsInDB(search){
   try {
-    const query = {};
-    if (location) query.location = location;
-    if (skills && skills.length > 0) {
-      query.skills = { $in: skills.split(",") }; // Match any of the skills
+    const query={};
+    if (search) {
+      
+      query.$or = [
+        { location: new RegExp(search, "i") }, 
+        { skills: { $regex: search, $options: "i" } }, 
+        { title: new RegExp(search, "i") } 
+      ];
     }
-    const jobs = await Job.find(query);
-    return jobs;
-  } catch (err) {
-    console.log(err.message);
+    console.log("Constructed query:", query); 
+    const jobs=await Job.find(query);
+    return jobs
+
+
+  } catch (error) {
+    console.error("Database error:", error.message);
     throw new Error("Failed to search jobs");
   }
 }

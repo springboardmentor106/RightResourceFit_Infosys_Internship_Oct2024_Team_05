@@ -13,6 +13,7 @@ import {
   verifySession,
   deleteSession,
 } from "../db/index.js";
+import { searchJobsInDB } from "../db/index.js";
 const router = express.Router();
 
 import { sendPasswordResetSuccessEmail, sendOtpEmail } from "../email/index.js";
@@ -326,21 +327,14 @@ async function deleteJob(req, res) {
 // }
 
 async function searchJobs(req, res){
+  console.log("Received search query:", req.body.search);
   try {
-    const {search}=req.query
-    const query={}
-    if(search){
-      query.$or=[
-        {location:new RegExp(search,"i")},
-        {skills:{$regex:search, $options:"i"}},
-        {title:new RegExp(search,"i")}
-      ];
-    }
+    const {search}=req.body
+    const jobs = await searchJobsInDB(search); 
 
-    const jobs=await Job.find(query);
-    res.status(200).json({jobs});
-    
+    res.status(200).json({ jobs });
   } catch (error) {
+    console.error("Error in searchJobs:", error);
     res.status(500).json({message:error.message})
   }
   
@@ -353,7 +347,7 @@ router.post("/reset-password", resetPassword);
 router.post("/jobs/add", addJob); // Add job
 router.put("/jobs/update/:jobId", updateJob); // Update job
 router.delete("/jobs/delete", deleteJob); // Delete job
-router.get("/jobs/search", searchJobs); // Search jobs by location and skills
+router.post("/jobs/search", searchJobs); // Search jobs by location and skills
 
 
 export default router;
