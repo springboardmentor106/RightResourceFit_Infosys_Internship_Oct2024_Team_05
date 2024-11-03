@@ -169,17 +169,17 @@ function JobPortal() {
                 className="job-card"
                 onClick={() => handleJobClick(job)}
               >
-                <h2>{job.title}</h2>
-                <h3>Google</h3>
-                <p>{job.location} </p>
+                <h1>{job.title}</h1>
+                {/* <h3>Google</h3> */}
+                <p><strong>Location:</strong>{job.location} </p>
                 <div className="skills">
                   {job.skills.map((skill, index) => (
                     <span key={index} className="skill-badge">
-                      {skill}
+                      <strong>Skills: </strong>{skill}
                     </span>
                   ))}
                 </div>
-                <p className="salary">Rs. 75000</p>
+                <p className="salary"><strong>Salary:</strong>Rs. 75000</p>
                 {/* <p className="rating">Rating: {job.rating}</p> */}
                 <p className="verified">Verified</p>
               </div>
