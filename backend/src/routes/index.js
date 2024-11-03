@@ -305,24 +305,45 @@ async function deleteJob(req, res) {
 }
 
 // Search Jobs by Location and Skills
-async function searchJobs(req, res) {
+// async function searchJobs(req, res) {
+//   try {
+//     const { location, skills } = req.query;
+//     const query = {};
+
+//     if (location) {
+//       query.location = location;
+//     }
+
+//     if (skills && skills.length > 0) {
+//       query.skills = { $in: skills.split(",") }; // Assume comma-separated skills in query
+//     }
+
+//     const jobs = await Job.find(query);
+//     res.status(200).json({ jobs });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// }
+
+async function searchJobs(req, res){
   try {
-    const { location, skills } = req.query;
-    const query = {};
-
-    if (location) {
-      query.location = location;
+    const {search}=req.query
+    const query={}
+    if(search){
+      query.$or=[
+        {location:new RegExp(search,"i")},
+        {skills:{$regex:search, $options:"i"}},
+        {title:new RegExp(search,"i")}
+      ];
     }
 
-    if (skills && skills.length > 0) {
-      query.skills = { $in: skills.split(",") }; // Assume comma-separated skills in query
-    }
-
-    const jobs = await Job.find(query);
-    res.status(200).json({ jobs });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const jobs=await Job.find(query);
+    res.status(200).json({jobs});
+    
+  } catch (error) {
+    res.status(500).json({message:error.message})
   }
+  
 }
 
 

@@ -2,11 +2,27 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import './home.css'
-import LoginPage from './LoginPage'
-import SignUpPage from './SignUpPage'
+import { useState,useEffect } from 'react'
+import axios from 'axios'
 
 
 const Home = () => {
+    const [latestJobs, setLatestjobs]=useState([]);
+
+    useEffect(()=>{
+        const fetchJobs=async()=>{
+            try{
+                const response=await axios.get('http://localhost:3000/api/jobs/latest');
+                setLatestjobs(response.data.jobs);
+                console.log("Fetched jobs:", response.data.jobs);
+            }
+            catch(error){
+                console.error("Error fetching Jobs",error)
+            }
+        };
+        fetchJobs();
+
+    },[])
   return (
     <div className='Home'>
         <Navbar/>
@@ -153,13 +169,15 @@ const Home = () => {
         <div className="recent_jobs">
             <h1>Recent Jobs Available</h1>
             <div className="jobs">
-                <div className="section">
+                {latestJobs.map((job)=>(
+                    <div className="section">
+                    
                     <div className="logo">
                         <img src="/Images/google logo.webp" alt="" />
                     </div>
                     <div className="text">
-                        <h2>Software Developer</h2>
-                        <p>Google looking for a skilled Software Developer , working on innovative solutions that impact millions globally. Responsibilities include designing, coding, testing, and deploying scalable applications while collaborating with cross-functional teams.</p>
+                        <h2>{job.title}</h2>
+                        <p>{job.description}</p>
                         <div className="button">
                         <button>
                             Apply Now
@@ -169,7 +187,9 @@ const Home = () => {
                     </div>
                     
                 </div>
-                <div className="section">
+                ))}
+                
+                {/* <div className="section">
                     <div className="logo">
                         <img src="/Images/google logo.webp" alt="" />
                     </div>
@@ -198,7 +218,7 @@ const Home = () => {
                     </div>
                     </div>
                     
-                </div>
+                </div> */}
             </div>
             
         </div>
