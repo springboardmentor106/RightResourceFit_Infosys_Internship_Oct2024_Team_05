@@ -1,0 +1,167 @@
+/* Location Icon Styling */
+.location-icon {
+  color: #5a4fcf;
+  margin-right: 5px;
+  font-size: 0.9em;
+}
+
+/* Container Layout */
+.container {
+  display: flex;
+  font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #5a4fcf;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 1.5em;
+  margin-bottom: 1em;
+}
+
+.sidebar nav ul, .settings ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar nav ul li, .settings ul li {
+  margin: 15px 0;
+}
+
+.sidebar nav ul li a, .settings ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar nav ul li a i, .settings ul li a i {
+  margin-right: 10px;
+}
+
+.sidebar nav ul li a:hover, .settings ul li a:hover {
+  color: #dcdcdc;
+}
+
+.notification {
+  background-color: red;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 0.8em;
+  margin-left: 5px;
+}
+
+.settings h3 {
+  margin-top: 30px;
+  font-size: 1em;
+  color: #fff;
+  border-top: 1px solid #dcdcdc;
+  padding-top: 15px;
+}
+
+.profile {
+  text-align: left;
+  padding-top: 20px;
+  border-top: 1px solid #dcdcdc;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile-name {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.profile-role {
+  font-size: 0.9em;
+  color: #dcdcdc;
+}
+
+/* Main Content */
+.content {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.candidate-summary {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  color: #333;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.candidate-summary h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-details {
+  background-color: #5a4fcf;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.candidate-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.candidate-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.candidate-details p {
+  margin: 3px 0;
+}
+
+.box {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+.links a {
+  color: #5a4fcf;
+  text-decoration: none;
+}
+
+.skills span {
+  display: inline-block;
+  background-color: #5a4fcf;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.work-experience p {
+  margin: 5px 0;
+}
