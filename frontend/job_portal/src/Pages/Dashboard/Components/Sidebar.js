@@ -11,7 +11,7 @@ import {
   faCog,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Sidebar.css";
+import "./sidebar.css";
 
 const Sidebar = ({ setActiveContent }) => {
   const [isMinimized, setIsMinimized] = useState(false); // State for minimized sidebar
