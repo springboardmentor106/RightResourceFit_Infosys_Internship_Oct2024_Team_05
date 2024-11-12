@@ -82,7 +82,7 @@ html {
     margin-bottom: 40px;
 }
 .category{
-    height: 180px;
+    /* height: 180px; */
     width: 250px;
     background-color: #F0EDFF;
     border-radius: 31px;
@@ -97,6 +97,7 @@ html {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 .category .content img{
     height: 40px;
