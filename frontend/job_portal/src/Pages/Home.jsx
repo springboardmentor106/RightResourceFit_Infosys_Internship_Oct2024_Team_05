@@ -186,7 +186,7 @@ const Home = () => {
                         <h2>{job.title}</h2>
                         <p>{job.description}</p>
                         <div className="button">
-                        <button>
+                        <button onClick={()=>navigate('/jobapplicationform')}>
                             Apply Now
                         </button>
                     </div>
