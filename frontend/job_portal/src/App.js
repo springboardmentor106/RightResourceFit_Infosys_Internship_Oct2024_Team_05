@@ -10,6 +10,8 @@ import ForgotPasswordOTP from "./Pages/ForgotPasswordOtp";
 import JobPostingPage from "./Pages/Job Posting Page/JobPostingPage"
 import HR_Dashboard from "./Pages/Dashboard/Src/HR_Dashboard";
 import JobPortal from './Pages/Job Search/JobPortal'
+import AppliedJobs from "./Pages/Applied_job/Applied_job";
+
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
           <Route path="/jobpostingpage" element={<JobPostingPage />} />
           <Route path="/hrdashboard" element={<HR_Dashboard />} />
           <Route path="/jobsearch" element={<JobPortal />} />
+          <Route path="/Applied_job" element={<AppliedJobs />} />
         </Routes>
       </div>
     </Router>
