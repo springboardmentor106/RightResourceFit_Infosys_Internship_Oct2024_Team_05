@@ -16,70 +16,15 @@ body {
     height: 100vh;
 }
 
-/* Sidebar styling */
-.sidebar {
-    width: 20%;
-    background-color: #5b52d1;
-    color: white;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    position: fixed;
-}
-
-.sidebar h2 {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-grow: 1;
-}
-
-.sidebar ul li {
-    margin: 15px 0;
-    font-size: 16px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.sidebar ul li:hover {
-    color: #ddd;
-}
-
-/* Sidebar profile info styling */
-.profile-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-}
-
-.profile-info img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-}
-
-.profile-info p {
-    font-size: 14px;
-    margin: 0;
-}
-
-/* Main content styling */
+/* Ensure content adjusts dynamically */
 .content {
-    width: 80%;
-    margin-left: 20%;
+    width: calc(100% - 200px); /* Sidebar width is 200px */
+    margin-left: 200px; /* Match the width of the sidebar */
     padding: 30px;
     background-color: #f4f4f9;
 }
 
+/* Header section styling */
 .header {
     display: flex;
     justify-content: space-between;
@@ -158,4 +103,67 @@ body {
     margin: 5px;
     border-radius: 5px;
     font-size: 15px;
+}
+
+/* Work Experience section */
+.experience p {
+    margin-bottom: 10px;
+    color: #555;
+}
+/* Header buttons styling */
+.header-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.accept-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.accept-btn:hover {
+    background-color: #218838;
+}
+
+.reject-btn {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.reject-btn:hover {
+    background-color: #c82333;
+}
+
+/* Decision feedback styling */
+.decision {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.decision.accepted {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.decision.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
 }
