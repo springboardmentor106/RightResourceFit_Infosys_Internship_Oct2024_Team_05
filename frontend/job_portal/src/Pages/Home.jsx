@@ -230,6 +230,7 @@ const Home = () => {
                             <button onClick={()=>handleApplyNow(job._id)}>
                                 Apply Now
                             </button>
+                            
                             </div>
                         
                         </div>

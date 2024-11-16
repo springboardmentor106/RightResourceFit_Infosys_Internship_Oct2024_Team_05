@@ -10,7 +10,7 @@ import ForgotPasswordOTP from "./Pages/ForgotPasswordOtp";
 import JobPostingPage from "./Pages/Job Posting Page/JobPostingPage"
 import HR_Dashboard from "./Pages/Dashboard/Src/HR_Dashboard";
 import JobPortal from './Pages/Job Search/JobPortal'
-import JobApplication from "./Pages/Job Application form/components/JobApplication";
+import JobApplication from "./Pages/Job Application form/JobApplication";
 import AppliedJobs from "./Pages/Applied_job/Applied_job";
 
 

@@ -345,6 +345,60 @@ router.post("/jobs/apply",upload.single("resume"),  async (req, res) => {
   }
 });
 
+//get all job applications
+import { JobApplication } from "../db/dbSchema.js";
+async function getApplicationsByApplicant(req, res) {
+  try {
+    const { applicantId } = req.params;
+
+    if (!applicantId) {
+      return res.status(400).json({ message: "Applicant ID is required" });
+    }
+
+    
+    const applications = await JobApplication.find({ applicantId })
+      .populate("jobId", "title description location") 
+      .populate("applicantId", "firstName lastName email") 
+      .sort({ appliedAt: -1 }); 
+
+    
+    if (!applications || applications.length === 0) {
+      return res.status(404).json({ message: "No applications found for this applicant" });
+    }
+
+    res.status(200).json({ applications });
+  } catch (err) {
+    console.error("Error fetching applications:", err);
+    res.status(500).json({ message: err.message });
+  }
+}
+
+async function deleteApplication(req, res) {
+  try {
+    const { jobId, applicantId } = req.params;
+
+    if (!jobId || !applicantId) {
+      return res.status(400).json({ message: "Job ID and Applicant ID are required" });
+    }
+
+    
+    const deletedApplication = await JobApplication.findOneAndDelete({
+      jobId: jobId,
+      applicantId: applicantId,
+    });
+
+    if (!deletedApplication) {
+      return res.status(404).json({ message: "Job application not found" });
+    }
+
+    res.status(200).json({ message: "Job application deleted successfully" });
+  } catch (err) {
+    console.error("Error deleting application:", err);
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
 
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
@@ -353,6 +407,8 @@ router.post("/jobs/add", addJob); // Add job
 router.put("/jobs/update/:jobId", updateJob); // Update job
 router.delete("/jobs/delete", deleteJob); // Delete job
 router.post("/jobs/search", searchJobs); // Search jobs by location and skills
+router.get("/applications/:applicantId", getApplicationsByApplicant);
+router.delete('/applications/:applicantId/:jobId',deleteApplication);
 
 
 

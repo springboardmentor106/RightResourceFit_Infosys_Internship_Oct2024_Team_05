@@ -136,7 +136,9 @@ function JobApplication() {
           <label>I agree with Terms & Conditions</label>
         </div>
         <button type="submit" className="apply-button">Apply Now</button>
+        
       </form>
+      
     </div>
   );
 }
