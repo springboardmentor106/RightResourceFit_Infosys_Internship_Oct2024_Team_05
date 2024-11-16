@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sidebar with Table Example</title>
+
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Style -->
+    <style>
+    :root {
+  --sidebar-bg-color: #6d51f2; /* Primary color for the sidebar */
+  --sidebar-hover-color: #5a3ddc; /* Hover/active state color */
+  --sidebar-title-color: #6409f7; /* Sidebar title background color */
+}
+
+/* General Body and Font Settings */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: var(--sidebar-bg-color);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+}
+
+/* Sidebar Title */
+.sidebar-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: merun;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Job Portal Header */
+.job-portal-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  background-color: var(--sidebar-bg-color);
+  padding: 20px;
+  text-align: center;
+  margin: 0;
+}
+
+/* Sidebar Menu Items */
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: var(--sidebar-bg-color);
+}
+
+.nav-item i {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.nav-item:hover, 
+.nav-item.active {
+  background-color: var(--sidebar-hover-color);
+}
+
+.notification {
+  background-color: #ff0000;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+/* Settings Section */
+.settings-section {
+  padding: 20px;
+}
+
+.settings-section h4 {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 10px;
+}
+
+/* Profile Section */
+.profile-section {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  background-color: var(--sidebar-bg-color);
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.profile-role {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Main Content Styling */
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  width: calc(100% - 250px);
+  background-color: #f9f9f9;
+}
+
+h2 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: center;
+  border: 2px solid #ddd;
+}
+
+th {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+/* Link Styling */
+td a {
+  color: var(--sidebar-bg-color);
+  text-decoration: none;
+}
+
+/* Status Styling */
+.status {
+  font-weight: bold;
+}
+
+.status.accepted {
+  color: green;
+}
+
+.status.rejected {
+  color: red;
+}
+
+.status.review {
+  color: orange;
+}
+
+/* Profile Icon */
+.profile-icon {
+  margin-right: 8px;
+  color: var(--sidebar-bg-color);
+}
+
+/* Button Styling for "View Application" */
+.button-link {
+  background-color: var(--sidebar-bg-color);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.button-link:hover {
+  background-color: var(--sidebar-hover-color);
+}
+     
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Job Portal Title -->
+      <div class="sidebar-title">Job Portal</div>
+
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <i class="fas fa-home"></i>
+          <span>Dashboard</span>
+        </li>
+        <li class="nav-item">
+          <i class="fas fa-envelope"></i>
+          <span
+            >Messages
+            <span
+              style="
+                background-color: red;
+                color: white;
+                padding: 2px 6px;
+                border-radius: 50%;
+              "
+              >1</span
+            >
+          </span>
+        </li>
+        <li class="nav-item">
+          <i class="fas fa-building"></i>
+          <span>Company Profile</span>
+        </li>
+        <li class="nav-item">
+          <i class="fas fa-users"></i>
+          <span>All Applicants</span>
+        </li>
+        <li class="nav-item">
+          <i class="fas fa-briefcase"></i>
+          <span>Job Listing</span>
+        </li>
+        <li class="nav-item">
+          <i class="fas fa-calendar-alt"></i>
+          <span>My Schedule</span>
+        </li>
+        <!-- Added Job Portal Link -->
+        <li class="nav-item">
+          <i class="fas fa-briefcase"></i>
+          <span>Job Portal</span>
+        </li>
+      </ul>
+
+      <div class="settings-section">
+        <h4>SETTINGS</h4>
+        <ul>
+          <li class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </li>
+          <li class="nav-item">
+            <i class="fas fa-question-circle"></i>
+            <span>Help Center</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="profile-section">
+        <img
+          class="profile-pic"
+          src="https://randomuser.me/api/portraits/women/44.jpg"
+          alt="Profile Image"
+        />
+        <div class="profile-info">
+          <div class="profile-name">Maria Kelly</div>
+          <div class="profile-role">Head of External Affairs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content with Table -->
+    <div class="main-content">
+      <h2>All Applicants</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Sr.No</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Resume</th>
+            <th>Application</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Jane Doe</td>
+            <td class="status accepted">Accepted</td>
+            <td><a href="#">View Resume</a></td>
+            <td><a href="#" class="button-link">View Application</a></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Jane Doe</td>
+            <td class="status review">Review</td>
+            <td><a href="#">View Resume</a></td>
+            <td><a href="#" class="button-link">View Application</a></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Jane Doe</td>
+            <td class="status rejected">Rejected</td>
+            <td><a href="#">View Resume</a></td>
+            <td><a href="#" class="button-link">View Application</a></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Jane Doe</td>
+            <td class="status accepted">Accepted</td>
+            <td><a href="#">View Resume</a></td>
+            <td><a href="#" class="button-link">View Application</a></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><i class="fas fa-user-circle profile-icon"></i>Jane Doe</td>
+            <td class="status accepted">Accepted</td>
+            <td><a href="#">View Resume</a></td>
+            <td><a href="#" class="button-link">View Application</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
