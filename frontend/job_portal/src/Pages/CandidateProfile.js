@@ -1,36 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react'; 
+import Sidebar from './Sidebar'; 
 import './CandidateProfile.css';
 
 function CandidateProfile() {
+  const [decision, setDecision] = useState(null); // Track HR's decision
+
+  const handleAccept = () => {
+    setDecision("Accepted");
+    alert("The applicant has been accepted.");
+    // Add logic to save decision to database if needed
+  };
+
+  const handleReject = () => {
+    setDecision("Rejected");
+    alert("The applicant has been rejected.");
+    // Add logic to save decision to database if needed
+  };
+
   return (
     <div className="profile-container">
-      <div className="sidebar">
-        <h2>Job Portal</h2>
-        <nav>
-          <ul>
-            <li>Dashboard</li>
-            <li>Messages</li>
-            <li>Company Profile</li>
-            <li>All Applicants</li>
-            <li>Job Listing</li>
-            <li>My Schedule</li>
-          </ul>
-        </nav>
-        <div className="profile-info">
-          <img src="profile-pic-url.jpg" alt="User" />
-          <p>Maria Kelly</p>
-        </div>
-      </div>
-
+      <Sidebar />
       <div className="content">
         <div className="header">
           <h2>Candidate Summary</h2>
           <div className="header-buttons">
-            <button>View Details</button>
-            <button>Edit</button>
+            <button onClick={handleAccept} className="accept-btn">Accept</button>
+            <button onClick={handleReject} className="reject-btn">Reject</button>
           </div>
         </div>
-
         <div className="profile">
           <img src="profile-pic-url.jpg" alt="Candidate" />
           <div className="profile-details">
@@ -39,7 +36,6 @@ function CandidateProfile() {
             <p>Australia</p>
           </div>
         </div>
-
         <div className="about">
           <h4>About</h4>
           <p>
@@ -48,7 +44,6 @@ function CandidateProfile() {
           </p>
           <a href="https://github.com">Github.com</a>
         </div>
-
         <div className="skills">
           <h4>Professional</h4>
           <span>Java</span>
@@ -59,15 +54,16 @@ function CandidateProfile() {
           <span>Git</span>
           <span>MongoDB</span>
         </div>
-
         <div className="experience">
           <h4>Work Experience</h4>
           <p>Senior Backend Developer (Apr 2023 - Present) - USA</p>
           <p>Backend Developer (2021 - 2023) - Portugal, USA</p>
         </div>
+        {decision && <div className={`decision ${decision.toLowerCase()}`}>Applicant {decision}</div>}
       </div>
     </div>
   );
 }
 
 export default CandidateProfile;
+
