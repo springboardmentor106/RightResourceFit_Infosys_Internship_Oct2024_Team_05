@@ -8,6 +8,42 @@ import {
   MONGODB_USER,
   MONGODB_PASSWORD,
 } from "../config.js";
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDir = path.join(__dirname, '../uploads');
+//console.log('Upload directory:', uploadDir);
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir); 
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, `${uniqueSuffix}-${file.originalname}`);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true); 
+  } else {
+    cb(new Error('Invalid file type. Only PDF, DOC, and DOCX files are allowed'), false);
+  }
+};
+
+
+const upload = multer({ storage, fileFilter });
 
 async function connectToDB() {
   await connect(MONGODB_URL, {
@@ -196,21 +232,6 @@ async function deleteJobFromDB(jobId) {
   }
 }
 
-// Search Jobs by location and skills
-// async function searchJobsInDB(location, skills) {
-//   try {
-//     const query = {};
-//     if (location) query.location = location;
-//     if (skills && skills.length > 0) {
-//       query.skills = { $in: skills.split(",") }; // Match any of the skills
-//     }
-//     const jobs = await Job.find(query);
-//     return jobs;
-//   } catch (err) {
-//     console.log(err.message);
-//     throw new Error("Failed to search jobs");
-//   }
-// }
 
 async function searchJobsInDB(search){
   try {
@@ -234,6 +255,24 @@ async function searchJobsInDB(search){
   }
 }
 
+import { JobApplication } from "./dbSchema.js";
+async function applyForJobApplication(applicationData,file,applicantId,jobId) {
+  try {
+    const newApplication = new JobApplication({
+      ...applicationData,
+      applicantId, 
+      jobId,
+    resume:file.path
+  });
+    await newApplication.save();
+    console.log("Job application submitted successfully");
+    return newApplication;
+  } catch (err) {
+    console.log(err.message);
+    throw new Error("Failed to apply for the job");
+  }
+}
+
 
 export {
   connectToDB,
@@ -250,5 +289,7 @@ export {
   addJobToDB,
   updateJobInDB,
   deleteJobFromDB,
-  searchJobsInDB
+  searchJobsInDB,
+  applyForJobApplication,
+  upload
 };

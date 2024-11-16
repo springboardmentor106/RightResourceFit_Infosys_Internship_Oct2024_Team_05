@@ -15,21 +15,62 @@ const Home = () => {
 
 
     const [latestJobs, setLatestjobs]=useState([]);
+    const [user, setUser] = useState(null);
+
+    const validateSession = async () => {
+        try {
+          const sessionToken = localStorage.getItem("sessionToken");  
+    
+          if (!sessionToken) {
+            console.log("No session token found");
+            return;
+          }
+    
+          const response = await axios.post('http://localhost:3000/api/dashboard', null, {
+            headers: {
+              Authorization: `Bearer ${sessionToken}`, 
+            },
+          });
+    
+          if (response.status === 200) {
+            console.log("Session validated"); 
+            setUser(response.data.user);
+            console.log(user._id)
+          }
+        } catch (error) {
+          console.error("Error validating session", error);
+        }
+      };
+    
+    
 
     useEffect(()=>{
+       
+
         const fetchJobs=async()=>{
             try{
                 const response=await axios.get('http://localhost:3000/api/jobs/latest');
                 setLatestjobs(response.data.jobs);
-                console.log("Fetched jobs:", response.data.jobs);
+               // console.log("Fetched jobs:", response.data.jobs);
             }
             catch(error){
                 console.error("Error fetching Jobs",error)
             }
         };
+        validateSession();
+
         fetchJobs();
 
     },[])
+    
+    const handleApplyNow = (jobId) => {
+        if (user) {
+            console.log("Applying for Job ID:", jobId);  // Debug log to check the jobId
+            navigate('/jobapplicationform', { state: { jobId, applicantId: user._id } });
+          } else {
+            alert("Please log in to apply for jobs.");
+          }
+      };
   return (
     <div className='Home'>
         <Navbar/>
@@ -177,55 +218,28 @@ const Home = () => {
             <h1>Recent Jobs Available</h1>
             <div className="jobs">
                 {latestJobs.map((job)=>(
-                    <div className="section">
+                    <div className="section" key={job._id}>
                     
-                    <div className="logo">
-                        <img src="/Images/google logo.webp" alt="" />
-                    </div>
-                    <div className="text">
-                        <h2>{job.title}</h2>
-                        <p>{job.description}</p>
-                        <div className="button">
-                        <button>
-                            Apply Now
-                        </button>
-                    </div>
+                        <div className="logo">
+                            <img src="/Images/google logo.webp" alt="" />
+                        </div>
+                        <div className="text">
+                            <h2>{job.title}</h2>
+                            <p>{job.description}</p>
+                            <div className="button">
+                            <button onClick={()=>handleApplyNow(job._id)}>
+                                Apply Now
+                            </button>
+                            
+                            </div>
+                        
+                        </div>
                     
-                    </div>
-                    
+                        <hr />
                 </div>
                 ))}
                 
-                {/* <div className="section">
-                    <div className="logo">
-                        <img src="/Images/google logo.webp" alt="" />
-                    </div>
-                    <div className="text">
-                        <h2>Email Marketing</h2>
-                        <p>Google looking for a skilled Software Developer , working on innovative solutions that impact millions globally. Responsibilities include designing, coding, testing, and deploying scalable applications while collaborating with cross-functional teams.</p>
-                        <div className="button">
-                        <button>
-                            Apply Now
-                        </button>
-                    </div>
-                    </div>
-                    
-                </div>
-                <div className="section">
-                    <div className="logo">
-                        <img src="/Images/google logo.webp" alt="" />
-                    </div>
-                    <div className="text">
-                        <h2>Brand Designer</h2>
-                        <p>Google looking for a skilled Software Developer , working on innovative solutions that impact millions globally. Responsibilities include designing, coding, testing, and deploying scalable applications while collaborating with cross-functional teams.</p>
-                        <div className="button">
-                        <button>
-                            Apply Now
-                        </button>
-                    </div>
-                    </div>
-                    
-                </div> */}
+                
             </div>
             
         </div>

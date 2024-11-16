@@ -164,11 +164,81 @@ hrUserSchema.pre("save", function (next) {
   next();
 });
 
+//import { Schema, model } from "mongoose";
+
+
+const jobApplicationSchema = new Schema(
+  {
+    applicantId: {
+      type: Schema.Types.ObjectId,
+      ref: USERS_COLLECTION, 
+      required: true,
+    },
+    jobId: {
+      type: Schema.Types.ObjectId,
+      ref: "Job", 
+      required: true,
+    },
+    
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+      required: true,
+    },
+    dob: {
+      type: Date,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    contactNumber: {
+      type: String,
+      required: true,
+    },
+    educationLevel: {
+      type: String,
+      enum: ["High School", "Bachelor's", "Master's", "PhD"],
+      required: true,
+    },
+    experienceLevel: {
+      type: String,
+      enum: ["0-1 Years", "1-3 Years", "3-5 Years", "5+ Years"],
+      required: true,
+    },
+    resume: {
+      type: String, 
+      required: true,
+    },
+    terms: {
+      type: Boolean,
+      required: true,
+    },
+    appliedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { versionKey: false }
+);
+
 
 const HRUser = model("HRUser", hrUserSchema);
 const Otp = model("Otp", otpSchema);
 const Job = model("Job", jobSchema);
 const User = model(USERS_COLLECTION, userSchema);
 const Session = model(SESSIONS_COLLECTION, sessionSchema);
+const JobApplication = model("JobApplication", jobApplicationSchema);
 
-export { User, Session, Otp, Job,HRUser };
+
+export { User, Session, Otp, Job,HRUser,JobApplication };

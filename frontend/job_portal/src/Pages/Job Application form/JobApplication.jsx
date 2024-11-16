@@ -1,9 +1,15 @@
 // src/components/JobApplication.jsx
 import React, { useState } from 'react';
 import './JobApplication.css';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 function JobApplication() {
+  const location=useLocation();
+  const {jobId,applicantId}=location.state || {};
+  console.log(jobId,applicantId)
   const [formData, setFormData] = useState({
+    
     firstName: '',
     lastName: '',
     gender: '',
@@ -18,6 +24,7 @@ function JobApplication() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === 'checkbox' ? checked : value,
@@ -31,15 +38,36 @@ function JobApplication() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    // Replace with your backend integration code
+    
+    try{
+      
+      const formDataToSubmit=new FormData();
+      for (let key in formData){
+        formDataToSubmit.append(key,formData[key]);
+      }
+      formDataToSubmit.append('applicantId', applicantId);
+    formDataToSubmit.append('jobId', jobId);
+
+      const response=await axios.post('http://localhost:3000/api/jobs/apply', formDataToSubmit,{
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      alert(response.data.message);
+    }
+  catch(error){
+    console.error('Error submitting application',error);
+  }
+  
+
   };
 
   return (
     <div className="form-container">
-      <h2 className="form-title">Application Form</h2>
-      <form className="application-form" onSubmit={handleSubmit}>
+      <h2 className="form-title">Application Form </h2>
+      {/* <p>Job ID: {jobId}</p>
+      <p>Applicant ID: {applicantId}</p> */}
+      <form className="application-form" onSubmit={handleSubmit} encType='multipart/form-data'>
         <div className="form-row">
           <div className="form-field">
             <label>First Name</label>
@@ -108,7 +136,9 @@ function JobApplication() {
           <label>I agree with Terms & Conditions</label>
         </div>
         <button type="submit" className="apply-button">Apply Now</button>
+        
       </form>
+      
     </div>
   );
 }
