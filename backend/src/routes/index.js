@@ -305,26 +305,7 @@ async function deleteJob(req, res) {
   }
 }
 
-// Search Jobs by Location and Skills
-// async function searchJobs(req, res) {
-//   try {
-//     const { location, skills } = req.query;
-//     const query = {};
 
-//     if (location) {
-//       query.location = location;
-//     }
-
-//     if (skills && skills.length > 0) {
-//       query.skills = { $in: skills.split(",") }; // Assume comma-separated skills in query
-//     }
-
-//     const jobs = await Job.find(query);
-//     res.status(200).json({ jobs });
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// }
 
 async function searchJobs(req, res){
   console.log("Received search query:", req.body.search);
@@ -340,6 +321,30 @@ async function searchJobs(req, res){
   
 }
 
+import { applyForJobApplication ,upload} from "../db/dbHandlers.js";
+router.post("/jobs/apply",upload.single("resume"),  async (req, res) => {
+  try {
+    const { applicantId, jobId, ...applicationData } = req.body; 
+    const file=req.file;
+
+    if(!file){
+      return res.status(400).json({message:"File upload required"})
+    }
+    if (!applicantId || !jobId) {
+      return res
+        .status(400)
+        .json({ message: "Applicant ID and Job ID are required" });
+    }
+
+    const newApplication = await applyForJobApplication(applicationData,file, applicantId,
+      jobId  ); 
+    res.status(200).json({ message: "Job application submitted successfully", application: newApplication });
+  } catch (err) {
+    console.error("Error applying for job:", err);
+    res.status(500).json({ message: "Failed to apply ", error: err.message });
+  }
+});
+
 
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
@@ -348,6 +353,7 @@ router.post("/jobs/add", addJob); // Add job
 router.put("/jobs/update/:jobId", updateJob); // Update job
 router.delete("/jobs/delete", deleteJob); // Delete job
 router.post("/jobs/search", searchJobs); // Search jobs by location and skills
+
 
 
 export default router;
