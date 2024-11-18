@@ -1,72 +1,89 @@
-import React from 'react';
-import './CandidateProfile.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import Sidebar from "./Sidebar";
+import styles from "./CandidateProfile.module.css";
 
 function CandidateProfile() {
-  return (
-    <div className="profile-container">
-      <div className="sidebar">
-        <h2>Job Portal</h2>
-        <nav>
-          <ul>
-            <li>Dashboard</li>
-            <li>Messages</li>
-            <li>Company Profile</li>
-            <li>All Applicants</li>
-            <li>Job Listing</li>
-            <li>My Schedule</li>
-          </ul>
-        </nav>
-        <div className="profile-info">
-          <img src="profile-pic-url.jpg" alt="User" />
-          <p>Maria Kelly</p>
-        </div>
-      </div>
+    const [decision, setDecision] = useState(null);
 
-      <div className="content">
-        <div className="header">
-          <h2>Candidate Summary</h2>
-          <button>View Details</button>
-        </div>
+    const handleAccept = () => {
+        setDecision("Accepted");
+        alert("The applicant has been accepted.");
+    };
 
-        <div className="profile">
-          <img src="profile-pic-url.jpg" alt="Candidate" />
-          <div className="profile-details">
-            <h3>Maria Kelly</h3>
-            <p><FontAwesomeIcon icon={faBriefcase} /> Backend Developer</p>
-            <p><FontAwesomeIcon icon={faMapMarkerAlt} /> Australia</p>
-          </div>
-        </div>
+    const handleReject = () => {
+        setDecision("Rejected");
+        alert("The applicant has been rejected.");
+    };
 
-        <div className="about">
-          <h4>About</h4>
-          <p>
-            I'm a backend developer with over 3 years of experience. I have a deep understanding of software
-            principles and architecture...
-          </p>
-          <a href="https://github.com">Github.com</a>
+    return (
+        <div className={styles.profileContainer}>
+            <Sidebar />
+            <div className={styles.content}>
+                <div className={styles.header}>
+                    <h2>Candidate Summary</h2>
+                    <div className={styles.headerButtons}>
+                        <button
+                            onClick={handleAccept}
+                            className={styles.acceptBtn}
+                        >
+                            Accept
+                        </button>
+                        <button
+                            onClick={handleReject}
+                            className={styles.rejectBtn}
+                        >
+                            Reject
+                        </button>
+                    </div>
+                </div>
+                <div className={styles.profile}>
+                    <img
+                        src="profile-pic-url.jpg"
+                        alt="Candidate"
+                    />
+                    <div className={styles.profileDetails}>
+                        <h3>Maria Kelly</h3>
+                        <p>Backend Developer</p>
+                        <p>Australia</p>
+                    </div>
+                </div>
+                <div className={styles.about}>
+                    <h4>About</h4>
+                    <p>
+                        I'm a backend developer with over 3 years of experience. 
+                        I have a deep understanding of software principles and architecture...
+                    </p>
+                    <a href="https://github.com">Github.com</a>
+                </div>
+                <div className={styles.skills}>
+                    <h4>Professional</h4>
+                    <span>Java</span>
+                    <span>Python</span>
+                    <span>SQL</span>
+                    <span>C</span>
+                    <span>React.js</span>
+                    <span>Git</span>
+                    <span>MongoDB</span>
+                </div>
+                <div className={styles.experience}>
+                    <h4>Work Experience</h4>
+                    <p>Senior Backend Developer (Apr 2023 - Present) - USA</p>
+                    <p>Backend Developer (2021 - 2023) - Portugal, USA</p>
+                </div>
+                {decision && (
+                    <div
+                        className={`${styles.decision} ${
+                            decision === "Accepted"
+                                ? styles.accepted
+                                : styles.rejected
+                        }`}
+                    >
+                        Applicant {decision}
+                    </div>
+                )}
+            </div>
         </div>
-
-        <div className="skills">
-          <h4>Professional</h4>
-          <span>Java</span>
-          <span>Python</span>
-          <span>SQL</span>
-          <span>C</span>
-          <span>React.js</span>
-          <span>Git</span>
-          <span>MongoDB</span>
-        </div>
-
-        <div className="experience">
-          <h4>Work Experience</h4>
-          <p>Senior Backend Developer (Apr 2023 - Present) - USA</p>
-          <p>Backend Developer (2021 - 2023) - Portugal, USA</p>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default CandidateProfile;
