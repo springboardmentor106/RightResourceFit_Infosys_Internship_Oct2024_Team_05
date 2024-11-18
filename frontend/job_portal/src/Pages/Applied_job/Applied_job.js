@@ -3,6 +3,10 @@ import "./Applied_job.css";
 import axios from "axios";
 import { useState } from "react";
 import DeleteModal from '../../components/DeleteModal'
+import Navbar from "../../components/Navbar";
+import { useNavigate } from "react-router-dom";
+
+
 
 const AppliedJobs = () => {
   // Dummy data for applied jobs
@@ -47,7 +51,9 @@ const AppliedJobs = () => {
   const [user, setUser] = useState(null);
   const [appliedJobs, setAppliedJobs] = useState([]);
   // const [isModalOpen, setIsModalOpen] = useState(false);  
-  // const [jobToDelete, setJobToDelete] = useState(null);    
+  // const [jobToDelete, setJobToDelete] = useState(null);  
+  
+  const navigate=useNavigate();
 
     const validateSession = async () => {
         try {
@@ -96,6 +102,8 @@ const AppliedJobs = () => {
         }
       }, [user]);
 
+     
+
       const handleDeleteApplication = async (jobId) => {
         try {
           const confirmDelete = window.confirm("Are you sure you want to delete this job application?");
@@ -139,10 +147,23 @@ const AppliedJobs = () => {
       // const closeModal = () => {
       //   setIsModalOpen(false);
       // };
+      const handleEditApplication = (jobId) => {
+        const applicationData = appliedJobs.find((application) => application.jobId._id === jobId);
+        navigate('/jobapplicationform', {
+          state: {
+            jobId: jobId,
+            applicantId: user._id,
+            applicationData,
+          },
+        });
+      };
     
 
   return (
+    <>
+      <Navbar/>
     <div className="applied-jobs-container">
+      
       <h1>Applied Jobs</h1>
 
       <div className="jobs-list">
@@ -167,7 +188,7 @@ const AppliedJobs = () => {
               </div>
             </div>
             <div className="action-buttons">
-                <button className="edit-btn" >
+                <button onClick={()=>handleEditApplication(application.jobId._id)} className="edit-btn" >
                   Edit
                 </button>
                 <button onClick={() => handleDeleteApplication(application.jobId._id)} className="delete-btn" >
@@ -178,6 +199,7 @@ const AppliedJobs = () => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 
