@@ -398,6 +398,43 @@ async function deleteApplication(req, res) {
   }
 }
 
+import { updateJobApplication } from "../db/dbHandlers.js";
+
+router.put("/applications/:id", upload.single("resume"), async (req, res) => {
+  console.log("Received application ID:", req.params.id); 
+  console.log("Uploaded file:", req.file); 
+  console.log(req.body); 
+
+  try {
+    const applicationId = req.params.id;
+    const updatedData = req.body;
+    //const file = req.file;
+    if (req.file) {
+      updatedData.resume = req.file.path;
+    }
+
+    
+    if (!applicationId) {
+      return res.status(400).json({ message: "Application ID is required" });
+    }
+
+    
+    const updatedApplication = await updateJobApplication(
+      applicationId,
+      updatedData,
+      req.file
+    );
+
+    res.status(200).json({ message: "Job application updated successfully", application: updatedApplication });
+  } catch (err) {
+    console.error("Error updating job application:", err);
+    res.status(500).json({ message: "Failed to update application", error: err.message });
+  }
+});
+
+
+
+
 
 
 router.post("/forgot-password", forgotPassword);

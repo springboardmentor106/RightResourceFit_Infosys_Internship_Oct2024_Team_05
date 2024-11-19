@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./JobPortal.css";
 import axios from "axios";
+import Navbar from "../../components/Navbar";
 
 
 function JobPortal() {
@@ -103,21 +104,10 @@ function JobPortal() {
   // );
 
   return (
+    <>
+    <Navbar/>
     <div className="job-portal">
-      {/* Navbar */}
-      {/* <nav className="navbar">
-        <h1>Job Portal</h1>
-        <ul>
-          <li>Home</li>
-          <li>About Us</li>
-          <li>Jobs</li>
-          <li>Contact Us</li>
-        </ul>
-        <div className="auth-buttons">
-          <button className="sign-in">Sign In</button>
-          <button className="sign-up">Sign Up</button>
-        </div>
-      </nav> */}
+      
 
       {/* Search Bar */}
       <div className="search-bar">
@@ -228,6 +218,7 @@ function JobPortal() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

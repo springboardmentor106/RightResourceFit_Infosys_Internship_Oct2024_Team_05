@@ -274,6 +274,59 @@ async function applyForJobApplication(applicationData,file,applicantId,jobId) {
 }
 
 
+import mongoose from "mongoose";
+async function updateJobApplication(applicationId, updatedData, file) {
+  try {
+    // console.log("recieved applicationId from frontend:" ,applicationId)
+    // console.log("recieved jobId from frontend:" ,updatedData.jobId)
+
+    if (Array.isArray(updatedData.jobId)) {
+      updatedData.jobId = updatedData.jobId.find((id) => mongoose.Types.ObjectId.isValid(id));
+    }
+    if (Array.isArray(updatedData.applicantId)) {
+      updatedData.applicantId = updatedData.applicantId.find((id) => mongoose.Types.ObjectId.isValid(id));
+    }
+    // if (Array.isArray(updatedData.jobId)) {
+    //   updatedData.jobId = updatedData.jobId[1]; // Extract the correct jobId value
+    // }
+    // if (Array.isArray(updatedData.applicationId)) {
+    //    updatedData.applicantId= updatedData.applicantId[1];
+    // }
+    
+
+    if (!mongoose.Types.ObjectId.isValid(updatedData.jobId)) {
+      throw new Error("Invalid jobId format");
+    }
+    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
+      throw new Error("Invalid applicantId format");
+    }
+    const updateFields = { ...updatedData };
+
+    // Update the resume field if a new file is uploaded
+    if (file) {
+      updateFields.resume = file.path;
+    }
+
+    const updatedApplication = await JobApplication.findByIdAndUpdate(
+      applicationId,
+      { $set: updateFields },
+      { new: true } 
+    );
+
+    if (!updatedApplication) {
+      throw new Error("Application not found");
+    }
+
+    console.log("Job application updated successfully");
+    return updatedApplication;
+  } catch (err) {
+    console.error("Error updating job application:", err);  
+    throw err;
+  }
+}
+
+
+
 export {
   connectToDB,
   addUserToDB,
@@ -291,5 +344,6 @@ export {
   deleteJobFromDB,
   searchJobsInDB,
   applyForJobApplication,
-  upload
+  upload,
+  updateJobApplication
 };

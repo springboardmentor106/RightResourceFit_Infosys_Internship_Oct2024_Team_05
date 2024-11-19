@@ -1,13 +1,31 @@
 // src/components/JobApplication.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './JobApplication.css';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function JobApplication() {
+  const navigate=useNavigate();
   const location=useLocation();
-  const {jobId,applicantId}=location.state || {};
-  console.log(jobId,applicantId)
+  const {jobId,applicantId,applicationData}=location.state || {};
+  //console.log(jobId,applicantId,applicationData)
+//   console.log('Received jobId:', jobId);
+// console.log('Received applicantId:', applicantId);
+// console.log('Application Data:', applicationData);
+
+  const isUpdate=!!applicationData;
+
+  useEffect(()=>{
+    if(isUpdate && applicationData){
+      setFormData({
+        ...applicationData,
+        terms:true,
+        dob:formatDate(applicationData.dob)
+      })
+    }
+  },[isUpdate,applicationData]);
+
   const [formData, setFormData] = useState({
     
     firstName: '',
@@ -38,6 +56,15 @@ function JobApplication() {
     }));
   };
 
+
+  const formatDate = (dateString) => {
+    if (dateString) {
+      const date = new Date(dateString);
+      return date.toISOString().split('T')[0]; // returns yyyy-MM-dd format
+    }
+    return '';
+  };
+
   const handleSubmit =async (e) => {
     e.preventDefault();
     
@@ -45,18 +72,38 @@ function JobApplication() {
       
       const formDataToSubmit=new FormData();
       for (let key in formData){
-        formDataToSubmit.append(key,formData[key]);
+        //formDataToSubmit.append(key,formData[key]);
+        if (key === 'resume' && formData.resume instanceof File) {
+          formDataToSubmit.append(key, formData.resume);
+        } else {
+          formDataToSubmit.append(key, formData[key]);
+        }
       }
       formDataToSubmit.append('applicantId', applicantId);
+      console.log("jobId being appended:", jobId);
     formDataToSubmit.append('jobId', jobId);
 
-      const response=await axios.post('http://localhost:3000/api/jobs/apply', formDataToSubmit,{
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+    console.log('Form Data to Submit:', formDataToSubmit);
+
+      // const response=await axios.post('http://localhost:3000/api/jobs/apply', formDataToSubmit,{
+      //   headers: { 'Content-Type': 'multipart/form-data' },
+      // })
+
+      const url = isUpdate
+      ? `http://localhost:3000/api/applications/${applicationData._id}`
+      : 'http://localhost:3000/api/jobs/apply';
+
+    const method = isUpdate ? 'put' : 'post';
+    const response = await axios[method](url, formDataToSubmit, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
       alert(response.data.message);
+      navigate('/Applied_job')
+      
     }
   catch(error){
-    console.error('Error submitting application',error);
+    console.error(`${isUpdate ? 'Error updating application' : 'Error submitting application'}`, error);
   }
   
 
@@ -135,7 +182,7 @@ function JobApplication() {
           <input type="checkbox" name="terms" checked={formData.terms} onChange={handleChange} />
           <label>I agree with Terms & Conditions</label>
         </div>
-        <button type="submit" className="apply-button">Apply Now</button>
+        <button type="submit" className="apply-button">{isUpdate ? 'Update Application' : 'Apply Now'}</button>
         
       </form>
       
