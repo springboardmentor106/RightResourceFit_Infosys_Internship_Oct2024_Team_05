@@ -12,6 +12,7 @@ import HR_Dashboard from "./Pages/Dashboard/Src/HR_Dashboard";
 import JobPortal from './Pages/Job Search/JobPortal'
 import JobApplication from "./Pages/Job Application form/JobApplication";
 import AppliedJobs from "./Pages/Applied_job/Applied_job";
+import Candidate_Profile from "./Pages/Dashboard/Components/CandidateProfile";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/jobsearch" element={<JobPortal />} />
           <Route path="/jobapplicationform" element={<JobApplication />} />
           <Route path="/Applied_job" element={<AppliedJobs />} />
+          <Route path="/candidateprofile" element={<Candidate_Profile />} />
         </Routes>
       </div>
     </Router>
