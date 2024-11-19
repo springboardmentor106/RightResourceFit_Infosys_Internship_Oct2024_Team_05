@@ -1,0 +1,126 @@
+/* General styling for the CandidateProfile component */
+.profileContainer {
+    display: flex;
+    height: 100vh;
+}
+
+.content {
+    width: calc(100% - 200px); /* Sidebar width */
+    margin-left: 200px;
+    padding: 30px;
+    background-color: #f4f4f9;
+}
+
+/* Header section styling */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.headerButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.acceptBtn,
+.rejectBtn {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.acceptBtn {
+    background-color: #28a745;
+}
+
+.acceptBtn:hover {
+    background-color: #218838;
+}
+
+.rejectBtn {
+    background-color: #dc3545;
+}
+
+.rejectBtn:hover {
+    background-color: #c82333;
+}
+
+/* Profile section */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ebe6fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.profile img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px solid #7f5cf1;
+}
+
+.profileDetails h3 {
+    font-size: 20px;
+    color: #333333;
+}
+
+.profileDetails p {
+    font-size: 16px;
+    color: #666666;
+}
+
+/* About, Skills, Experience sections */
+.about,
+.skills,
+.experience {
+    margin-top: 20px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+.skills span {
+    display: inline-block;
+    background-color: #7f5cf1;
+    color: white;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+/* Decision feedback styling */
+.decision {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.decision.accepted {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.decision.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
