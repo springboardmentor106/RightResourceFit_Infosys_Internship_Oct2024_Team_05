@@ -433,7 +433,25 @@ router.put("/applications/:id", upload.single("resume"), async (req, res) => {
 });
 
 
+// Get user notifications
+router.get('/notifications/:userId', async (req, res) => {
+  try {
+    const notifications = await getNotifications(req.params.userId);
+    res.json({ notifications });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
+// Mark notification as read
+router.put('/notifications/:notificationId/read', async (req, res) => {
+  try {
+    await markNotificationAsRead(req.params.notificationId);
+    res.json({ message: 'Notification marked as read' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 
