@@ -231,8 +231,37 @@ const jobApplicationSchema = new Schema(
   },
   { versionKey: false }
 );
+const notificationSchema = new Schema({
+  recipient: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  type: {
+    type: String,
+    enum: ['application', 'status_update'],
+    required: true
+  },
+  jobId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Job',
+    required: true
+  },
+  message: {
+    type: String,
+    required: true
+  },
+  read: {
+    type: Boolean,
+    default: false
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-
+const Notification = model('Notification', notificationSchema);
 const HRUser = model("HRUser", hrUserSchema);
 const Otp = model("Otp", otpSchema);
 const Job = model("Job", jobSchema);
@@ -241,4 +270,4 @@ const Session = model(SESSIONS_COLLECTION, sessionSchema);
 const JobApplication = model("JobApplication", jobApplicationSchema);
 
 
-export { User, Session, Otp, Job,HRUser,JobApplication };
+export { User, Session, Otp, Job,HRUser,JobApplication,Notification };

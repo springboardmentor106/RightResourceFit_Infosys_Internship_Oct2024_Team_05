@@ -325,6 +325,47 @@ async function updateJobApplication(applicationId, updatedData, file) {
   }
 }
 
+async function createNotification(recipientId, type, jobId, message) {
+  try {
+    const notification = new Notification({
+      recipient: recipientId,
+      type,
+      jobId,
+      message
+    });
+    await notification.save();
+    return notification;
+  } catch (error) {
+    console.error('Error creating notification:', error);
+    throw error;
+  }
+}
+
+async function getNotifications(userId) {
+  try {
+    const notifications = await Notification.find({ recipient: userId })
+      .populate('jobId')
+      .sort({ createdAt: -1 });
+    return notifications;
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    throw error;
+  }
+}
+
+async function markNotificationAsRead(notificationId) {
+  try {
+    const notification = await Notification.findByIdAndUpdate(
+      notificationId,
+      { read: true },
+      { new: true }
+    );
+    return notification;
+  } catch (error) {
+    console.error('Error marking notification as read:', error);
+    throw error;
+  }
+}
 
 
 export {
@@ -345,5 +386,8 @@ export {
   searchJobsInDB,
   applyForJobApplication,
   upload,
-  updateJobApplication
+  updateJobApplication,
+  createNotification,
+  getNotifications,
+  markNotificationAsRead
 };
