@@ -3,7 +3,7 @@ import './SignUpPage.css'; // Import CSS for styling
 import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 
-const SignUpPage = () => {
+const RecruiterSignUpPage = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [confirmPasswordShown, setConfirmPasswordShown] = useState(false);
 
@@ -86,4 +86,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default RecruiterSignUpPage;

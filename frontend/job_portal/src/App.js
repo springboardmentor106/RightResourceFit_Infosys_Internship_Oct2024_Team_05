@@ -13,6 +13,10 @@ import JobPortal from './Pages/Job Search/JobPortal'
 import JobApplication from "./Pages/Job Application form/JobApplication";
 import AppliedJobs from "./Pages/Applied_job/Applied_job";
 import Candidate_Profile from "./Pages/Dashboard/Components/CandidateProfile";
+import SignInPage from "./Pages/recruiter_side_pages/SignInPage";
+import RecruiterSignUpPage  from "./Pages/recruiter_side_pages/RecruiterSignUpPage";
+import StartPage from "./Pages/recruiter_side_pages/StartPage"
+
 
 
 function App() {
@@ -40,6 +44,9 @@ function App() {
           <Route path="/jobapplicationform" element={<JobApplication />} />
           <Route path="/Applied_job" element={<AppliedJobs />} />
           <Route path="/candidateprofile" element={<Candidate_Profile />} />
+          <Route path="/recruiter-sigin" element={<SignInPage />} />
+          <Route path="/recruiter-sigup" element={<RecruiterSignUpPage />} />
+          <Route path="/start" element={<StartPage />} />
         </Routes>
       </div>
     </Router>
