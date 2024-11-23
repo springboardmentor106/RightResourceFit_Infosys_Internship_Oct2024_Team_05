@@ -94,3 +94,9 @@ input[type="range"] {
 .submit-button:hover {
   background-color: #357abd;
 }
+
+.error {
+  color: rgba(217, 38, 38, 0.902);
+  font-size: 0.9rem;
+  margin-top: 5px;
+}

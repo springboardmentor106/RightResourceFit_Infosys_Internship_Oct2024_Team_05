@@ -1,99 +1,109 @@
 import React, { useEffect, useState } from 'react';
-import { FaUpload } from 'react-icons/fa';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate,useParams,useLocation } from 'react-router-dom';
+import "./JobPostingFrom.css";
 
-import "./JobPostingFrom.css"
 function JobForm() {
   const [jobTitle, setJobTitle] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [skills, setSkills] = useState('');
   const [jobMode, setJobMode] = useState('');
   const [experience, setExperience] = useState('');
-  const [salaryRange, setSalaryRange] = useState(75000); // Default to midpoint
+  const [salaryRange, setSalaryRange] = useState('');
   const [jobType, setJobType] = useState('');
   const [location, setLocation] = useState('');
-  const [contactInfo, setContactInfo] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [attachment, setAttachment] = useState(null);
-  const [jobId, setJobId] = useState(null)
+  const [jobId, setJobId] = useState(null);
+  const [errors, setErrors] = useState({}); // State to track error messages
 
-  const handleFileUpload = (e) => {
-    setAttachment(e.target.files[0]);
-  };
-
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_BACKEND_API_URL;
- 
   const locationState = useLocation().state;
 
-  useEffect(()=>{
-    if(locationState?.job){
-      const {_id, title, description, skills, location } = locationState.job;
-      setJobId(_id); 
+  useEffect(() => {
+    if (locationState?.job) {
+      const { _id, title, description, skills, location } = locationState.job;
+      setJobId(_id);
       setJobTitle(title);
       setJobDescription(description);
       setSkills(skills);
       setLocation(location);
     }
-    
-  },[locationState])
+  }, [locationState]);
 
-  
-  
+  const validateInputs = () => {
+    const errorsObj = {};
+    const titleRegex = /^[a-zA-Z0-9\s]{5,50}$/;
+    const descriptionRegex = /^.{10,500}$/;
+    const skillsRegex = /^[a-zA-Z,.\s]{3,100}$/;
+    const locationRegex = /^[a-zA-Z\s]{3,50}$/;
+    const salaryRegex = /^\d{4,9}$/;
 
-  const handleSubmit = async(e) => {
-    
-      e.preventDefault();
-      const jobData = {
-        title:jobTitle,
-        description:jobDescription,
-        skills,
-        // jobMode,
-        // experience,
-        // salaryRange,
-        // jobType,
-        location,
-        // contactInfo,
-        // deadline,
-        // attachment,
-      };
+    if (!titleRegex.test(jobTitle)) {
+      errorsObj.jobTitle = "Job Title must be 5-50 alphanumeric characters.";
+    }
+    if (!descriptionRegex.test(jobDescription)) {
+      errorsObj.jobDescription = "Job Description must be between 10 and 500 characters.";
+    }
+    if (!skillsRegex.test(skills)) {
+      errorsObj.skills = "Skills must be alphabetic and separated by commas.";
+    }
+    if (!locationRegex.test(location)) {
+      errorsObj.location = "Location must be alphabetic and 3-50 characters long.";
+    }
+    if (!salaryRegex.test(salaryRange)) {
+      errorsObj.salaryRange = "Salary Range must be between $1000 and $150000.";
+    }
+    if (!jobMode) {
+      errorsObj.jobMode = "Please select a Job Mode.";
+    }
+    if (!experience) {
+      errorsObj.experience = "Please select an Experience Level.";
+    }
+    if (!jobType) {
+      errorsObj.jobType = "Please select a Job Type.";
+    }
 
-      try {
-        let response;
+    setErrors(errorsObj);
+    return Object.keys(errorsObj).length === 0;
+  };
 
-        if (jobId){
-          response = await axios.put(`${apiUrl}/api/jobs/update/${jobId}`, jobData, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-          alert('Job updated successfully')
-        }
-        else{
-           response=await axios.post(`${apiUrl}/api/jobs/add`,jobData,{
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-          alert("Job added successfully")
-        }
-          console.log(response.data);
-          navigate('/hrdashboard')
-      } 
-      catch (error) {
-        console.log(error)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateInputs()) return;
+
+    const jobData = {
+      title: jobTitle,
+      description: jobDescription,
+      skills,
+      jobMode,
+      experience,
+      salaryRange,
+      jobType,
+      location,
+    };
+
+    try {
+      let response;
+      if (jobId) {
+        response = await axios.put(`${apiUrl}/api/jobs/update/${jobId}`, jobData, {
+          headers: { 'Content-Type': 'application/json' },
+        });
+        alert("Job updated successfully");
+      } else {
+        response = await axios.post(`${apiUrl}/api/jobs/add`, jobData, {
+          headers: { 'Content-Type': 'application/json' },
+        });
+        alert("Job added successfully");
       }
-      
-      
-        
-    // console.log('Form Data Submitted:', formData);
-    // Add any additional submission logic here (e.g., API call)
+      navigate('/hrdashboard');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="job-form-container">
-      <h1>{jobId? 'Edit Job':"Post a Job"}</h1>
+      <h1>{jobId ? 'Edit Job' : "Post a Job"}</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Job Title:</label>
@@ -103,6 +113,7 @@ function JobForm() {
             onChange={(e) => setJobTitle(e.target.value)}
             placeholder="Enter the job title"
           />
+          {errors.jobTitle && <p className="error">{errors.jobTitle}</p>}
         </div>
 
         <div className="form-group">
@@ -110,8 +121,9 @@ function JobForm() {
           <textarea
             value={jobDescription}
             onChange={(e) => setJobDescription(e.target.value)}
-            placeholder="Enter the job Description"
+            placeholder="Enter the job description"
           />
+          {errors.jobDescription && <p className="error">{errors.jobDescription}</p>}
         </div>
 
         <div className="form-group">
@@ -120,8 +132,9 @@ function JobForm() {
             type="text"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
-            placeholder="Enter the Major Skill Set"
+            placeholder="Enter the major skill set"
           />
+          {errors.skills && <p className="error">{errors.skills}</p>}
         </div>
 
         <div className="form-group">
@@ -140,6 +153,7 @@ function JobForm() {
               </label>
             ))}
           </div>
+          {errors.jobMode && <p className="error">{errors.jobMode}</p>}
         </div>
 
         <div className="form-group">
@@ -158,25 +172,19 @@ function JobForm() {
               </label>
             ))}
           </div>
+          {errors.experience && <p className="error">{errors.experience}</p>}
         </div>
 
         <div className="form-group">
-  <label>Salary Range:</label>
-  <div className="salary-input-wrapper">
-    <span className="salary-prefix">$</span>
-    <input
-      type="number"
-      min="0"
-      max="150000"
-      step="1000"
-      value={salaryRange}
-      onChange={(e) => setSalaryRange(e.target.value)}
-      placeholder="Enter salary amount"
-      className="salary-number-input"
-    />
-  </div>
-</div>
-
+          <label>Salary Range:</label>
+          <input
+            type="text"
+            value={salaryRange}
+            onChange={(e) => setSalaryRange(e.target.value)}
+            placeholder="Enter salary amount (e.g., 10000)"
+          />
+          {errors.salaryRange && <p className="error">{errors.salaryRange}</p>}
+        </div>
 
         <div className="form-group">
           <label>Job Type:</label>
@@ -194,6 +202,7 @@ function JobForm() {
               </label>
             ))}
           </div>
+          {errors.jobType && <p className="error">{errors.jobType}</p>}
         </div>
 
         <div className="form-group">
@@ -202,37 +211,10 @@ function JobForm() {
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="Enter the job Location"
+            placeholder="Enter the job location"
           />
+          {errors.location && <p className="error">{errors.location}</p>}
         </div>
-
-        {/* <div className="form-group">
-          <label>Contact Info:</label>
-          <input
-            type="text"
-            value={contactInfo}
-            onChange={(e) => setContactInfo(e.target.value)}
-            placeholder="Enter email or number"
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Application Deadline:</label>
-          <input
-            type="date"
-            value={deadline}
-            onChange={(e) => setDeadline(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Upload Attachments:</label>
-          <label className="upload-button">
-            <FaUpload />
-            <input type="file" onChange={handleFileUpload} style={{ display: 'none' }} />
-          </label>
-          {attachment && <span>{attachment.name}</span>}
-        </div> */}
 
         <button type="submit" className="submit-button">{jobId ? "Update" : "Submit"}</button>
       </form>

@@ -1,0 +1,213 @@
+.all-applications-container {
+    margin-left: 220px; /* Adjust for sidebar width */
+    padding: 20px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .all-applications-title {
+    font-size: 2rem;
+    color: #4f46e5;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Search and Filter Section */
+  .search-filter-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .search-input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .search-input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 6px rgba(79, 70, 229, 0.5);
+    outline: none;
+  }
+  
+  .filter-select {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .filter-select:focus {
+    border-color: #4f46e5;
+    outline: none;
+  }
+  
+  .all-applications-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    animation: slideIn 0.8s ease-in-out;
+  }
+  
+  .all-applications-table thead tr {
+    background-color: #4f46e5;
+    color: white;
+  }
+  
+  .all-applications-table th,
+  .all-applications-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+  }
+  
+  .all-applications-table tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+  }
+  
+  .all-applications-table tbody tr:hover {
+    background-color: #e8f0fe;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .all-applications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .all-applications-title {
+    font-size: 2rem;
+    color: #4f46e5;
+    margin: 0;
+  }
+  
+  /* Filter and search styles */
+  .filter-search {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .search-field {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .search-field:focus {
+    border-color: #4f46e5;
+  }
+  
+  .filter-dropdown {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    outline: none;
+    background-color: white;
+    transition: border-color 0.3s;
+  }
+  
+  .filter-dropdown:focus {
+    border-color: #4f46e5;
+  }
+  
+  /* Status Colors */
+  .status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+  
+  .status.applied {
+    background-color: #fde68a;
+    color: #7c3aed;
+  }
+  
+  .status.accepted {
+    background-color: #d1fae5;
+    color: #059669;
+  }
+  
+  .status.rejected {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+  
+  .status.review {
+    background-color: #e0f2fe;
+    color: #0284c7;
+  }
+  
+  /* View and Delete Buttons */
+  .view-button,
+  .delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .view-button {
+    background-color: #4f46e5;
+    color: white;
+  }
+  
+  .view-button:hover {
+    background-color: #4338ca;
+  }
+  
+  .delete-button {
+    background-color: #ef4444;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #dc2626;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-10%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
