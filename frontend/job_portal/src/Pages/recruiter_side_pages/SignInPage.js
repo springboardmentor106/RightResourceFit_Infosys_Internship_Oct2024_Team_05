@@ -3,7 +3,7 @@ import './SignInPage.css';
 import { Link } from 'react-router-dom'; 
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
 
-const LoginPage = () => {
+const SignInPage = () => {
   const [passwordShown, setPasswordShown] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -52,4 +52,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignInPage;
