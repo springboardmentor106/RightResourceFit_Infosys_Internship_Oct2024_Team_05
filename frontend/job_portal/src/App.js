@@ -16,6 +16,7 @@ import Candidate_Profile from "./Pages/Dashboard/Components/CandidateProfile";
 import SignInPage from "./Pages/recruiter_side_pages/SignInPage";
 import RecruiterSignUpPage  from "./Pages/recruiter_side_pages/RecruiterSignUpPage";
 import StartPage from "./Pages/recruiter_side_pages/StartPage"
+import AllApplications from "./Pages/All Applicants/AllApplications"
 
 
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/recruiter-sigin" element={<SignInPage />} />
           <Route path="/recruiter-sigup" element={<RecruiterSignUpPage />} />
           <Route path="/start" element={<StartPage />} />
+          <Route path="/all-applicants" element={<AllApplications />} />
         </Routes>
       </div>
     </Router>

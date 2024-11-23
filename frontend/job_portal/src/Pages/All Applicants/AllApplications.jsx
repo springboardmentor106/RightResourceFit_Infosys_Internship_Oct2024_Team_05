@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./AllApplications.css";
 import { FaTrashAlt, FaEye } from "react-icons/fa";
-import Sidebar from './Sidebar'
+import Sidebar from "../Dashboard/Components/Sidebar"
 function AllApplications() {
   const applicants = [
     { id: 1, name: "John", status: "Applied", date: "11/22/2024", role: "Backend Developer" },
@@ -30,6 +30,8 @@ function AllApplications() {
   };
 
   return (
+    <>
+    <Sidebar/>
     <div className="all-applications-container">
       <div className="all-applications-header">
         <h2 className="all-applications-title">All Applicants</h2>
@@ -90,6 +92,7 @@ function AllApplications() {
         </tbody>
       </table>
     </div>
+    </>
   );
 }
 
