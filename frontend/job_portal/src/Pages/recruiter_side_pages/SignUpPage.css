@@ -1,19 +1,24 @@
+/* General Styles */
 .signup-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     background-color: #f0f0f0;
-}
-
-.signup-container {
-    border-color: black;
-    border-width: 2px;
-    border-radius: 8px;
-    padding: 10%;
+  }
+  
+  .signup-container {
     display: flex;
     justify-content: space-between;
-    height: 500px;
+    border-radius: 8px;
+    padding: 10%;
+    width: 70%;
+    height: auto;
     background-color: #f0f0f0;
-}
-
-.signup-left {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .signup-left {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     flex: 1;
@@ -23,10 +28,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100px;
-}
-
-.signup-right {
+  }
+  
+  .signup-right {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -38,67 +42,63 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding:30px;
-}
-
-.signup-form {
+    padding: 30px;
+  }
+  
+  .signup-form {
     width: 80%;
-}
-
-.input-group {
+  }
+  
+  .input-group {
     margin-bottom: 20px;
-    position: relative;  /* To position the icons properly */
+    position: relative; /* To position the icons properly */
     width: 100%;
-}
-
-input {
+  }
+  
+  input {
     width: 94%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.password-group {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .password-group {
     position: relative;
     width: 100%;
-}
-
-.password-toggle {
+  }
+  
+  .password-toggle {
     position: absolute;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-}
-
-.signup-btn {
-    width: 20%;  /* Take full width */
+  }
+  
+  .signup-btn {
+    width: 20%;
     padding: 10px;
-    
     margin-top: 20px;
     background-color: #7f5cf1;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;  /* Horizontally center the text inside the button */
-}
-
-.button-container {
-      /* Full width of the form */
-    display: flex;
-    justify-content: center;  /* Center the button horizontally */
-}
-
-
-.login-prompt {
+  }
+  
+  .signup-btn:hover {
+    background-color: #5a3bed;
+  }
+  
+  .login-prompt {
     margin-top: 20px;
     text-align: center;
-}
-
-.center{
-    text-align: center;
-    padding-left: 20px;
-}
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+  }
+  
