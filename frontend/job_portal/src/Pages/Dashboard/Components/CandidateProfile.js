@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import styles from "./CandidateProfile.module.css";
+import { useLocation } from "react-router-dom";
 
 function CandidateProfile() {
+    const location=useLocation();
+    const applicant=location.state;
+    // if (!applicant) {
+    //     return <p>No applicant data found!</p>;
+    //   }
     const [decision, setDecision] = useState(null);
 
     const handleAccept = () => {
@@ -42,9 +48,9 @@ function CandidateProfile() {
                         alt="Candidate"
                     />
                     <div className={styles.profileDetails}>
-                        <h3>Maria Kelly</h3>
+                        <h3>{applicant.firstName} {applicant.lastName}</h3>
                         <p>Backend Developer</p>
-                        <p>Australia</p>
+                        <p>{applicant.gender}</p>
                     </div>
                 </div>
                 <div className={styles.about}>

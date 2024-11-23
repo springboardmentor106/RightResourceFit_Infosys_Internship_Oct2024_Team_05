@@ -60,6 +60,10 @@ function Dashboard() {
         setEditJob(job)
         navigate('/jobpostingpage',{ state: { job } })
     }
+
+    const handleViewApplicants = (jobId) => {
+      navigate(`/applicants/${jobId}`);
+  };
     
   return (
     <div className="dashboard">
@@ -94,7 +98,7 @@ function Dashboard() {
 
 <div className="job-row">
           {latestJobs.map((job) => (
-            <div className="job-card" key={job._id}>
+            <div className="job-card" key={job._id} onClick={() => handleViewApplicants(job._id)}>
               <div className="job-info">
                 {/* <img src="https://via.placeholder.com/40" alt="company logo" /> */}
                 <div>
@@ -124,3 +128,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+

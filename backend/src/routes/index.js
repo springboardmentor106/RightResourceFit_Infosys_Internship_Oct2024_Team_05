@@ -432,6 +432,26 @@ router.put("/applications/:id", upload.single("resume"), async (req, res) => {
   }
 });
 
+//get all applicants of a job
+// router.get('/applicants/:jobId',async(req,res)=>{
+  
+// })
+export const getApplicantsByJobId = async (req, res) => {
+  const { jobId } = req.params;
+
+  try {
+      
+      const applicants = await JobApplication.find({ jobId })
+          .populate("applicantId", "firstName lastName email ") 
+          
+
+      
+      res.status(200).json({ applicants });
+  } catch (error) {
+      console.error("Error fetching applicants:", error);
+      res.status(500).json({ message: "Error fetching applicants", error });
+  }
+};
 
 // Get user notifications
 router.get('/notifications/:userId', async (req, res) => {
@@ -455,6 +475,7 @@ router.put('/notifications/:notificationId/read', async (req, res) => {
 
 
 
+
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 // Add routes for job management
@@ -464,6 +485,7 @@ router.delete("/jobs/delete", deleteJob); // Delete job
 router.post("/jobs/search", searchJobs); // Search jobs by location and skills
 router.get("/applications/:applicantId", getApplicationsByApplicant);
 router.delete('/applications/:applicantId/:jobId',deleteApplication);
+router.get('/applicants/:jobId',getApplicantsByJobId);
 
 
 

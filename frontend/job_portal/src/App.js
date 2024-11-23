@@ -44,11 +44,11 @@ function App() {
           <Route path="/jobsearch" element={<JobPortal />} />
           <Route path="/jobapplicationform" element={<JobApplication />} />
           <Route path="/Applied_job" element={<AppliedJobs />} />
-          <Route path="/candidateprofile" element={<Candidate_Profile />} />
+          <Route path="/candidate-profile/:id" element={<Candidate_Profile />} />
           <Route path="/recruiter-sigin" element={<SignInPage />} />
           <Route path="/recruiter-sigup" element={<RecruiterSignUpPage />} />
           <Route path="/start" element={<StartPage />} />
-          <Route path="/all-applicants" element={<AllApplications />} />
+          <Route path="/applicants/:jobId" element={<AllApplications />} />
         </Routes>
       </div>
     </Router>
