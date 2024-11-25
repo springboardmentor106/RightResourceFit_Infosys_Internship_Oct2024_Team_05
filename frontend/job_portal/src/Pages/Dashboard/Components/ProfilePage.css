@@ -1,0 +1,228 @@
+.profile-page {
+    display: flex;
+    padding-left: 20px;
+  }
+  
+  .main-content {
+    margin-left: 200px; /* Matches the sidebar width */
+    padding: 20px;
+    width: calc(100% - 200px);
+  }
+  
+  .profile-details {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #333;
+    border-bottom: 2px solid #7f5cf1;
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+  
+  .profile-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+  }
+  
+  .profile-field {
+    margin-bottom: 15px;
+  }
+  
+  .profile-field label {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #555;
+  }
+  
+  .profile-field span {
+    color: #333;
+  }
+  
+  .profile-field a {
+    color: #7f5cf1;
+    text-decoration: none;
+  }
+  
+  .profile-field a:hover {
+    text-decoration: underline;
+  }
+  
+  .job-statistics {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .job-statistics h2 {
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #7f5cf1;
+    display: inline-block;
+  }
+  
+  .job-statistics p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .edit-profile-button {
+    background-color: #7f5cf1;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+  }
+  
+  .edit-profile-button:hover {
+    background-color: #6a3fcf;
+  }/* General page structure */
+.profile-page {
+    display: flex;
+  }
+  
+  .main-content {
+    margin-left: 200px;
+    padding: 30px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    height: 100vh;
+    overflow-y: auto;
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-header h1 {
+    font-size: 2em;
+    color: #7f5cf1;
+  }
+  
+  .profile-header p {
+    font-size: 1.1em;
+    color: #555;
+  }
+  
+  /* Profile Grid */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Profile Cards */
+  .profile-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .profile-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profile-card h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #7f5cf1;
+    border-bottom: 2px solid #7f5cf1;
+    display: inline-block;
+  }
+  
+  .profile-detail {
+    font-size: 1em;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .profile-detail strong {
+    color: #555;
+  }
+  
+  .profile-detail a {
+    color: #7f5cf1;
+    text-decoration: none;
+  }
+  
+  .profile-detail a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Statistics Card */
+  /* Statistics Card */
+.stats-card {
+    text-align: center;
+    background: linear-gradient(135deg, #7f5cf1, #6a3fcf);
+    color: #fff; /* Default text color for stats card */
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.stats-card h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #fff; /* Ensures heading is white */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7); /* Optional white underline */
+    display: inline-block;
+}
+
+  
+  .stat-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .stat-number {
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+  
+  .stat-label {
+    font-size: 1.2em;
+  }
+  
+  /* Edit Button */
+  .edit-profile-button {
+    display: block;
+    margin: 30px auto;
+    background-color: #7f5cf1;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-profile-button:hover {
+    background-color: #6a3fcf;
+  }
+  
+  
+.statistics{
+    color: #fff;
+}
