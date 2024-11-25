@@ -21,6 +21,40 @@ const RecruiterDetailsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Regex validation
+    const nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces
+    const phoneRegex = /^[6-9]\d{9}$/; // Indian phone number validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Standard email format
+    const linkedinRegex = /^https?:\/\/(www\.)?linkedin\.com\/.*$/; // LinkedIn URL
+    const websiteRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/; // Website URL
+    const experienceRegex = /^[0-9]+$/; // Numbers only
+
+    if (!nameRegex.test(formData.name)) {
+      alert("Please enter a valid name (letters and spaces only).");
+      return;
+    }
+    if (!phoneRegex.test(formData.phone)) {
+      alert("Please enter a valid phone number (starting with 6-9 and 10 digits).");
+      return;
+    }
+    if (!emailRegex.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    if (!linkedinRegex.test(formData.linkedin)) {
+      alert("Please enter a valid LinkedIn URL.");
+      return;
+    }
+    if (formData.website && !websiteRegex.test(formData.website)) {
+      alert("Please enter a valid website URL.");
+      return;
+    }
+    if (!experienceRegex.test(formData.experience) || formData.experience < 0) {
+      alert("Please enter a valid number for experience (positive integers only).");
+      return;
+    }
+
     console.log("Recruiter Details Submitted: ", formData);
     alert("Form Submitted Successfully!");
   };
