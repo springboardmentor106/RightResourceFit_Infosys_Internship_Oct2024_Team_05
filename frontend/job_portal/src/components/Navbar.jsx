@@ -59,7 +59,7 @@ const Navbar = () => {
                     
                     <li><Link to="/">Home</Link></li>
                     <li>About Us</li>
-                    <li>Jobs</li>
+                    <li onClick={()=>navigate('all-jobs')}>Jobs</li>
                     <li><a href='#contact'>Contact Us</a></li>
                 </ul>
             </div>

@@ -17,6 +17,10 @@ const Home = () => {
     const [latestJobs, setLatestjobs]=useState([]);
     const [user, setUser] = useState(null);
 
+    const handleNavigatetoAllJobs=()=>{
+        navigate('/all-jobs',{state:{user}})
+    }
+
     const validateSession = async () => {
         try {
           const sessionToken = localStorage.getItem("sessionToken");  
@@ -244,7 +248,7 @@ const Home = () => {
             
         </div>
         <div className="link">
-            <a href="">View More </a>
+            <a onClick={handleNavigatetoAllJobs}>View More </a>
         </div>
 
     <Footer/>    

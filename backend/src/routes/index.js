@@ -246,15 +246,26 @@ async function addJob(req, res) {
   }
 }
 
-//latest 4 jobs 
+//latest 3 jobs 
 router.get('/jobs/latest', async (req, res) => {
   try {
     const latestJobs = await Job.find().sort({ createdAt: -1 }).limit(3);
     console.log(latestJobs);
-    res.json({ jobs: latestJobs }); // Wrap jobs array in an object for frontend compatibility
+    res.json({ jobs: latestJobs }); 
   } catch (error) {
     console.error("Error fetching jobs:", error);
     res.status(500).json({ error: "Error fetching jobs" });
+  }
+});
+//get all jobs available 
+router.get('/alljobs', async (req, res) => {
+  try {
+    const allJobs = await Job.find(); 
+    console.log(allJobs);
+    res.json({ jobs: allJobs }); 
+  } catch (error) {
+    console.error("Error fetching all jobs:", error);
+    res.status(500).json({ error: "Error fetching all jobs" });
   }
 });
 
@@ -320,6 +331,9 @@ async function searchJobs(req, res){
   }
   
 }
+
+
+
 
 import { applyForJobApplication ,upload} from "../db/dbHandlers.js";
 router.post("/jobs/apply",upload.single("resume"),  async (req, res) => {
@@ -433,9 +447,7 @@ router.put("/applications/:id", upload.single("resume"), async (req, res) => {
 });
 
 //get all applicants of a job
-// router.get('/applicants/:jobId',async(req,res)=>{
-  
-// })
+
 export const getApplicantsByJobId = async (req, res) => {
   const { jobId } = req.params;
 

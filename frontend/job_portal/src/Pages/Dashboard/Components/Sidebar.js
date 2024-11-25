@@ -12,9 +12,11 @@ import {
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ setActiveContent }) => {
   const [isMinimized, setIsMinimized] = useState(false); // State for minimized sidebar
+  const navigate=useNavigate()
 
   return (
     <div className={`sidebar ${isMinimized ? 'minimized' : ''}`}>
@@ -24,7 +26,7 @@ const Sidebar = ({ setActiveContent }) => {
       </div>
 
       <ul className="nav-menu">
-        <li className="nav-item" onClick={() => setActiveContent("Dashboard")}>
+        <li className="nav-item" onClick={() => navigate('/hrdashboard')}>
           <FontAwesomeIcon icon={faHome} />
           <span className={isMinimized ? 'hidden' : ''}>Dashboard</span>
         </li>
@@ -43,7 +45,7 @@ const Sidebar = ({ setActiveContent }) => {
           <FontAwesomeIcon icon={faUsers} />
           <span className={isMinimized ? 'hidden' : ''}>All Applicants</span>
         </li>
-        <li className="nav-item" onClick={() => setActiveContent("Job Listing")}>
+        <li className="nav-item" onClick={() => navigate('/all-posted-jobs')}>
           <FontAwesomeIcon icon={faBriefcase} />
           <span className={isMinimized ? 'hidden' : ''}>Job Listing</span>
         </li>

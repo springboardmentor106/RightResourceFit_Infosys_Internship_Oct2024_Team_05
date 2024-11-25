@@ -17,6 +17,8 @@ import SignInPage from "./Pages/recruiter_side_pages/SignInPage";
 import RecruiterSignUpPage  from "./Pages/recruiter_side_pages/RecruiterSignUpPage";
 import StartPage from "./Pages/recruiter_side_pages/StartPage"
 import AllApplications from "./Pages/All Applicants/AllApplications"
+import  AllJobs from "./Pages/AllJobs/AllJobs"
+import AllPostedJobs from './Pages/recruiter_side_pages/AllPostedJobs/AllPostedJobs'
 
 
 
@@ -49,7 +51,12 @@ function App() {
           <Route path="/recruiter-sigup" element={<RecruiterSignUpPage />} />
           <Route path="/start" element={<StartPage />} />
           <Route path="/applicants/:jobId" element={<AllApplications />} />
+          <Route path="/all-jobs" element={<AllJobs />} />
+          <Route path="/all-posted-jobs" element={<AllPostedJobs />} />
         </Routes>
+        
+        
+        
       </div>
     </Router>
   );
