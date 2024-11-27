@@ -239,7 +239,7 @@ const notificationSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ['application', 'status_update'],
+    enum: ['application_submitted', 'application_status', 'job_posted', 'other'],
     required: true
   },
   jobId: {
@@ -251,6 +251,10 @@ const notificationSchema = new Schema({
     type: String,
     required: true
   },
+  title: {
+    type: String,
+    required: true
+  },
   read: {
     type: Boolean,
     default: false
@@ -259,7 +263,10 @@ const notificationSchema = new Schema({
     type: Date,
     default: Date.now
   }
-});
+}, { versionKey: false });
+
+// Add index for faster queries
+notificationSchema.index({ recipient: 1, createdAt: -1 });
 
 const Notification = model('Notification', notificationSchema);
 const HRUser = model("HRUser", hrUserSchema);

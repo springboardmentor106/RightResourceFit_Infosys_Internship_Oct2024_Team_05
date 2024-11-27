@@ -367,6 +367,52 @@ async function markNotificationAsRead(notificationId) {
   }
 }
 
+export const createNotification = async ({
+  recipient,
+  type,
+  jobId,
+  message,
+  title
+}) => {
+  try {
+    const notification = new Notification({
+      recipient,
+      type,
+      jobId,
+      message,
+      title
+    });
+    await notification.save();
+    return notification;
+  } catch (error) {
+    throw new Error('Failed to create notification: ' + error.message);
+  }
+};
+
+export const getUnreadNotifications = async (userId) => {
+  try {
+    return await Notification.find({
+      recipient: userId,
+      read: false
+    })
+    .sort({ createdAt: -1 })
+    .populate('jobId', 'title');
+  } catch (error) {
+    throw new Error('Failed to fetch notifications: ' + error.message);
+  }
+};
+
+export const markNotificationAsRead = async (notificationId) => {
+  try {
+    return await Notification.findByIdAndUpdate(
+      notificationId,
+      { read: true },
+      { new: true }
+    );
+  } catch (error) {
+    throw new Error('Failed to mark notification as read: ' + error.message);
+  }
+};
 
 export {
   connectToDB,

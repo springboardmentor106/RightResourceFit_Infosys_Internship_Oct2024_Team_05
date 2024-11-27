@@ -338,6 +338,16 @@ router.post("/jobs/apply",upload.single("resume"),  async (req, res) => {
 
     const newApplication = await applyForJobApplication(applicationData,file, applicantId,
       jobId  ); 
+
+    // Create notification for the HR
+    await createNotification({
+      recipient: job.postedBy, // Assuming you have the HR's ID in the job
+      type: 'application_submitted',
+      jobId: jobId,
+      title: 'New Job Application',
+      message: `A new application has been submitted for ${job.title}`
+    });
+
     res.status(200).json({ message: "Job application submitted successfully", application: newApplication });
   } catch (err) {
     console.error("Error applying for job:", err);
@@ -465,6 +475,22 @@ router.post("/jobs/search", searchJobs); // Search jobs by location and skills
 router.get("/applications/:applicantId", getApplicationsByApplicant);
 router.delete('/applications/:applicantId/:jobId',deleteApplication);
 
+router.get('/notifications', authenticateToken, async (req, res) => {
+  try {
+    const notifications = await getUnreadNotifications(req.user.id);
+    res.json(notifications);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
+router.patch('/notifications/:id/read', authenticateToken, async (req, res) => {
+  try {
+    const notification = await markNotificationAsRead(req.params.id);
+    res.json(notification);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 export default router;
