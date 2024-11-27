@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "./RecruiterDetailsForm.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const RecruiterDetailsForm = () => {
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -16,14 +19,33 @@ const RecruiterDetailsForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit=async(e)=>{
     e.preventDefault();
-    console.log("Recruiter Details Submitted: ", formData);
-    alert("Form Submitted Successfully!");
-  };
+    try {
+      const response =await axios.post("http://localhost:3000/api/hr-profile",formData)
+
+      if (response.status === 201) {
+        alert("Profile added successfully!");
+        localStorage.setItem('profileData', JSON.stringify(response.data));
+        console.log("Profile Data with HR ID:", response.data);
+        navigate('/hr-profilePage')
+      } else {
+        alert("Error adding profile.");
+      }
+      
+    } catch (error) {
+      console.error("Error submitting form data", error);
+      alert("Error submitting profile data. Please try again.");
+    }
+  }
+
+ 
 
   return (
     <div className="form-container">
@@ -97,7 +119,7 @@ const RecruiterDetailsForm = () => {
         <div className="form-group">
           <label htmlFor="linkedin">LinkedIn ID</label>
           <input
-            type="url"
+            type="text"
             id="linkedin"
             name="linkedin"
             value={formData.linkedin}

@@ -13,20 +13,31 @@ function AllPostedJobs() {
     const [editJob, setEditJob] = useState(null);
     const [jobToDelete, setJobToDelete] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    useEffect(()=>{
-        const fetchJobs=async()=>{
-            try {
-                const response=await axios.get('http://localhost:3000/api/alljobs');
-                setJobs(response.data.jobs)
-                console.log("fetched jobs:",response.data.jobs)
-                
-            } catch (error) {
-                console.error("Error Fetching all jobs from frontend")
-            }
-        }
+    const [profile, setProfile] = useState(null);
 
-        fetchJobs();
-    },[])
+  useEffect(() => {
+    // Check if profile data is in localStorage
+    const storedProfile = localStorage.getItem('profileData');
+    if (storedProfile) {
+      setProfile(JSON.parse(storedProfile));
+    }
+  }, []);
+  useEffect(() => {
+    if (profile?.user?.hrUserID) {
+      const fetchLatestJobs = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:3000/api/recruiter/all/${profile.user.hrUserID}`
+          );
+          setJobs(response.data.jobs);
+        } catch (error) {
+          console.error('Error fetching latest jobs:', error);
+        }
+      };
+      fetchLatestJobs();
+    }
+  }, [profile]);
+  
 
     const handleViewApplicants = (jobId) => {
         navigate(`/applicants/${jobId}`);

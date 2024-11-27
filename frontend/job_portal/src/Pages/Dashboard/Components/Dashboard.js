@@ -14,6 +14,32 @@ function Dashboard() {
   const [editJob, setEditJob] = useState(null);
   const [jobToDelete, setJobToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    // Check if profile data is in localStorage
+    const storedProfile = localStorage.getItem('profileData');
+    if (storedProfile) {
+      setProfile(JSON.parse(storedProfile));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (profile?.user?.hrUserID) {
+      const fetchLatestJobs = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:3000/api/recruiter/latest/${profile.user.hrUserID}`
+          );
+          setLatestJobs(response.data.jobs);
+        } catch (error) {
+          console.error('Error fetching latest jobs:', error);
+        }
+      };
+      fetchLatestJobs();
+    }
+  }, [profile]);
+  
 
   const handlePostJobClick = () => {
     navigate('/jobpostingpage');}
@@ -64,11 +90,17 @@ function Dashboard() {
     const handleViewApplicants = (jobId) => {
       navigate(`/applicants/${jobId}`);
   };
+
+ 
+  if (!profile) {
+    return <div>Loading profile...</div>;
+  }
+
     
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1>Welcome Back</h1>
+        <h1>Welcome Back {profile.user.username}</h1>
         <button className="post-job-btn" onClick={handlePostJobClick}>+ Post A Job</button>
       </header>
 
@@ -98,11 +130,13 @@ function Dashboard() {
 
 <div className="job-row">
           {latestJobs.map((job) => (
-            <div className="job-card" key={job._id} onClick={() => handleViewApplicants(job._id)}>
+            <div className="job-card" key={job._id} 
+            //onClick={() => handleViewApplicants(job._id)}
+            >
               <div className="job-info">
                 {/* <img src="https://via.placeholder.com/40" alt="company logo" /> */}
                 <div>
-                  <h1><span className="job-type">{job.title}</span></h1>
+                  <h1><span className="job-type" onClick={() => handleViewApplicants(job._id)}>{job.title}</span></h1>
                   <p>{job.description}</p>
                   {/* <small>{job.appliedCount} applied of {job.capacity} capacity</small> */}
                  <div className="btn">

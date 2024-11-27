@@ -7,9 +7,9 @@ const StartPage = () => {
 
   const handleSelection = (role) => {
     if (role === "recruiter") {
-      navigate("/recruiter");
+      navigate("/recruiter-sigup");
     } else {
-      navigate("/applicant");
+      navigate("/signup");
     }
   };
 

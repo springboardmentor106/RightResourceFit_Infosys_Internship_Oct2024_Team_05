@@ -1,6 +1,6 @@
 import { connect } from "mongoose";
 import { generateRandomString } from "../util/index.js";
-import { User, Session } from "./dbSchema.js";
+import { User, Session, recruiterSession } from "./dbSchema.js";
 import bcrypt from "bcryptjs";
 import {
   MONGODB_URL,
@@ -127,6 +127,33 @@ async function verifySession(sessionToken) {
     console.log(err.message);
   }
 }
+import { HRUser } from "./dbSchema.js";
+
+async function getRecruiterSessionByToken(req, res) {
+  try {
+    const sessionToken = req.headers.authorization.split(' ')[1];
+
+    // Fetch session details directly from the database
+    const sessionInfo = await recruiterSession.findOne({ sessionToken, userType: 'recruiter' });
+
+    if (!sessionInfo) {
+      return res.status(401).json({ message: 'Invalid or expired session.' });
+    }
+
+    // Fetch recruiter details using the userId from the session
+    const recruiter = await HRUser.findById(sessionInfo.userId);
+    if (!recruiter) {
+      return res.status(404).json({ message: 'Recruiter not found.' });
+    }
+
+    res.status(200).json({
+      message: 'Valid session.',
+      recruiter,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
 
 async function deleteSession(sessionToken) {
   try {
@@ -135,6 +162,38 @@ async function deleteSession(sessionToken) {
     console.log(err.message);
   }
 }
+
+//const RecruiterSession=require('./dbSchema.js/')
+const saveRecruiterSessionToDatabase=async(sessionData)=>{
+  try {
+    const session=new recruiterSession(sessionData)
+    await session.save();
+    return session;
+  } catch (error) {
+    console.error('Error saving recruiter session to database:', error);
+    throw error;
+  }
+}
+const createRecruiterSession = async (userAgent, recruiterId) => {
+  try {
+    
+    //const sessionToken = generateSessionToken(recruiterId, 'recruiter');
+    const sessionToken = generateRandomString(42);
+
+    await saveRecruiterSessionToDatabase({
+      userId: recruiterId,
+      userType: 'recruiter',
+      sessionToken,
+      userAgent,
+    });
+
+    
+    return { sessionToken };
+  } catch (err) {
+    console.error('Error creating recruiter session:', err);
+    throw err;
+  }
+};
 
 import { Otp } from "./dbSchema.js";
 
@@ -189,7 +248,11 @@ async function addJobToDB(jobData) {
       description: jobData.description,
       location: jobData.location,
       skills: jobData.skills,
-      //postedBy: jobData.hrId, // Reference to HR user
+      jobMode: jobData.jobMode, // Added jobMode
+      experience: jobData.experience, 
+      salaryRange: jobData.salaryRange, 
+      jobType: jobData.jobType, 
+      postedBy: jobData.hrId, // Reference to HR user
     });
     await newJob.save();
     return newJob;
@@ -209,6 +272,11 @@ async function updateJobInDB(jobId, jobData) {
         description: jobData.description,
         location: jobData.location,
         skills: jobData.skills,
+        jobMode:jobData.jobMode,
+        experience: jobData.experience, 
+        salaryRange: jobData.salaryRange, 
+        jobType: jobData.jobType, 
+        postedBy: jobData.hrId,
         updatedAt: Date.now(), // Update the timestamp
       },
       { new: true } // Return the updated document
@@ -389,5 +457,8 @@ export {
   updateJobApplication,
   createNotification,
   getNotifications,
-  markNotificationAsRead
+  markNotificationAsRead,
+  saveRecruiterSessionToDatabase,
+  createRecruiterSession,
+  getRecruiterSessionByToken
 };

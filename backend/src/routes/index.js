@@ -192,6 +192,7 @@ async function resetPassword(req, res) {
   }
 }
 
+
 //! User Route Handlers
 router.get("/", async (req, res) => {
   console.log(`This api is running`);
@@ -223,12 +224,163 @@ router.post("/logout", async (req, res) => {
   await logoutUser(req, res);
 });
 
-import { Job } from "../db/dbSchema.js"; // Import Job schema
+//register hr
+async function registerRecruiter(req, res) {
+  try {
+    const { email, username, companyName, jobTitle, password } = req.body;
+
+    // Validate input fields
+    if (!email || !username || !companyName || !jobTitle || !password) {
+      return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    // Check if the recruiter already exists
+    const existingRecruiter = await HRUser.findOne({ email });
+    if (existingRecruiter) {
+      return res.status(409).json({ message: 'Email already registered.' });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new recruiter
+    const newRecruiter = new HRUser({
+      email,
+      username,
+      companyName,
+      jobTitle,
+      password: hashedPassword,
+      
+    });
+
+    // Save the recruiter to the database
+    await newRecruiter.save();
+
+    
+    res.status(201).json({ message: 'Recruiter registered successfully.', hrid: newRecruiter._id });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+//login hr
+import { createRecruiterSession } from "../db/dbHandlers.js";
+async function loginRecruiter(req, res) {
+  try {
+    const { username, password } = req.body;
+    const userAgent = req.get('User-Agent');
+
+    // Validate input
+    if (!username || !password) {
+      return res.status(400).json({ message: 'username and password are required.' });
+    }
+
+    // Find recruiter by email
+    const recruiter = await HRUser.findOne({ username });
+    if (!recruiter) {
+      return res.status(404).json({ message: 'Recruiter not found.' });
+    }
+
+    // Compare passwords
+    const isPasswordValid = await bcrypt.compare(password, recruiter.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid password.' });
+    }
+
+    // Create a session
+  
+    const session = await createRecruiterSession (req.get('User-Agent'), recruiter._id);
+    if (!session) {
+      return res.status(500).json({ message: 'Failed to create recruiter session.' });
+    }
+
+    // Respond with session token
+    res.status(200).json({ sessionToken: session.sessionToken });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+//logout hr
+async function logoutRecruiter(req, res) {
+  try {
+    const session = req.headers.authorization.split(' ')[1];
+    const sessionInfo = await verifySession(session);
+
+    if (!sessionInfo) {
+      return res.status(401).json({ message: 'Invalid session.' });
+    }
+
+    // Delete the session
+    await deleteSession(session);
+
+    res.status(200).json({ message: 'Session deleted successfully.' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+import { getRecruiterSessionByToken } from "../db/dbHandlers.js";
+async function validateRecruiterSession(req, res) {
+  try {
+    const session = req.headers.authorization.split(' ')[1];
+    const sessionInfo = await getRecruiterSessionByToken(session);
+
+    if (!sessionInfo) {
+      return res.status(401).json({ message: 'Invalid session.' });
+    }
+
+    
+
+    res.status(200).json({
+      message: 'Valid session.',
+      recruiter: sessionInfo,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
+
+
+router.post('/hr-profile', async (req, res) => {
+  try {
+    const { name, phone, email, company, role, linkedin, website, industry, experience } = req.body;
+
+    const hrUser=await HRUser.findOne({email});
+    if(!hrUser){
+      return res.status(404).json({message:'HR is not found'})
+    }
+    
+    // Create and save new HR user
+    const newHR = new HrProfile({
+      username: name,
+      hrUserID: hrUser._id,
+      email,
+     
+      role,
+      companyName: company,
+      contactNumber: phone,
+      address: linkedin, 
+      industry,
+      experience,
+      website,
+    });
+
+    await newHR.save();
+    res.status(201).json({ message: 'Profile added successfully', user: newHR });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error adding HR profile', error: error.message });
+  }
+});
+
+
+import {  HrProfile, HRUser, Job } from "../db/dbSchema.js"; // Import Job schema
 
 // Add Job - HR functionality
 async function addJob(req, res) {
   try {
-    const { title, description, location, skills, hrId } = req.body;
+    const { title, description, location, skills, hrId,jobMode,experience,salaryRange,jobType } = req.body;
     console.log("Adding job with data:", req.body);//added this line
 
     const newJob = new Job({
@@ -236,7 +388,11 @@ async function addJob(req, res) {
       description,
       location,
       skills,
-      //postedBy: hrId, // HR User ID
+      jobMode, // Added jobMode
+      experience, // Added experience
+      salaryRange, // Added salaryRange
+      jobType, // Added jobType
+      postedBy: hrId, 
     });
 
     await newJob.save();
@@ -257,7 +413,7 @@ router.get('/jobs/latest', async (req, res) => {
     res.status(500).json({ error: "Error fetching jobs" });
   }
 });
-//get all jobs available 
+//get all jobs available (applicant)
 router.get('/alljobs', async (req, res) => {
   try {
     const allJobs = await Job.find(); 
@@ -269,7 +425,7 @@ router.get('/alljobs', async (req, res) => {
   }
 });
 
-//get job
+//get job (applicant)
 router.get("/jobs/:jobId",async(req,res)=>{
   try {
     const {jobId}=req.params;
@@ -284,15 +440,43 @@ router.get("/jobs/:jobId",async(req,res)=>{
   }
 })
 
+//get latest jobs (HR)
+router.get('/recruiter/latest/:hrId', async (req, res) => {
+  const { hrId } = req.params;
+  try {
+    const latestJobs = await Job.find({ postedBy: hrId }) // Filter by hrId
+      .sort({ createdAt: -1 }) // Sort by creation date (descending)
+      .limit(3); // Limit to 3 jobs
+    console.log(latestJobs);
+    res.json({ jobs: latestJobs });
+  } catch (error) {
+    console.error("Error fetching latest jobs for recruiter:", error);
+    res.status(500).json({ error: "Error fetching latest jobs for recruiter" });
+  }
+});
+
+// Fetch All Jobs Posted by a Recruiter
+router.get('/recruiter/all/:hrId', async (req, res) => {
+  const { hrId } = req.params;
+  try {
+    const allJobs = await Job.find({ postedBy: hrId }); // Filter by hrId
+    console.log(allJobs);
+    res.json({ jobs: allJobs });
+  } catch (error) {
+    console.error("Error fetching all jobs for recruiter:", error);
+    res.status(500).json({ error: "Error fetching all jobs for recruiter" });
+  }
+});
+
 // Update Job - HR functionality
 async function updateJob(req, res) {
   try {
     const {jobId}=req.params
-    const {  title, description, location, skills } = req.body;
+    const {  title, description, location, skills,jobMode,experience,salaryRange,jobType } = req.body;
     
     const updatedJob = await Job.findByIdAndUpdate(
       jobId,
-      { title, description, location, skills, updatedAt: Date.now() },
+      { title, description, location, skills,jobMode,experience,salaryRange,jobType, updatedAt: Date.now() },
       { new: true } // Return updated job
     );
 
@@ -498,6 +682,10 @@ router.post("/jobs/search", searchJobs); // Search jobs by location and skills
 router.get("/applications/:applicantId", getApplicationsByApplicant);
 router.delete('/applications/:applicantId/:jobId',deleteApplication);
 router.get('/applicants/:jobId',getApplicantsByJobId);
+router.post('/recruiter-register', registerRecruiter);
+router.post('/recruiter-login', loginRecruiter);
+router.post('/recruiter/logout', logoutRecruiter);
+router.get('/recruiter/validate-session', validateRecruiterSession);
 
 
 
