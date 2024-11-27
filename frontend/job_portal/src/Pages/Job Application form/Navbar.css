@@ -1,0 +1,86 @@
+/* src/components/Navbar.css */
+
+.navbar {
+  background-color: #7a49cc;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.navbar h1 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.nav-links a {
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #d1c1ff;
+}
+
+.profile-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-image: url('https://path-to-your-icon.com/icon.png'); /* Replace with actual icon URL */
+  background-size: cover;
+  border-radius: 50%;
+  cursor: pointer;
+}
+/* src/components/Navbar.css */
+
+.navbar {
+  background-color: #7a49cc;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.nav-links a {
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #d1c1ff;
+}
+
+.profile-icon {
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+}
+

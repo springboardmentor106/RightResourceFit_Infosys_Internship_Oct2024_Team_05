@@ -1,0 +1,72 @@
+.job-posting-page {
+    display: flex;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .job-form-container-wrapper {
+    margin: 20px auto;
+    padding: 30px 40px;
+    width: 90%;
+    max-width: 1000px;
+    background-color: #f9fafb;
+    min-height: 100vh;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .job-form-container-wrapper:hover {
+    background-color: #f3f4f6;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .salary-input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%; 
+    box-sizing: border-box; 
+    background-color: #f9fafb;
+    transition: border-color 0.2s;
+  }
+  
+  .salary-prefix {
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px;
+  }
+  
+  .salary-number-input {
+    flex-grow: 1; 
+    border: none; 
+    outline: none;
+    background: transparent; 
+    font-size: 1rem;
+    padding-left: 5px; 
+  }
+  
+  
+  .salary-number-input {
+    border: none;
+    outline: none;
+    width: 100px;
+    padding: 8px;
+    font-size: 1rem;
+    background: transparent;
+  }
+  
+  @media (max-width: 768px) {
+    .job-form-container-wrapper {
+      width: 95%;
+      padding: 20px 25px; 
+    }
+  }
+  
