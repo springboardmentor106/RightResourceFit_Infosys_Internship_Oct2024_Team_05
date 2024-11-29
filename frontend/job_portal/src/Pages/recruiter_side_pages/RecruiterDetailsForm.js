@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import "./RecruiterDetailsForm.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const RecruiterDetailsForm = () => {
   const navigate=useNavigate()
+  const { state } = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -16,6 +19,22 @@ const RecruiterDetailsForm = () => {
     industry: "",
     experience: "",
   });
+
+  useEffect(() => {
+    if (state && state.profile) {
+      setFormData({
+        name: state.profile.username || "",
+        phone: state.profile.contactNumber || "",
+        email: state.profile.email || "",
+        company: state.profile.companyName || "",
+        role: state.profile.role || "",
+        linkedin: state.profile.address || "",
+        website: state.profile.website || "",
+        industry: state.profile.industry || "",
+        experience: state.profile.experience || "",
+      });
+    }
+  }, [state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +49,7 @@ const RecruiterDetailsForm = () => {
     try {
       const response =await axios.post("http://localhost:3000/api/hr-profile",formData)
 
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         alert("Profile added successfully!");
         localStorage.setItem('profileData', JSON.stringify(response.data));
         console.log("Profile Data with HR ID:", response.data);

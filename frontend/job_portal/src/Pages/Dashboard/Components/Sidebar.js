@@ -14,17 +14,25 @@ import {
 import "./sidebar.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import LogoutModal from "../../../components/LogoutModal";
 
 const Sidebar = ({ setActiveContent }) => {
   const [isMinimized, setIsMinimized] = useState(false); // State for minimized sidebar
   const navigate=useNavigate()
   const [profile, setProfile] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   useEffect(() => {
     // Check if profile data is in localStorage
-    const storedProfile = localStorage.getItem('profileData');
-    if (storedProfile) {
-      setProfile(JSON.parse(storedProfile));
+    //const storedProfile = localStorage.getItem('profileData');
+    const storedUserDetails = localStorage.getItem("userDetails");
+    // if (storedProfile) {
+    //   setProfile(JSON.parse(storedProfile));
+    // }
+    if (storedUserDetails) {
+      const parsedUserDetails = JSON.parse(storedUserDetails);
+      setProfile(parsedUserDetails);
+      //console.log("UserDetails loaded from localStorage:", parsedUserDetails);
     }
   }, []);
   if (!profile) {
@@ -33,17 +41,25 @@ const Sidebar = ({ setActiveContent }) => {
 
   const handleButtonClick=()=>{
     if(profile){
+     // localStorage.removeItem('profileData');
+      localStorage.removeItem('userDetails');
       localStorage.removeItem('sessionToken'); 
-      setProfile(null); // Optionally clear the profile state
-      alert('Logged out successfully!');
+      setProfile(null)
+      setIsModalOpen(false); 
       navigate('/recruiter-sigin');
-
     }
     else{
       navigate('/recruiter-sigin');
     }
   }
 
+  const handleLogoutClick = () => {
+    setIsModalOpen(true); 
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false); 
+  };
 
   return (
     <div className={`sidebar ${isMinimized ? 'minimized' : ''}`}>
@@ -57,16 +73,16 @@ const Sidebar = ({ setActiveContent }) => {
           <FontAwesomeIcon icon={faHome} />
           <span className={isMinimized ? 'hidden' : ''}>Dashboard</span>
         </li>
-        <li className="nav-item" onClick={() => setActiveContent("Messages")}>
+        <li className="nav-item" onClick={() => navigate('/messages')}>
           <FontAwesomeIcon icon={faEnvelope} />
           <span className={isMinimized ? 'hidden' : ''}>
             Messages
-            <span className="badge">1</span>
+            <span className="badge"></span>
           </span>
         </li>
-        <li className="nav-item" onClick={() => setActiveContent("Company Profile")}>
+        <li className="nav-item" onClick={()=>navigate('/hr-profilePage')}>
           <FontAwesomeIcon icon={faBuilding} />
-          <span className={isMinimized ? 'hidden' : ''}>Company Profile</span>
+          <span className={isMinimized ? 'hidden' : ''} >Company Profile</span>
         </li>
         <li className="nav-item" onClick={() => setActiveContent("All Applicants")}>
           <FontAwesomeIcon icon={faUsers} />
@@ -76,10 +92,10 @@ const Sidebar = ({ setActiveContent }) => {
           <FontAwesomeIcon icon={faBriefcase} />
           <span className={isMinimized ? 'hidden' : ''}>Job Listing</span>
         </li>
-        <li className="nav-item" onClick={() => setActiveContent("My Schedule")}>
+        {/* <li className="nav-item" onClick={() => setActiveContent("My Schedule")}>
           <FontAwesomeIcon icon={faCalendarAlt} />
           <span className={isMinimized ? 'hidden' : ''}>My Schedule</span>
-        </li>
+        </li> */}
       </ul>
 
       {/* <div className="settings-section">
@@ -98,18 +114,18 @@ const Sidebar = ({ setActiveContent }) => {
       <div className="logout">
   <button
     style={{
-      backgroundColor: '#ff4d4f', // Vibrant red color
-      color: 'white', // Text color
-      fontSize: '16px', // Font size
-      padding: '10px 20px', // Padding for size
-      border: 'none', // Remove border
-      borderRadius: '5px', // Rounded corners
-      cursor: 'pointer', // Pointer cursor on hover
+      backgroundColor: '#ff4d4f', 
+      color: 'white',
+      fontSize: '16px', 
+      padding: '10px 20px', 
+      border: 'none', 
+      borderRadius: '5px', 
+      cursor: 'pointer', 
       transition: 'background-color 0.3s, transform 0.2s',
     }}
-    onMouseEnter={(e) => (e.target.style.backgroundColor = '#e43c3d')} // Darker red on hover
+    onMouseEnter={(e) => (e.target.style.backgroundColor = '#e43c3d')} 
     onMouseLeave={(e) => (e.target.style.backgroundColor = '#ff4d4f')}
-    onClick={handleButtonClick}
+    onClick={handleLogoutClick}
   >
     {profile ? 'Logout' : 'Sign In'}
   </button>
@@ -119,12 +135,18 @@ const Sidebar = ({ setActiveContent }) => {
           className="profile-pic"
           src="https://randomuser.me/api/portraits/women/44.jpg"
           alt="Profile"
+          onClick={()=>navigate('/hr-profilePage')}
         />
         <div className={`profile-info ${isMinimized ? 'hidden' : ''}`}>
-          <div className="profile-name" onClick={()=>navigate('/hr-profilePage')}>{profile.user.username || "Give username"}</div>
-          <div className="profile-role">{profile.user.role} in {profile.user.companyName}</div>
+          <div className="profile-name" onClick={()=>navigate('/hr-profilePage')}>{profile.username || "Give username"}</div>
+          <div className="profile-role">{profile.role} in {profile.company}</div>
         </div>
       </div>
+      <LogoutModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onConfirm={handleButtonClick}
+      />
     </div>
   );
 };

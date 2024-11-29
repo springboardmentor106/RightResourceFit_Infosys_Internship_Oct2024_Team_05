@@ -17,15 +17,51 @@ const ProfilePage = () => {
 
   useEffect(() => {
     // Check if profile data is in localStorage
-    const storedProfile = localStorage.getItem('profileData');
-    if (storedProfile) {
-      const parsedProfile = JSON.parse(storedProfile);
-      setProfile(parsedProfile);
-      console.log("Profile loaded from localStorage:", parsedProfile); // Log the profile here
+    //const storedProfile = localStorage.getItem('profileData');
+    const storedUserDetails = localStorage.getItem("userDetails");
+    console.log(storedUserDetails)
+    // if (storedProfile) {
+    //   const parsedProfile = JSON.parse(storedProfile);
+    //   setProfile(parsedProfile);
+    //   //console.log("Profile loaded from localStorage:", parsedProfile); // Log the profile here
+    // }
+    if (storedUserDetails) {
+      const parsedUserDetails = JSON.parse(storedUserDetails);
+      setProfile(parsedUserDetails);
+      console.log("UserDetails loaded from localStorage:", parsedUserDetails);
     }
+    const fetchProfile = async () => {
+      try {
+        const storedUserDetails = localStorage.getItem("userDetails");
+        if (!storedUserDetails) {
+          setError("User details not found in localStorage.");
+          return;
+        }
+  
+        const { id } = JSON.parse(storedUserDetails);
+        console.log(id)
+        const response = await axios.get(`http://localhost:3000/api/profile/${id}`);
+        
+        setProfile(response.data.profile);
+        setLoading(false);
+        console.log(profile)
+  
+        
+        localStorage.setItem('profileData', JSON.stringify(response.data.profile));
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        setError(error.response?.data?.message || "Error fetching profile.");
+        setLoading(false);
+      }
+    };
+  
+    fetchProfile();
+  
+
+
   }, []);
 
-  if (!profile) {
+  if (!profile  ) {
     return <div>Loading or Profile data not available</div>;
   }
 
@@ -95,16 +131,16 @@ const ProfilePage = () => {
               <div className="profile-card">
                 <h2>Personal Details</h2>
                 <div className="profile-detail">
-                  <strong>Username:</strong> <span>{profile.user.username || "Give username"}</span>
+                  <strong>Username:</strong> <span>{ profile.username||  "Give username"}</span>
                 </div>
                 <div className="profile-detail">
-                  <strong>Phone Number:</strong> <span>{profile.user.contactNumber || "Enter Phone Number"}</span>
+                  <strong>Phone Number:</strong> <span>{profile.contactNumber||"Enter Phone Number"}</span>
                 </div>
                 <div className="profile-detail">
-                  <strong>Email ID:</strong> <span>{profile.user.email || "Enter Email"}</span>
+                  <strong>Email ID:</strong> <span>{profile.email|| "Enter Email"}</span>
                 </div>
                 <div className="profile-detail">
-                  <strong>Company Role:</strong> <span>{profile.user.role || "Enter role"}</span>
+                  <strong>Company Role:</strong> <span>{profile.role|| "Enter role"}</span>
                 </div>
               </div>
 
@@ -113,23 +149,23 @@ const ProfilePage = () => {
                 <h2>Professional Links</h2>
                 <div className="profile-detail">
                   <strong>LinkedIn:</strong>{" "}
-                  <a href="{profile.user.address }" target="_blank" rel="noopener noreferrer">
-                  {profile.user.address ? "View LinkedIn Profile" : "No LinkedIn Profile"}
+                  <a href="{profile.address }" target="_blank" rel="noopener noreferrer">
+                  {profile.address ? "View LinkedIn Profile" : "No LinkedIn Profile"}
                   </a>
                 </div>
                 <div className="profile-detail">
                   <strong>Website:</strong>{" "}
                   <a href="https://johndoe.dev" target="_blank" rel="noopener noreferrer">
-                  {profile.user.website ? profile.website : "No website provided"}
+                  {profile.website ? profile.website : "No website provided"}
                   </a>
                 </div>
                 <div className="profile-detail">
-                  <strong>Industry Experience:</strong> <span>{profile.user.experience ? `${profile.user.experience} years in ${profile.user.company} as ${profile.user.role}` : "No experience details provided"}</span>
+                  <strong>Industry Experience:</strong> <span>{profile.experience ? `${profile.experience} years in ${profile.companyName} as ${profile.role}` : "No experience details provided"}</span>
                 </div>
               </div>
 
               {/* Statistics */}
-              <div className="profile-card stats-card">
+              {/* <div className="profile-card stats-card">
                 <h2 className="statistics">📊 Statistics</h2>
                 <div className="stat-detail">
                   <span className="stat-number">25</span>
@@ -139,12 +175,12 @@ const ProfilePage = () => {
                   <span className="stat-number">120</span>
                   <span className="stat-label">Applications Received</span>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Edit Profile Button */}
             <div className="button-container">
-              <button className="edit-profile-button" onClick={()=>navigate('/hr-profile')}>✏️ Edit Profile</button>
+              <button className="edit-profile-button" onClick={()=>navigate('/hr-profile', { state: { profile } })}>✏️ Edit Profile</button>
             </div>
           </div>
         )}

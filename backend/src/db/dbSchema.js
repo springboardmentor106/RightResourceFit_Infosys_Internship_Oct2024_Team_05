@@ -83,7 +83,7 @@ const recruiterSessionSchema=new Schema({
       type:Schema.Types.ObjectId,
       required:true,
       ref:"HRUser",
-    },
+    }, 
     userType: {
       type: String,
       required: true,

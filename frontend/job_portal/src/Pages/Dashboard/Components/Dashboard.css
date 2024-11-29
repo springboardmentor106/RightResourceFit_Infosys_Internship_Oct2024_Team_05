@@ -86,6 +86,7 @@
 .job-card h1{
   text-align: left !important; 
   margin: 0;
+  cursor: pointer;
 }
 
 .view-more {

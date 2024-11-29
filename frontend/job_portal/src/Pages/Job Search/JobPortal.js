@@ -192,14 +192,14 @@ function JobPortal() {
                 </span>
               ))}
             </div>
-            <p className="salary"><strong>Salary: Rs 75000</strong> {selectedJob.salary}</p>
+            <p className="salary"><strong>Salary: Rs {selectedJob.salaryRange}</strong> {selectedJob.salary}</p>
             
             <p className="verified">This job is verified.</p>
           </div>
         )}
 
         {/* Profile Section */}
-        <div className="profile-card">
+        {/* <div className="profile-card">
           <img src={profile.image} alt="Profile" className="profile-image" />
           <h2>{profile.name}</h2>
           <h3>{profile.title}</h3>
@@ -215,7 +215,7 @@ function JobPortal() {
             </div>
           </div>
           <button className="edit-profile">Edit Profile</button>
-        </div>
+        </div> */}
       </div>
     </div>
     </>

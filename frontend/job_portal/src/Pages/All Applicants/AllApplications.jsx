@@ -5,21 +5,30 @@ import Sidebar from "../Dashboard/Components/Sidebar"
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
 
 function AllApplications() {
   const navigate=useNavigate()
+  const location=useLocation()
+  const { appStatus } = location.state || {};
   const {jobId}=useParams()
   const [applicants,setApplicants]=useState([])
+  const [applicantStatus, setApplicantStatus] = useState("Review");
 
+
+ 
   useEffect(()=>{
+    
     const fetchApplicants=async()=>{
       try {
         const response=await axios.get(`http://localhost:3000/api/applicants/${jobId}`)
         setApplicants(response.data.applicants);
         //console.log("Fetched applicants:", response.data.applicants);
         //console.log(applicants)
+         
+
 
         
       } catch (error) {
@@ -105,7 +114,7 @@ function AllApplications() {
               <td>{applicant.firstName} {applicant.lastName}</td>
               <td>{applicant.contactNumber}</td>
               <td>{applicant.email}</td>
-              <td className={`status ${applicant.status}`}>Review</td>
+              <td className="status">{appStatus ||"Review"}</td>
               <td>
                 <button className="view-button" onClick={() => navigate(`/candidate-profile/${applicant.applicantId}`, { state: applicant })}>
                   <FaEye /> View 

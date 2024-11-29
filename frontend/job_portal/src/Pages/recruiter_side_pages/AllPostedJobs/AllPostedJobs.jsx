@@ -17,17 +17,17 @@ function AllPostedJobs() {
 
   useEffect(() => {
     // Check if profile data is in localStorage
-    const storedProfile = localStorage.getItem('profileData');
+    const storedProfile = localStorage.getItem('userDetails');
     if (storedProfile) {
       setProfile(JSON.parse(storedProfile));
     }
   }, []);
   useEffect(() => {
-    if (profile?.user?.hrUserID) {
+    if (profile?.id) {
       const fetchLatestJobs = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3000/api/recruiter/all/${profile.user.hrUserID}`
+            `http://localhost:3000/api/recruiter/all/${profile.id}`
           );
           setJobs(response.data.jobs);
         } catch (error) {

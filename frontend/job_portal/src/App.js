@@ -21,6 +21,9 @@ import  AllJobs from "./Pages/AllJobs/AllJobs"
 import AllPostedJobs from './Pages/recruiter_side_pages/AllPostedJobs/AllPostedJobs'
 import RecruiterDetailsForm from "./Pages/recruiter_side_pages/RecruiterDetailsForm";
 import ProfilePage from "./Pages/Dashboard/Components/ProfilePage";
+import AppNotification from "./Pages/AppNotification/AppNotification";
+import Messages from "./Pages/recruiter_side_pages/Messages";
+import About from "./components/About";
 
 
 
@@ -56,6 +59,9 @@ function App() {
           <Route path="/all-posted-jobs" element={<AllPostedJobs />} />
           <Route path="/hr-profile" element={<RecruiterDetailsForm />} />
           <Route path="/hr-profilePage" element={<ProfilePage />} />
+          <Route path="/notification" element={<AppNotification />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/about" element={<About />} />
         </Routes>
         
         

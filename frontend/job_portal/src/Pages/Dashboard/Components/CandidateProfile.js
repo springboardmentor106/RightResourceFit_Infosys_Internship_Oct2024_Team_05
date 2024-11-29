@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import styles from "./CandidateProfile.module.css";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CandidateProfile() {
     const location=useLocation();
+    const navigate=useNavigate()
     const applicant=location.state;
+    const [appStatus,setAppStatus]=useState("review")
+    //console.log(applicant)
     // if (!applicant) {
     //     return <p>No applicant data found!</p>;
     //   }
@@ -13,12 +17,18 @@ function CandidateProfile() {
 
     const handleAccept = () => {
         setDecision("Accepted");
+        setAppStatus("Accepted")
         alert("The applicant has been accepted.");
+        
+        //navigate(`/applicants/${applicant.applicantId}`,  { state: { appStatus: appStatus } })
+        
+
     };
 
     const handleReject = () => {
         setDecision("Rejected");
         alert("The applicant has been rejected.");
+        localStorage.setItem(applicant.applicantId, "Rejected");
     };
 
     return (
@@ -43,10 +53,10 @@ function CandidateProfile() {
                     </div>
                 </div>
                 <div className={styles.profile}>
-                    <img
+                    {/* <img
                         src="profile-pic-url.jpg"
-                        alt="Candidate"
-                    />
+                        alt="Candidate" 
+                    /> */}
                     <div className={styles.profileDetails}>
                         <h3>{applicant.firstName} {applicant.lastName}</h3>
                         <p>Backend Developer</p>
@@ -76,6 +86,15 @@ function CandidateProfile() {
                     <p>Senior Backend Developer (Apr 2023 - Present) - USA</p>
                     <p>Backend Developer (2021 - 2023) - Portugal, USA</p>
                 </div>
+                {applicant.resume && (
+                    <div className={styles.resume}>
+                        <h4>Resume</h4>
+                        {/* Display the resume link */}
+                        <a href={applicant.resume} target="_blank" rel="noopener noreferrer">
+                            Click here to view the resume
+                        </a>
+                    </div>
+                )}
                 {decision && (
                     <div
                         className={`${styles.decision} ${

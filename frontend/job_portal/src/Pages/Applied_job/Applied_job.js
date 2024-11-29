@@ -9,51 +9,22 @@ import { useNavigate } from "react-router-dom";
 
 
 const AppliedJobs = () => {
-  // Dummy data for applied jobs
-  // const dummyJobs = [
-  //   {
-  //     id: 1,
-  //     title: "Sales Representative",
-  //     company: "Google",
-  //     description:
-  //       "We are seeking a motivated and results-driven Sales Representative to join our growing team. The ideal candidate will have a passion for sales, excellent communication skills, and a desire to succeed in a dynamic and competitive environment.",
-  //     appliedDate: "2024-03-15",
-  //     status: "Under Review",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Fullstack Designer",
-  //     company: "Google",
-  //     description:
-  //       "We are looking for a skilled Fullstack Developer to build and maintain web applications from concept to deployment. You will work on both the front-end and back-end, ensuring that applications are robust, scalable, and user-friendly.",
-  //     appliedDate: "2024-03-14",
-  //     status: "Interview Scheduled",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "UX Designer",
-  //     company: "Apple",
-  //     description:
-  //       "Creating user-centered designs for digital products and experiences.",
-  //     appliedDate: "2024-03-13",
-  //     status: "Pending",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Product Manager",
-  //     company: "Amazon",
-  //     description:
-  //       "Leading product development and strategy for consumer-facing applications.",
-  //     appliedDate: "2024-03-12",
-  //     status: "Under Review",
-  //   },
-  // ];
+  
   const [user, setUser] = useState(null);
   const [appliedJobs, setAppliedJobs] = useState([]);
-  // const [isModalOpen, setIsModalOpen] = useState(false);  
-  // const [jobToDelete, setJobToDelete] = useState(null);  
+  const [isModalOpen, setIsModalOpen] = useState(false);  
+  const [jobToDelete, setJobToDelete] = useState(null);  
   
   const navigate=useNavigate();
+
+  const openDeleteModal = (jobId) => {
+    setJobToDelete(jobId);  // Store the job ID to be deleted
+    setIsModalOpen(true);    // Open the modal
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);  // Close the modal
+  };
 
     const validateSession = async () => {
         try {
@@ -104,21 +75,21 @@ const AppliedJobs = () => {
 
      
 
-      const handleDeleteApplication = async (jobId) => {
-        try {
-          const confirmDelete = window.confirm("Are you sure you want to delete this job application?");
-          if (!confirmDelete) {
-            return; 
-          }
-          const applicantId = user._id;
-          const response = await axios.delete(`http://localhost:3000/api/applications/${applicantId}/${jobId}`);
-          console.log("Delete response:", response.data.message);
+      // const handleDeleteApplication = async (jobId) => {
+      //   try {
+      //     const confirmDelete = window.confirm("Are you sure you want to delete this job application?");
+      //     if (!confirmDelete) {
+      //       return; 
+      //     }
+      //     const applicantId = user._id;
+      //     const response = await axios.delete(`http://localhost:3000/api/applications/${applicantId}/${jobId}`);
+      //     console.log("Delete response:", response.data.message);
     
-          setAppliedJobs((prevJobs) => prevJobs.filter((job) => job.jobId._id !== jobId));
-        } catch (error) {
-          console.error("Error deleting job application", error);
-        }
-      };
+      //     setAppliedJobs((prevJobs) => prevJobs.filter((job) => job.jobId._id !== jobId));
+      //   } catch (error) {
+      //     console.error("Error deleting job application", error);
+      //   }
+      // };
       // const handleDeleteApplication = (jobId) => {
       //   setJobToDelete(jobId);
       //   setIsModalOpen(true); // Show the delete confirmation modal
@@ -157,6 +128,27 @@ const AppliedJobs = () => {
           },
         });
       };
+
+      const handleDeleteApplication = async () => {
+        try {
+          if (!jobToDelete) return;
+    
+          const applicantId = user._id;
+          const response = await axios.delete(
+            `http://localhost:3000/api/applications/${applicantId}/${jobToDelete}`
+          );
+          console.log("Delete response:", response.data.message);
+    
+          setAppliedJobs((prevJobs) =>
+            prevJobs.filter((job) => job.jobId._id !== jobToDelete)
+          );
+          alert("Job Application deleted Successfully")
+    
+          setIsModalOpen(false); 
+        } catch (error) {
+          console.error("Error deleting job application", error);
+        }
+      };
     
 
   return (
@@ -172,7 +164,7 @@ const AppliedJobs = () => {
             <div className="job-header">
               
               <div className="job-title-section">
-                <h2>{application.jobId.title}</h2>
+                <h2>{application.jobId.title} </h2>
                 {/* <p className="company-name">{job.company}</p> */}
               </div>
               
@@ -191,7 +183,13 @@ const AppliedJobs = () => {
                 <button onClick={()=>handleEditApplication(application.jobId._id)} className="edit-btn" >
                   Edit
                 </button>
-                <button onClick={() => handleDeleteApplication(application.jobId._id)} className="delete-btn" >
+                {/* <button onClick={() => handleDeleteApplication(application.jobId._id)} className="delete-btn" >
+                  Delete
+                </button> */}
+                <button
+                  onClick={() => openDeleteModal(application.jobId._id)}
+                  className="delete-btn"
+                >
                   Delete
                 </button>
               </div>
@@ -199,6 +197,11 @@ const AppliedJobs = () => {
         ))}
       </div>
     </div>
+    <DeleteModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={handleDeleteApplication}
+      />
     </>
   );
 };

@@ -74,8 +74,8 @@ function JobForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateInputs()) return;
-    const profileData = JSON.parse(localStorage.getItem("profileData"));
-    const hrId = profileData ? profileData.user.hrUserID : null;
+    const profileData = JSON.parse(localStorage.getItem("userDetails"));
+    const hrId = profileData ? profileData.id : null;
 
     const jobData = {
       title: jobTitle,

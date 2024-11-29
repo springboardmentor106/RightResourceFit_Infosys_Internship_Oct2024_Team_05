@@ -30,21 +30,28 @@ const SignInPage = () => {
         password,
       });
 
-      // On successful login
-      setSuccessMessage(response.data.message);
-      setErrorMessage('');
-      // Redirect to another page (e.g., dashboard) after successful login
-      //history.push('/dashboard');
-      alert('Logged-In successfully')
-      const profileData = localStorage.getItem('profileData');
+      if (response.status===200){
+        // On successful login
+        const userDetails = response.data.user;
+        setSuccessMessage(response.data.message);
+        setErrorMessage('');
+
+        localStorage.setItem('userDetails',JSON.stringify(userDetails))
+        alert('Logged-In successfully')
+        navigate('/hrdashboard');
+        console.log(userDetails)
+      }
+
+     
+      // const profileData = localStorage.getItem('profileData');
     
     // If profile data exists, navigate to the dashboard
-    if (profileData) {
-      navigate('/hrdashboard');
-    } else {
-      // If no profile data, redirect to profile creation form
-      navigate('/recruiter-details-form');
-    }
+    // if (profileData) {
+      
+    // } else {
+    //   // If no profile data, redirect to profile creation form
+    //   navigate('/recruiter-details-form');
+    // }
 
 
     } catch (err) {
