@@ -696,7 +696,21 @@ export const getApplicantsByJobId = async (req, res) => {
   }
 };
 
+import { createNotification } from "../db/dbHandlers.js";
+router.post('/notifications', async (req, res) => {
+  const { recipientId, type, jobId, message } = req.body;
+
+  try {
+    const notification = await createNotification(recipientId, type, jobId, message);
+    res.status(201).json(notification);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 // Get user notifications
+import { getNotifications } from "../db/dbHandlers.js";
 router.get('/notifications/:userId', async (req, res) => {
   try {
     const notifications = await getNotifications(req.params.userId);

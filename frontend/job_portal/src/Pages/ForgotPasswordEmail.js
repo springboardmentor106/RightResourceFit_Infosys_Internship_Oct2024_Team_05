@@ -61,7 +61,7 @@ const ForgotPasswordEmail = () => {
               onChange={handleChange}
             />
             <div className="otp">
-              <p>We will send you a 4-digit recovery code to your Email</p>
+              <p>We will send you a 6-digit recovery code to your Email</p>
             </div>
             {error && <p className="error-message">{error}</p>}
             {success && <p className="success-message">Code sent! Redirecting...</p>}

@@ -393,6 +393,7 @@ async function updateJobApplication(applicationId, updatedData, file) {
   }
 }
 
+import { Notification } from "./dbSchema.js";
 async function createNotification(recipientId, type, jobId, message) {
   try {
     const notification = new Notification({

@@ -13,9 +13,10 @@ function AllApplications() {
   const navigate=useNavigate()
   const location=useLocation()
   const { appStatus } = location.state || {};
+  // console.log(appStatus)
   const {jobId}=useParams()
   const [applicants,setApplicants]=useState([])
-  const [applicantStatus, setApplicantStatus] = useState("Review");
+  // const [applicantStatus, setApplicantStatus] = useState("Review");
 
 
  
