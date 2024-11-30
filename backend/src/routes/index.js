@@ -139,56 +139,108 @@ async function logoutUser(req, res) {
 // Forgot password handler
 async function forgotPassword(req, res) {
   try {
-    const { email } = req.headers;
+    // Log the entire request body for debugging
+    console.log("Request body:", req.body);
+    
+    const email = req.headers.email;
+    console.log("Received email:", email);
+
+    if (!email) {
+      return res.status(400).json({ 
+        message: "Email is required",
+        received: req.body 
+      });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
     const user = await findUserByEmail(email);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    console.log("Found user:", user);
 
-    // Generate a 4-digit OTP
-    const otp = crypto.randomInt(1000, 9999).toString();
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    // Save the OTP in the database and set expiration
+    // Generate a 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    console.log("Generated OTP:", otp);
+
+    // Save the OTP in the database
     await saveOtp(user._id, otp);
 
     // Send OTP to user's email
     await sendOtpEmail(email, { email, otp });
 
-    res.status(200).json({ message: "OTP sent to your email" });
+    res.status(200).json({ 
+      message: "OTP sent successfully",
+      userId: user._id 
+    });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Forgot password error:", err);
+    res.status(500).json({ 
+      message: "Failed to process forgot password request",
+      error: err.message 
+    });
   }
 }
 
 // Reset password handler
 async function resetPassword(req, res) {
   try {
-    const { email, otp, newPassword } = req.headers;
+    const { email, otp, newpassword } = req.headers;
+    console.log("Received headers:",email,otp,newpassword);
+
+    if (!email || !otp || !newpassword) {
+      return res.status(400).json({ 
+        message: "Email, OTP, and new password are required" 
+      });
+    }
+
+    console.log("Reset attempt for email:", email);
+
     const user = await findUserByEmail(email);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     const otpRecord = await findOtpByUserId(user._id);
-    if (!otpRecord || otpRecord.otp !== otp) {
-      console.log("otp from db => " + otpRecord.otp);
-      console.log("otp from db => " + otp);
-      return res.status(400).json({ message: "Invalid or expired OTP" });
+    if (!otpRecord) {
+      return res.status(400).json({ message: "No OTP found. Please request a new one." });
+    }
+
+    console.log("Stored OTP:", otpRecord.otp);
+    console.log("Received OTP:", otp);
+
+    if (otpRecord.otp !== otp) {
+      return res.status(400).json({ message: "Invalid OTP" });
     }
 
     // Check if OTP has expired
-    if (otpRecord.expiresAt < new Date()) {
-      return res.status(400).json({ message: "OTP has expired" });
+    if (new Date() > new Date(otpRecord.expiresAt)) {
+      await deleteOtp(user._id);
+      return res.status(400).json({ message: "OTP has expired. Please request a new one." });
     }
 
-    // Update the user's password
-    await updateUserPassword(user._id, newPassword);
+    // Update password
+    const updated = await updateUserPassword(user._id, newpassword);
+    if (!updated) {
+      return res.status(500).json({ message: "Failed to update password" });
+    }
 
-    // Remove the OTP after successful password reset
+    // Delete the used OTP
     await deleteOtp(user._id);
 
-    // Send an email notification after successful password reset
+    // Send success email
     await sendPasswordResetSuccessEmail(email, { email });
 
-    res.status(200).json({ message: "Password reset successful, email sent" });
+    res.status(200).json({ message: "Password reset successful" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Reset password error:", err);
+    res.status(500).json({ message: "Failed to reset password" });
   }
 }
 
@@ -487,6 +539,18 @@ router.get("/applications/:applicantId", getApplicationsByApplicant);
 router.delete('/applications/:applicantId/:jobId',deleteApplication);
 router.get('/applicants/:jobId',getApplicantsByJobId);
 
-
+// Add this route to help debug user issues
+router.get("/check-users", async (req, res) => {
+  try {
+    const userCount = await checkUserCollection();
+    res.json({ 
+      message: "User collection check complete", 
+      count: userCount 
+    });
+  } catch (error) {
+    console.error("Error checking users:", error);
+    res.status(500).json({ message: "Error checking users" });
+  }
+});
 
 export default router;

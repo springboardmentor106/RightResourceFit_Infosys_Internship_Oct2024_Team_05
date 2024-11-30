@@ -73,10 +73,13 @@ async function addUserToDB(user) {
 
 async function findUserByEmail(email) {
   try {
-    const user = await User.findOne({ email });
+    console.log("Searching for email:", email); // Debug log
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    console.log("Database response:", user); // Debug log
     return user;
-  } catch (err) {
-    console.log(err.message);
+  } catch (error) {
+    console.error("Error finding user by email:", error);
+    throw error;
   }
 }
 async function findUserByUsername(username) {
@@ -141,11 +144,21 @@ import { Otp } from "./dbSchema.js";
 // Save OTP to the database
 async function saveOtp(userId, otp) {
   try {
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // Set expiration time (10 minutes)
-    const newOtp = new Otp({ userId, otp, expiresAt });
+    // First, delete any existing OTP for this user
+    await Otp.deleteMany({ userId });
+
+    const newOtp = new Otp({
+      userId,
+      otp,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes expiry
+    });
+
     await newOtp.save();
-  } catch (err) {
-    console.log(err.message);
+    console.log("OTP saved successfully for user:", userId); // Debug log
+    return newOtp;
+  } catch (error) {
+    console.error('Error saving OTP:', error);
+    throw error;
   }
 }
 
@@ -171,10 +184,32 @@ async function deleteOtp(userId) {
 // Update user password
 async function updateUserPassword(userId, newPassword) {
   try {
-    const hashedPassword = await bcrypt.hash(newPassword, 10); // Hash the new password
-    await User.updateOne({ _id: userId }, { password: hashedPassword });
-  } catch (err) {
-    console.log(err.message);
+    if (!userId || !newPassword) {
+      throw new Error('User ID and new password are required');
+    }
+
+    console.log("Updating password for user:", userId); // Debug log
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { 
+        password: hashedPassword,
+        updatedAt: new Date()
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      throw new Error('User not found');
+    }
+
+    console.log("Password updated successfully"); // Debug log
+    return updatedUser;
+  } catch (error) {
+    console.error('Error updating password:', error);
+    throw error;
   }
 }
 
@@ -367,6 +402,22 @@ async function markNotificationAsRead(notificationId) {
   }
 }
 
+// Add this function to help debug user issues
+async function checkUserCollection() {
+  try {
+    const count = await User.countDocuments();
+    console.log(`Total users in database: ${count}`);
+    
+    // List first few users (for debugging)
+    const users = await User.find().limit(5).select('email username');
+    console.log('Sample users:', users);
+    
+    return count;
+  } catch (error) {
+    console.error('Error checking user collection:', error);
+    throw error;
+  }
+}
 
 export {
   connectToDB,
@@ -389,5 +440,6 @@ export {
   updateJobApplication,
   createNotification,
   getNotifications,
-  markNotificationAsRead
+  markNotificationAsRead,
+  checkUserCollection
 };

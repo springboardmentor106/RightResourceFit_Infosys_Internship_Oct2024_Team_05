@@ -14,8 +14,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      // minlength: 8,
       index: true,
+      lowercase: true,
+      trim: true,
     },
     password: {
       type: String,
@@ -29,6 +30,9 @@ const userSchema = new Schema(
   },
   { versionKey: false }
 );
+
+// Add an index for email lookups
+userSchema.index({ email: 1 });
 
 const sessionSchema = new Schema(
   {
@@ -73,10 +77,18 @@ const otpSchema = new Schema(
     expiresAt: {
       type: Date,
       required: true,
+      default: () => new Date(Date.now() + 10 * 60 * 1000), // 10 minutes from now
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    }
   },
   { versionKey: false }
 );
+
+// Add index for expiration
+otpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 const jobSchema = new Schema(
   {

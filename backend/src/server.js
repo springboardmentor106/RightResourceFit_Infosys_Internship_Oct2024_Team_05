@@ -1,4 +1,5 @@
-import express, { json } from 'express';
+import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import apiRoute from './routes/index.js';
 import { connectToDB } from './db/index.js';
@@ -23,7 +24,8 @@ const corsOptions = {
 };
 
 app.use(cors());
-app.use(json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', apiRoute); // example: http://jaish.com/api
 
