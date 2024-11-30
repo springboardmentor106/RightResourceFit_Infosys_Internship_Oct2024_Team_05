@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@mui/material": "^5.x.x",
+    "@mui/icons-material": "^5.x.x",
+    "axios": "^1.x.x",
+    "react-router-dom": "^6.x.x"
+    // ... other dependencies
+  }
+} 
