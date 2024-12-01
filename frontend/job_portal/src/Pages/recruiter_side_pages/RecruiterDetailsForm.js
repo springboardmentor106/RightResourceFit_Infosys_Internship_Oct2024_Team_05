@@ -80,9 +80,6 @@ const RecruiterDetailsForm = () => {
       return;
     }
 
-    console.log("Recruiter Details Submitted: ", formData);
-    alert("Form Submitted Successfully!");
-  };
     try {
       const response =await axios.post("http://localhost:3000/api/hr-profile",formData)
 
@@ -99,7 +96,11 @@ const RecruiterDetailsForm = () => {
       console.error("Error submitting form data", error);
       alert("Error submitting profile data. Please try again.");
     }
-  }
+
+   
+  };
+    
+  
 
  
 
@@ -230,6 +231,7 @@ const RecruiterDetailsForm = () => {
       </form>
     </div>
   );
-};
+}
+
 
 export default RecruiterDetailsForm;
