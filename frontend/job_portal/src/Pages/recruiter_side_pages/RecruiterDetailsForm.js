@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./RecruiterDetailsForm.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const RecruiterDetailsForm = () => {
+  const navigate=useNavigate()
+  const { state } = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -14,12 +20,31 @@ const RecruiterDetailsForm = () => {
     experience: "",
   });
 
+  useEffect(() => {
+    if (state && state.profile) {
+      setFormData({
+        name: state.profile.username || "",
+        phone: state.profile.contactNumber || "",
+        email: state.profile.email || "",
+        company: state.profile.companyName || "",
+        role: state.profile.role || "",
+        linkedin: state.profile.address || "",
+        website: state.profile.website || "",
+        industry: state.profile.industry || "",
+        experience: state.profile.experience || "",
+      });
+    }
+  }, [state]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit=async(e)=>{
     e.preventDefault();
 
     // Regex validation
@@ -58,6 +83,25 @@ const RecruiterDetailsForm = () => {
     console.log("Recruiter Details Submitted: ", formData);
     alert("Form Submitted Successfully!");
   };
+    try {
+      const response =await axios.post("http://localhost:3000/api/hr-profile",formData)
+
+      if (response.status === 201 || response.status === 200) {
+        alert("Profile added successfully!");
+        localStorage.setItem('profileData', JSON.stringify(response.data));
+        console.log("Profile Data with HR ID:", response.data);
+        navigate('/hr-profilePage')
+      } else {
+        alert("Error adding profile.");
+      }
+      
+    } catch (error) {
+      console.error("Error submitting form data", error);
+      alert("Error submitting profile data. Please try again.");
+    }
+  }
+
+ 
 
   return (
     <div className="form-container">
@@ -131,7 +175,7 @@ const RecruiterDetailsForm = () => {
         <div className="form-group">
           <label htmlFor="linkedin">LinkedIn ID</label>
           <input
-            type="url"
+            type="text"
             id="linkedin"
             name="linkedin"
             value={formData.linkedin}

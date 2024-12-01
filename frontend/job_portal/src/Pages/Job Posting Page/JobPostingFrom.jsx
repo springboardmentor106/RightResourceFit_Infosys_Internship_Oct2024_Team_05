@@ -21,12 +21,16 @@ function JobForm() {
 
   useEffect(() => {
     if (locationState?.job) {
-      const { _id, title, description, skills, location } = locationState.job;
+      const { _id, title, description, skills, location , jobMode, experience, salaryRange, jobType} = locationState.job;
       setJobId(_id);
       setJobTitle(title);
       setJobDescription(description);
       setSkills(skills);
       setLocation(location);
+      setJobMode(jobMode);  // Set jobMode from location state
+      setExperience(experience);  // Set experience from location state
+      setSalaryRange(salaryRange);  // Set salaryRange from location state
+      setJobType(jobType);
     }
   }, [locationState]);
 
@@ -70,6 +74,8 @@ function JobForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateInputs()) return;
+    const profileData = JSON.parse(localStorage.getItem("userDetails"));
+    const hrId = profileData ? profileData.id : null;
 
     const jobData = {
       title: jobTitle,
@@ -77,9 +83,10 @@ function JobForm() {
       skills,
       jobMode,
       experience,
-      salaryRange,
+      salaryRange: parseFloat(salaryRange),
       jobType,
-      location,
+      location:location,
+      hrId
     };
 
     try {

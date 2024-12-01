@@ -14,6 +14,32 @@ function Dashboard() {
   const [editJob, setEditJob] = useState(null);
   const [jobToDelete, setJobToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    // Check if profile data is in localStorage
+    const storedProfile = localStorage.getItem('userDetails');
+    if (storedProfile) {
+      setProfile(JSON.parse(storedProfile));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (profile?.id) {
+      const fetchLatestJobs = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:3000/api/recruiter/latest/${profile.id}`
+          );
+          setLatestJobs(response.data.jobs);
+        } catch (error) {
+          console.error('Error fetching latest jobs:', error);
+        }
+      };
+      fetchLatestJobs();
+    }
+  }, [profile]);
+  
 
   const handlePostJobClick = () => {
     navigate('/jobpostingpage');}
@@ -64,26 +90,32 @@ function Dashboard() {
     const handleViewApplicants = (jobId) => {
       navigate(`/applicants/${jobId}`);
   };
+
+ 
+  if (!profile) {
+    return <div>Loading profile...</div>;
+  }
+
     
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1>Welcome Back</h1>
+        <h1>Welcome Back {profile.username}</h1>
         <button className="post-job-btn" onClick={handlePostJobClick}>+ Post A Job</button>
       </header>
 
       <div className="stats">
         <div className="stat-item purple">
-          <span>76</span>
-          <p>New candidates to review</p>
+          {/* <span>76</span> */}
+          <p>Talent wins games, but teamwork wins championships</p>
         </div>
         <div className="stat-item green">
-          <span>3</span>
-          <p>Schedule for today</p>
+          {/* <span>3</span> */}
+          <p>Hire character. Train skill</p>
         </div>
         <div className="stat-item blue">
-          <span>24</span>
-          <p>Messages received</p>
+          {/* <span>24</span> */}
+          <p>The strength of the team is each individual member</p>
         </div>
       </div>
 
@@ -98,11 +130,13 @@ function Dashboard() {
 
 <div className="job-row">
           {latestJobs.map((job) => (
-            <div className="job-card" key={job._id} onClick={() => handleViewApplicants(job._id)}>
+            <div className="job-card" key={job._id} 
+            //onClick={() => handleViewApplicants(job._id)}
+            >
               <div className="job-info">
                 {/* <img src="https://via.placeholder.com/40" alt="company logo" /> */}
                 <div>
-                  <h1><span className="job-type">{job.title}</span></h1>
+                  <h1><span className="job-type" onClick={() => handleViewApplicants(job._id)}>{job.title}</span></h1>
                   <p>{job.description}</p>
                   {/* <small>{job.appliedCount} applied of {job.capacity} capacity</small> */}
                  <div className="btn">
@@ -121,7 +155,7 @@ function Dashboard() {
           ))}
         </div>
 
-        <a href="/" className="view-more">View More &gt;&gt;</a>
+        <a href="/all-posted-jobs" className="view-more">View More &gt;&gt;</a>
       </div>
     </div>
   );

@@ -17,6 +17,10 @@ const Home = () => {
     const [latestJobs, setLatestjobs]=useState([]);
     const [user, setUser] = useState(null);
 
+    const handleNavigatetoAllJobs=()=>{
+        navigate('/all-jobs',{state:{user}})
+    }
+
     const validateSession = async () => {
         try {
           const sessionToken = localStorage.getItem("sessionToken");  
@@ -65,7 +69,9 @@ const Home = () => {
     
     const handleApplyNow = (jobId) => {
         if (user) {
-            console.log("Applying for Job ID:", jobId);  // Debug log to check the jobId
+            console.log("Applying for Job ID:", jobId);  
+            console.log("Job ID:", jobId);
+            console.log("Applicant ID:", user._id);
             navigate('/jobapplicationform', { state: { jobId, applicantId: user._id } });
           } else {
             alert("Please log in to apply for jobs.");
@@ -92,7 +98,7 @@ const Home = () => {
 
         </div>
 
-        <div className="categories">
+        {/* <div className="categories">
             <h2>Explore By Category</h2>
             <div className="row">
                 <div className="category">
@@ -211,7 +217,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
 
 
         <div className="recent_jobs">
@@ -244,7 +250,7 @@ const Home = () => {
             
         </div>
         <div className="link">
-            <a href="">View More </a>
+            <a onClick={handleNavigatetoAllJobs}>View More </a>
         </div>
 
     <Footer/>    

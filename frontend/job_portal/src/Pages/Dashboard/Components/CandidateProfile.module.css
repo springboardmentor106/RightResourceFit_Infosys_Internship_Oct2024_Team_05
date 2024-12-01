@@ -2,6 +2,7 @@
 .profileContainer {
     display: flex;
     height: 100vh;
+    margin-left: 20px;
 }
 
 .content {

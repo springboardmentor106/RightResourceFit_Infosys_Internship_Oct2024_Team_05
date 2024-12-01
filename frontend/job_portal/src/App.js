@@ -17,6 +17,14 @@ import SignInPage from "./Pages/recruiter_side_pages/SignInPage";
 import RecruiterSignUpPage  from "./Pages/recruiter_side_pages/RecruiterSignUpPage";
 import StartPage from "./Pages/recruiter_side_pages/StartPage"
 import AllApplications from "./Pages/All Applicants/AllApplications"
+import  AllJobs from "./Pages/AllJobs/AllJobs"
+import AllPostedJobs from './Pages/recruiter_side_pages/AllPostedJobs/AllPostedJobs'
+import RecruiterDetailsForm from "./Pages/recruiter_side_pages/RecruiterDetailsForm";
+import ProfilePage from "./Pages/Dashboard/Components/ProfilePage";
+import AppNotification from "./Pages/AppNotification/AppNotification";
+import Messages from "./Pages/recruiter_side_pages/Messages";
+import About from "./components/About";
+import AllApplicants from './Pages/recruiter_side_pages/AllPostedJobs/AllApplicants'
 
 
 
@@ -30,13 +38,12 @@ function App() {
         {/* <Navbar /> */}
 
         <Routes>
+        <Route path="/start" element={<StartPage/>} />
           <Route path="/" element={<Home />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<LoginPage />} />
           <Route
-            path="/forgotpasswordemail"
-            element={<ForgotPasswordEmail />}
-          />
+            path="/forgotpasswordemail" element={<ForgotPasswordEmail />} />
           <Route path="/forgotpasswordotp" element={<ForgotPasswordOTP />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/jobpostingpage" element={<JobPostingPage />} />
@@ -49,7 +56,18 @@ function App() {
           <Route path="/recruiter-sigup" element={<RecruiterSignUpPage />} />
           <Route path="/start" element={<StartPage />} />
           <Route path="/applicants/:jobId" element={<AllApplications />} />
+          <Route path="/all-jobs" element={<AllJobs />} />
+          <Route path="/all-posted-jobs" element={<AllPostedJobs />} />
+          <Route path="/hr-profile" element={<RecruiterDetailsForm />} />
+          <Route path="/hr-profilePage" element={<ProfilePage />} />
+          <Route path="/notification" element={<AppNotification />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/all-applicants" element={<AllApplicants />} />
         </Routes>
+        
+        
+        
       </div>
     </Router>
   );

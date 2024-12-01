@@ -98,3 +98,14 @@ button:hover{
     font-weight: bold;
     cursor: pointer;
 }
+.notification-icon {
+    margin-right: 20px;
+    cursor: pointer;
+    margin-top: 14px;
+}
+
+.notification-icon svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+}

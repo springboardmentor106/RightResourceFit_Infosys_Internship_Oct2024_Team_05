@@ -69,7 +69,7 @@ const ForgotPasswordOtp = () => {
               </span>
             </div>
             <div className="otp">
-              <p>A 4-digit code has been sent to your email</p>
+              <p>A 6-digit code has been sent to your email</p>
             </div>
 
             <div className="button-container" align="center">

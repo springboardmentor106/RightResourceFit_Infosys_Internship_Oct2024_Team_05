@@ -1,7 +1,7 @@
 .applied-jobs-container {
     padding: 40px;
     max-width: 800px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 }
 
 .applied-jobs-container h1 {
@@ -17,6 +17,7 @@
     max-width: 100vw;
     overflow-y: auto;
     padding-right: 50px;
+    
 }
 
 .job-card {

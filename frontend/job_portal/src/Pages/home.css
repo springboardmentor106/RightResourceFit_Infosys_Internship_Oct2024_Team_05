@@ -145,14 +145,15 @@ html {
     gap: 40px;
 }
 .section{
-    /* background-color: #EFEFEF; */
+    background-color: #f4f4f4;
     display: flex;
     border-radius: 47px;
     height: 190px;
     justify-content: space-between;
     align-items: flex-start;
-    box-shadow: 0px 3px  rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0px 3px  rgba(0, 0, 0, 0.5); */
     padding: 20px;
+    border: 2px solid gainsboro;
 }
 /* .section:hover{
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.5);
@@ -182,4 +183,7 @@ html {
     border-top: 2px solid #000; 
     margin-bottom: 20px;
   }
-  
+  .link a{
+    cursor: pointer;
+    color: #9181F4;
+  }

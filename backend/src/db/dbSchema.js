@@ -87,8 +87,37 @@ const otpSchema = new Schema(
   { versionKey: false }
 );
 
-// Add index for expiration
-otpSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+const recruiterSessionSchema=new Schema({
+    userId:{
+      type:Schema.Types.ObjectId,
+      required:true,
+      ref:"HRUser",
+    }, 
+    userType: {
+      type: String,
+      required: true,
+      default: 'recruiter', // Hardcoded to 'recruiter'
+    },
+    sessionToken: {
+      type: String,
+      required: true,
+      unique: true, // Ensure each session token is unique
+    },
+    userAgent: {
+      type: String,
+      required: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      expires: '1d', // Automatically delete session after 1 day
+    },
+
+},
+{
+  timestamps: true, // Automatically manage `createdAt` and `updatedAt`
+}
+);
 
 const jobSchema = new Schema(
   {
@@ -108,11 +137,27 @@ const jobSchema = new Schema(
       type: [String], // Array of strings representing required skills
       required: true,
     },
-    // postedBy: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "User", // Reference to the HR who posted the job
-    //   required: true,
-    // },
+    jobMode: {
+      type: String, // Can be "Onsite", "Hybrid", or "Remote"
+      required: true,
+    },
+    experience: {
+      type: String, // Can be "Beginner", "Intermediate", or "Expert"
+      required: true,
+    },
+    salaryRange: {
+      type: Number, // Numeric range for the salary
+      required: true,
+    },
+    jobType: {
+      type: String, // Can be "Day Shift", "Night Shift", or "Contract"
+      required: true,
+    },
+    postedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "HRUser", // Reference to the HR who posted the job
+      required: true,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -127,54 +172,93 @@ const jobSchema = new Schema(
 
 // Define HR user schema
 const hrUserSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    default: "HR", // Specifies this user as HR
-    enum: ["HR", "Admin"], // Only HR and Admin allowed
-  },
-  companyName: {
-    type: String,
-    required: true,
-  },
-  contactNumber: {
-    type: String,
-  },
-  address: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  sessions: [{
-    sessionToken: String,
-    expiresAt: Date
-  }],
-}, { versionKey: false });
+  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true },
+  companyName: { type: String, required: true },
+  jobTitle: { type: String, required: true },
+  password: { type: String, required: true },
+  
+}, { timestamps: true });
 
-// Pre-save middleware for updating `updatedAt` timestamp on modification
-hrUserSchema.pre("save", function (next) {
+// // Pre-save middleware for updating `updatedAt` timestamp on modification
+// hrUserSchema.pre("save", function (next) {
+//   this.updatedAt = Date.now();
+//   next();
+// });
+const hrProfile = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    hrUserID:{
+      type:Schema.Types.ObjectId,
+      ref:'HRUser',
+      required:true
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+   
+    role: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
+      required: true,
+    },
+    contactNumber: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    
+    linkedin: {
+      type: String,
+    },
+    website: {
+      type: String,
+    },
+    industry: {
+      type: String,
+    },
+    experience: {
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now,
+    },
+    // sessions: [
+    //   {
+    //     sessionToken: String,
+    //     expiresAt: Date,
+    //   },
+    // ],
+  },
+  { versionKey: false }
+);
+
+hrProfile.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
+
 
 //import { Schema, model } from "mongoose";
 
@@ -280,6 +364,9 @@ const Job = model("Job", jobSchema);
 const User = model(USERS_COLLECTION, userSchema);
 const Session = model(SESSIONS_COLLECTION, sessionSchema);
 const JobApplication = model("JobApplication", jobApplicationSchema);
+const HrProfile=model("HrProfile",hrProfile)
+const recruiterSession=model("recruiterSession",recruiterSessionSchema)
 
 
-export { User, Session, Otp, Job,HRUser,JobApplication,Notification };
+
+export { User, Session, Otp, Job,HrProfile,JobApplication,Notification ,HRUser,recruiterSession};
