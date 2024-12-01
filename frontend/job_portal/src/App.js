@@ -24,6 +24,7 @@ import ProfilePage from "./Pages/Dashboard/Components/ProfilePage";
 import AppNotification from "./Pages/AppNotification/AppNotification";
 import Messages from "./Pages/recruiter_side_pages/Messages";
 import About from "./components/About";
+import AllApplicants from './Pages/recruiter_side_pages/AllPostedJobs/AllApplicants'
 
 
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/notification" element={<AppNotification />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/about" element={<About />} />
+          <Route path="/all-applicants" element={<AllApplicants />} />
         </Routes>
         
         

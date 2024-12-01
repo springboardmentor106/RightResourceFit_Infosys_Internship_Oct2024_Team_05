@@ -84,7 +84,7 @@ const Sidebar = ({ setActiveContent }) => {
           <FontAwesomeIcon icon={faBuilding} />
           <span className={isMinimized ? 'hidden' : ''} >Company Profile</span>
         </li>
-        <li className="nav-item" onClick={() => setActiveContent("All Applicants")}>
+        <li className="nav-item" onClick={() => navigate('/all-applicants')}>
           <FontAwesomeIcon icon={faUsers} />
           <span className={isMinimized ? 'hidden' : ''}>All Applicants</span>
         </li>

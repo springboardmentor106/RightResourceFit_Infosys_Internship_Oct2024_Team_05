@@ -696,6 +696,26 @@ export const getApplicantsByJobId = async (req, res) => {
   }
 };
 
+//get all applicants
+export const getAllJobApplications = async (req, res) => {
+  try {
+    const applications = await JobApplication.find()
+      .populate('applicantId', 'firstName lastName email') // Populate applicant details
+      .populate('jobId', 'title company') // Populate job details
+      .exec();
+
+    if (applications.length === 0) {
+      return res.status(404).json({ message: "No job applications found" });
+    }
+
+    res.status(200).json({ applications });
+  } catch (error) {
+    console.error("Error fetching job applications:", error);
+    res.status(500).json({ message: "Error fetching job applications", error });
+  }
+};
+
+
 import { createNotification } from "../db/dbHandlers.js";
 router.post('/notifications', async (req, res) => {
   const { recipientId, type, jobId, message } = req.body;
@@ -707,6 +727,8 @@ router.post('/notifications', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
 
 
 // Get user notifications
@@ -743,6 +765,7 @@ router.post("/jobs/search", searchJobs); // Search jobs by location and skills
 router.get("/applications/:applicantId", getApplicationsByApplicant);
 router.delete('/applications/:applicantId/:jobId',deleteApplication);
 router.get('/applicants/:jobId',getApplicantsByJobId);
+router.get('/all-applicants',getAllJobApplications);
 router.post('/recruiter-register', registerRecruiter);
 router.post('/recruiter-login', loginRecruiter);
 router.post('/recruiter/logout', logoutRecruiter);
