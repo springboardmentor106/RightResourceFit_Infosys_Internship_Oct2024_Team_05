@@ -9,7 +9,7 @@ const ForgotPasswordOtp = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [timer, setTimer] = useState(60); // 60 seconds timer
   const [isResendDisabled, setIsResendDisabled] = useState(true); // Disable resend button initially
-
+  const navigate=useNavigate()
   // Toggle password visibility (OTP visibility)
   const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown);
@@ -23,7 +23,12 @@ const ForgotPasswordOtp = () => {
   // Handle form submission for OTP
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Submit OTP to backend (implement your backend request here)
+    if (!otp.trim()) {
+      alert('OTP field cannot be empty.');
+      return;
+    }
+
+    navigate('/forgotpassword')
     console.log('Entered OTP:', otp);
   };
 
@@ -73,7 +78,7 @@ const ForgotPasswordOtp = () => {
             </div>
 
             <div className="button-container" align="center">
-              <button type="submit" className="signup-btn" ><Link to='/forgotpassword' style={{ color: 'white' }}>Enter Code</Link>
+              <button type="submit" className="signup-btn" style={{ color: 'white' }}>Enter Code
                 
               </button>
             </div>
